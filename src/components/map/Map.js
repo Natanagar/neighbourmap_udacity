@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+import './Map.css'
  /* global google */
+
 
 class Map extends Component {
     constructor(props){
@@ -26,13 +28,7 @@ class Map extends Component {
 
     render(){
         return(
-            <div ref={this.myMapContainer} id="map" style={
-                {
-                    width: '100%',
-                    heigth : '100%'
-
-                }
-            }/>
+            <div ref={this.myMapContainer} id="map" />
         )
     }
 }

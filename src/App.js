@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import Map from './components/Map';
+import ReactDOM from 'react-dom';
+import Map from './components/map/Map';
+import SearchBar from './components/SearchBar';
+import {Alert} from 'reactstrap';
 import './App.css';
 
 class App extends Component {
@@ -10,6 +13,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <SearchBar />
         <Map />
       </div>
     );
