@@ -4,6 +4,7 @@ import Map from './components/map/Map';
 import SearchBar from './components/SearchBar';
 import {Alert} from 'reactstrap';
 import './App.css';
+import MarkersPanel from './components/MarkersPanel';
 
 class App extends Component {
   state={
@@ -13,7 +14,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <SearchBar />
+        <MarkersPanel />
         <Map />
       </div>
     );

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { Alert } from 'reactstrap';
 import { InputGroup, InputGroupText, InputGroupAddon, Input } from 'reactstrap';
 
@@ -13,7 +12,7 @@ class SearchBar extends Component {
                 <Alert>
                     <InputGroup>
                         <InputGroupAddon addonType="prepend">
-                            <InputGroupText>To the Left!</InputGroupText>
+                            <InputGroupText>Go to markers</InputGroupText>
                                 </InputGroupAddon>
                                 <Input placeholder="Seach"/>
                     </InputGroup>
