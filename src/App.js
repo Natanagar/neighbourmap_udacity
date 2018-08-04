@@ -23,12 +23,7 @@ class App extends Component {
             <MarkersPanel />
           </Col>
           <Col ml="8" xl="8">
-            <Map style={{
-              width: '100%', 
-              heigth: '100%',
-              padding: '0',
-              margin: '0'
-            }}/>
+            <Map />
           </Col>
         </Row>
         <Row>
