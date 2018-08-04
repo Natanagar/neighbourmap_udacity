@@ -2,23 +2,42 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Map from './components/map/Map';
 import SearchBar from './components/SearchBar';
-import {Alert} from 'reactstrap';
-import './App.css';
 import MarkersPanel from './components/MarkersPanel';
 import Navbar from './components/Navbar';
+import { Container, Row, Col, Alert } from 'reactstrap';
+import Footer from './components/Footer';
+import './App.css';
+
 
 class App extends Component {
-  state={
-    lat : -34.397,
-    lng : 150.644
-  }
   render() {
     return (
-      <div className="App">
-        <Navbar />
-        <MarkersPanel />
-        <Map />
-      </div>
+      <Container className="App">
+        <Row>
+            <Col>
+              <Navbar />
+            </Col>
+          </Row>
+        <Row>
+          <Col ml="4" xl="4">
+            <MarkersPanel />
+          </Col>
+          <Col ml="8" xl="8">
+            <Map style={{
+              width: '100%', 
+              heigth: '100%',
+              padding: '0',
+              margin: '0'
+            }}/>
+          </Col>
+        </Row>
+        <Row>
+            <Col>
+              <Footer className=".col-12"/>
+            </Col>
+        </Row>
+      </Container>
+     
     );
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Alert } from 'reactstrap';
 import PropTypes from 'prop-types'
 
 
@@ -21,20 +21,22 @@ export default class Example extends React.Component {
   render() {
     return (
       <div>
-        <Navbar color="faded" light>
-          <NavbarBrand href="/" className="mr-auto">reactstrap</NavbarBrand>
-          <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-          <Collapse isOpen={!this.state.collapsed} navbar>
-            <Nav navbar>
-              <NavItem>
-                <NavLink href="/components/">Components</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Navbar>
+        <Alert color="dark">
+            <Navbar color="faded" light>
+                <NavbarBrand href="/" className="mr-auto">Neibourhood Map Kielce</NavbarBrand>
+                    <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+                        <Collapse isOpen={!this.state.collapsed} navbar>
+                            <Nav navbar>
+                            <NavItem>
+                                <NavLink href="/components/">Components</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                            </NavItem>
+                            </Nav>
+                        </Collapse>
+            </Navbar>
+        </Alert>
       </div>
     );
   }
