@@ -5,6 +5,7 @@ const Places = [{
             'primary' : " ",
             'shortName' : "HappyDays",
             'hasPerk' :  " ",
+            'img' : 'img/HappyDays.png',
             'location' : {
                 'address' : "Krakowska, 89",
                 'city' : "Kielce",
@@ -24,6 +25,7 @@ const Places = [{
             'primary' : " ",
             'shortName' : "Delfin",
             'hasPerk' :  " ",
+            'img' : 'img/delfin.jpg',
             'location' : {
                 'address' : " ul. Krakowska 2",
                 'city' : "Kielce",
@@ -43,6 +45,7 @@ const Places = [{
             'primary' : " ",
             'shortName' : "Multikino",
             'hasPerk' :  " ",
+            'img' : 'img/multikino.jpg',
             'location' : {
                 'address' : "ul. Warszawska 26",
                 'city' : "Kielce",
@@ -62,6 +65,7 @@ const Places = [{
             'primary' : " ",
             'shortName' : "Oddział Matematyki Uniwersyteta imienia Jana Kochanowskiego",
             'hasPerk' :  " ",
+            'img' : 'img/Wydział_Matematyczno-Przyrodniczy_UJK.jpg',
             'location' : {
                 'address' : "ul. Świętokrzyska 15",
                 'city' : "Kielce",
@@ -81,6 +85,7 @@ const Places = [{
             'primary' : " ",
             'shortName' : "Homo Homini",
             'hasPerk' :  " ",
+            'img' : 'img/Kielce-Homo-Homini.jpg',
             'location' : {
                 'address' : "ul. Księdza Piotra Ściegiennego",
                 'city' : "Kielce",
@@ -100,6 +105,7 @@ const Places = [{
             'primary' : " ",
             'shortName' : "Pomnik ofiarom armii radzieckiej",
             'hasPerk' :  " ",
+            'img' : 'img/cementry.jpg',
             'location' : {
                 'address' : "",
                 'city' : "Kielce",
@@ -120,6 +126,7 @@ const Places = [{
             'primary' : " ",
             'shortName' : "WDK",
             'hasPerk' :  " ",
+            'img' : 'img/multikino.jpg',
             'location' : {
                 'address' : "ul. Księdza Piotra Ściegiennego, 2",
                 'city' : "Kielce",
@@ -140,6 +147,7 @@ const Places = [{
             'primary' : " ",
             'shortName' : "Amfiteatr Kadzielnia",
             'hasPerk' :  " ",
+            'img' : 'img/multikino.jpg',
             'location' : {
                 'address' : "ul. Księdza Piotra Ściegiennego, 2",
                 'city' : "Kielce",
@@ -160,6 +168,7 @@ const Places = [{
             'primary' : " ",
             'shortName' : "WBP",
             'hasPerk' :  " ",
+            'img' : 'img/biblioteka.jpg',
             'location' : {
                 'address' : "ul. Księdza Piotra Ściegiennego, 13",
                 'city' : "Kielce",
@@ -179,6 +188,7 @@ const Places = [{
         'primary' : " ",
         'shortName' : "Park Miejski",
         'hasPerk' :  " ",
+        'img' : 'img/Staszica.jpg',
         'location' : {
             'address' : "ul. Jana Pawła II",
             'city' : "Kielce",
@@ -198,6 +208,7 @@ const Places = [{
         'primary' : " ",
         'shortName' : "Liceum Ogólnokształcące imienia Żeromskiego",
         'hasPerk' :  " ",
+        'img' : 'img/zeromski.jpg',
         'location' : {
             'address' : "ul. Jana Pawła II, 5",
             'city' : "Kielce",
@@ -217,6 +228,7 @@ const Places = [{
         'primary' : " ",
         'shortName' : "Liceum Ogólnokształcące imienia Żeromskiego",
         'hasPerk' :  " ",
+        'img' : 'img/zabawki.jpg',
         'location' : {
             'address' : "płac Wolności, 2",
             'city' : "Kielce",
@@ -236,6 +248,7 @@ const Places = [{
         'primary' : " ",
         'shortName' : "The National Museum in Kielce",
         'hasPerk' :  " ",
+        'img' : 'img/muzeum_narodowe.jpg',
         'location' : {
             'address' : "płac Zamkowy, 1",
             'city' : "Kielce",
@@ -255,6 +268,7 @@ const Places = [{
         'primary' : " ",
         'shortName' : "Kielce Region Countryside Museum",
         'hasPerk' :  " ",
+        'img' : 'img/wies.jpg',
         'location' : {
             'address' : "ul. Jana Pawła II, 6",
             'city' : "Kielce",
@@ -274,6 +288,7 @@ const Places = [{
         'primary' : " ",
         'shortName' : "Kielce Region Countryside Museum",
         'hasPerk' :  " ",
+        'img' : 'img/wies.jpg',
         'location' : {
             'address' : "ul. Świętego Leonarda, 4",
             'city' : "Kielce",
@@ -293,6 +308,7 @@ const Places = [{
         'primary' : " ",
         'shortName' : "Tomasz Zieliński Palace",
         'hasPerk' :  " ",
+        'img' : 'img/Tomasza-Zielinskiego.jpg',
         'location' : {
             'address' : "ul. Zamkowa, 5",
             'city' : "Kielce",
@@ -312,6 +328,7 @@ const Places = [{
         'primary' : " ",
         'shortName' : "Kielce Ghetto Monument",
         'hasPerk' :  " ",
+        'img' : 'img/getto.jpg',
         'location' : {
             'address' : "al. IX Wieków Kielc, 3",
             'city' : "Kielce",
@@ -331,6 +348,7 @@ const Places = [{
         'primary' : " ",
         'shortName' : "Świętokrzyski Provincial Office in Kielce",
         'hasPerk' :  " ",
+        'img' : 'img/urząd.jpg',
         'location' : {
             'address' : "al. IX Wieków Kielc, 3",
             'city' : "Kielce",
@@ -350,6 +368,7 @@ const Places = [{
         'primary' : " ",
         'shortName' : "Technical University in Kielce",
         'hasPerk' :  " ",
+        'img' : 'img/Politechnika.jpg',
         'location' : {
             'address' : "aleja Tysiąclecia Państwa Polskiego 7",
             'city' : "Kielce",
@@ -369,6 +388,7 @@ const Places = [{
         'primary' : " ",
         'shortName' : "Kielce Dance Canter",
         'hasPerk' :  " ",
+        'img' : 'img/teatr_tanca.jpg',
         'location' : {
             'address' : "plac Moniuszki 2B",
             'city' : "Kielce",
@@ -388,6 +408,7 @@ const Places = [{
         'primary' : " ",
         'shortName' : "",
         'hasPerk' :  " ",
+        'img' : 'img/tao.jpg',
         'location' : {
             'address' : "ul. Jagiellońska 62,",
             'city' : "Kielce",

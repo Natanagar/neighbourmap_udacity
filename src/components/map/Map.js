@@ -364,7 +364,7 @@ class Map extends Component {
     //create list of markers
    Places.map((place)=>{
     let title = place.name;
-     //console.log(place.name)
+     console.log(place.img)
      //console.log(place.location.lat)
      //console.log(place.location.lng)
      //console.log(title)
@@ -373,6 +373,7 @@ class Map extends Component {
                       <h3>${title}</h3>
                       <span>${place.site}</span>
                       <span>tel. ${place.phone}</span>
+                      <span><img src=${place.img}></span>
                       </div>`
         });
         let position = {lat: place.location.lat, lng: place.location.lng};
