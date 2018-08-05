@@ -302,7 +302,7 @@ const Places = [{
             'state' : "Europe"},
         'site' : "mhki.kielce.eu",
         'phone' : "+48-41-340-55-20"
-        }, {'id' : 732430956723,
+        }, {'id' : 732430956715,
         'name' : "Pałac Tomasza Zielińskiego",
         'pluralName' : "",
         'primary' : " ",

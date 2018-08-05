@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './Map.css';
 import Places from './places';
+
  /* global google */
 
 
@@ -363,17 +364,20 @@ class Map extends Component {
         
     //create list of markers
    Places.map((place)=>{
-    let title = place.name;
-     console.log(place.img)
+    let title = place.name,
+        image = place.img;
      //console.log(place.location.lat)
      //console.log(place.location.lng)
      //console.log(title)
      var infowindow = new google.maps.InfoWindow({
-          content : `<div className="container">
+          content : `<div className="container" style ={{
+              height : '125px'
+          }}>
                       <h3>${title}</h3>
-                      <span>${place.site}</span>
-                      <span>tel. ${place.phone}</span>
-                      <span><img src=${place.img}></span>
+                        <span>${place.site}</span>
+                        <span>tel. ${place.phone}</span>
+                          <div><img src=${image} height = "100" width="100"></img>
+                          </div>
                       </div>`
         });
         let position = {lat: place.location.lat, lng: place.location.lng};
