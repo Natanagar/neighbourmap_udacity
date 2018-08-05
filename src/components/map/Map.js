@@ -18,6 +18,7 @@ class Map extends Component {
     componentDidMount(){
       const markers = [];
       console.log(Places);
+      console.log (markers);
         var styledMapType = new google.maps.StyledMapType(
             [
                 {
