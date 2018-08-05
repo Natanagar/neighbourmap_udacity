@@ -355,16 +355,21 @@ class Map extends Component {
         })
         map.mapTypes.set('styled_map', styledMapType);
         map.setMapTypeId('styled_map');
-
+        
+      //type of icons in markers  
+    var defaultIcon = makeMarkerIcon('0091ff');
+    var highlightedIcon = makeMarkerIcon('FFFF24');
+        
     //create list of markers
-    console.log(Object.keys(Places).map(place=>{
-      console.log(place.title);
-    }));
-        /*var infowindow = new google.maps.InfoWindow({
+   Places.map((place)=>{
+     console.log(place.name)
+     console.log(place.location.lat)
+     console.log(place.location.lng)
+     var infowindow = new google.maps.InfoWindow({
           content : `Do you ever feel like an InfoWindow, floating through the windowready to start again?`
         });
-        let position = {lat: this.place.lat, lng: this.place.lng};
-        let title = this.place.title;
+        let position = {lat: place.location.lat, lng: place.location.lng};
+        let title = place.name;
         console.log(position);
         var marker = new google.maps.Marker({
           map: map,
@@ -374,9 +379,25 @@ class Map extends Component {
           icon: defaultIcon,
           id: 1
         });
-      markers.push(marker);*/
+      markers.push(marker);
 
-    }
+   })
+
+// This function takes in a COLOR, and then creates a new marker
+// icon of that color. The icon will be 21 px wide by 34 high, have an origin
+// of 0, 0 and be anchored at 10, 34).
+function makeMarkerIcon(markerColor) {
+  var markerImage = new google.maps.MarkerImage(
+  'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
+  '|40|_|%E2%80%A2',
+      new google.maps.Size(21, 34),
+      new google.maps.Point(0, 0),
+      new google.maps.Point(10, 34),
+      new google.maps.Size(21,34));
+  return markerImage;
+}
+        
+}
  
 
     render(){
