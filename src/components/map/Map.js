@@ -366,6 +366,7 @@ class Map extends Component {
    Places.map((place)=>{
     let title = place.name,
         image = place.img;
+        console.log(image)
      //console.log(place.location.lat)
      //console.log(place.location.lng)
      //console.log(title)

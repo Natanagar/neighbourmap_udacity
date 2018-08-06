@@ -11,10 +11,14 @@ const MarkersList = (props) =>{
             <Alert color="light">
                 <ol>
                     {Places.map((place) => {
-                        console.log(place.name)
+            
                         return (
                         <li key={place.id}>
-                            <div>{place.name}</div>
+                            <div style ={{
+                                borderStyle: "ridge",
+                                fontStyle: 'Bold',
+                                paddingLeft : "5px"
+                            }} >{place.name}</div>
                         </li>
                         );
                     })}

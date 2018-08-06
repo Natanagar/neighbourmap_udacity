@@ -141,7 +141,7 @@ const Places = [{
             },
             'site' : "www.wdk-kielce.pl",
             'phone' : "+48-41-365-51-00"
-            },{ 'id' : 342987593567483,
+            },{ 'id' : 342987593567425,
             'name' : "Rezerwat przyrody 'Kadzielnia'",
             'pluralName' : "",
             'primary' : " ",
