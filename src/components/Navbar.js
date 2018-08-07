@@ -2,6 +2,7 @@ import React from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Alert } from 'reactstrap';
 import PropTypes from 'prop-types';
 import Facebook from './img/facebook.svg';
+import Github from './img/github.svg'
 
 
 
@@ -31,11 +32,17 @@ export default class Example extends React.Component {
                             <Nav navbar>
                             <NavItem>
                                 <NavLink href="/components/">Login with 
-                                  <img src={Facebook} width="24" height="24" alt="FB" />
+                                  <img src={Facebook} width="24" height="24" alt="FB" style={{
+                                    marginLeft: "3px"
+                                  }}/>
                                 </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="https://github.com/Natanagar/neighbourhood-map">Code in GitHub</NavLink>
+                                <NavLink href="https://github.com/Natanagar/neighbourhood-map">Code in 
+                                <img src={Github} width="24" height="24" alt="GH" style={{
+                                    marginLeft: "5px"
+                                  }}/>
+                                </NavLink>
                             </NavItem>
                             </Nav>
                         </Collapse>
