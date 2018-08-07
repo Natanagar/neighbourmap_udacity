@@ -1,32 +1,33 @@
 import React, { Component } from 'react';
 import { Alert } from 'reactstrap';
 import { InputGroup, InputGroupText, InputGroupAddon, Input } from 'reactstrap';
+import PropTypes from 'prop-types';
+
+
 
 class SearchBar extends Component {
-    constructor(props){
-        super(props);
-    }
-
-    updateQuery = (query) =>{
-        this.setState({query : query})
+    static propTypes = {
+        query: PropTypes.string.isRequired,
+        onUpdate: PropTypes.func.isRequired
     }
     state = {
-        query : ''
+        query: ''
     }
     render(){
         return(
+    
             <div>
                 <Alert>
                     <InputGroup>
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText className="bar" >Go to markers</InputGroupText>
-                                </InputGroupAddon>
+                        </InputGroupAddon>
                                 <Input 
                                 className='input' 
                                 type="text" 
                                 placeholder="Seach"
-                                value ={this.state.query}
-                                onChange ={(event) => {this.updateQuery(event.target.value)}} 
+                                value ={this.props.query}
+                                onChange ={(event) => {this.props.onUpdate(event.target.value)}} 
                                 />
                     </InputGroup>
                     <br/>
@@ -34,7 +35,5 @@ class SearchBar extends Component {
             </div>
         )
     }
-}
-
-
+} 
 export default SearchBar;

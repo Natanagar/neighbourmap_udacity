@@ -3,6 +3,8 @@ import { Alert } from 'reactstrap';
 import { InputGroup, InputGroupText, InputGroupAddon, Input } from 'reactstrap';
 import Places from './map/places';
 import PropTypes from 'prop-types';
+import escapeRegExp from 'escape-string-regexp';
+import sortBy from 'sort-by';
 
 
 
@@ -10,28 +12,35 @@ class MarkersList extends Component{
    constructor(props){
     
        super(props);
-       this.props = Places;   
    }
    
-   state= {
-    markers: [],
-    query : ''
-   }
+    update = (query) =>{
+        this.setState({query : query})
+    }
+    state = {
+        query : '',
+        places : []
+    }
+   
    render(){
-    
+    const places =  this.props.showMarkers.listOfMarkers;
+   
     return(
         <div>
             <Alert color="light">
                 <ol>
-                    {Places.map((place) => {
+                    {places.map((place) => {
             
                         return (
                         <li key={place.id}>
-                            <div className="markerList" style ={{
+                            <div className="markerList"
+                                onUpdate={this.update}
+                            style ={{
                                 borderStyle: "ridge",
                                 fontStyle: 'Bold',
                                 paddingLeft : "5px",
                                 fontSize: "13px"
+                                
                             }} >{place.name}
                             <div>{place.englishName}</div>
                             
