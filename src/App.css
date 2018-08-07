@@ -4,5 +4,9 @@ body {
     padding: 0;
   }
 #map {
-    height: 1400px;
+    height: 1393px;
   }
+.markerList:hover {
+  background-color: #ecf9f2;
+  font-style: italic;
+}

@@ -4,6 +4,8 @@ import { InputGroup, InputGroupText, InputGroupAddon, Input } from 'reactstrap';
 import Places from './map/places';
 import PropTypes from 'prop-types';
 
+
+
 const MarkersList = (props) =>{
    //console.log(Places);
     return(
@@ -14,7 +16,7 @@ const MarkersList = (props) =>{
             
                         return (
                         <li key={place.id}>
-                            <div style ={{
+                            <div className="markerList" style ={{
                                 borderStyle: "ridge",
                                 fontStyle: 'Bold',
                                 paddingLeft : "5px",

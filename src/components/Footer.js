@@ -1,7 +1,7 @@
 import React from 'react';
 import { Media } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
-import 'font-awesome/css/font-awesome.min.css';
+
 
 
 
@@ -14,7 +14,7 @@ const Footer = () => {
                     <Col ml="4" xl="6">
                         
                         <Media left href="https://github.com/Natanagar/neighbourhood-map">
-                        <i className="fab fa-github"></i>
+                    
                         <i className="fab fa-facebook-square"></i>
 
                             <Media object data-src=".../img/GitHub_Logo.png" alt="Github" />
