@@ -17,8 +17,12 @@ const MarkersList = (props) =>{
                             <div style ={{
                                 borderStyle: "ridge",
                                 fontStyle: 'Bold',
-                                paddingLeft : "5px"
-                            }} >{place.name}</div>
+                                paddingLeft : "5px",
+                                fontSize: "13px"
+                            }} >{place.name}
+                            <div>{place.englishName}</div>
+                            
+                            </div>
                         </li>
                         );
                     })}

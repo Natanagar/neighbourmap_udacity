@@ -1,9 +1,9 @@
 const Places = [{
         'id' : 346738648274, 
             'name' : "Przedszkole HappyDays",
-            'pluralName' : "Przedszkole HappyDays",
+            'polishName' : "Przedszkole HappyDays",
             'primary' : " ",
-            'shortName' : "HappyDays",
+            'englishName' : "Preschool HappyDays",
             'hasPerk' :  " ",
             'img' : 'img/HappyDays.png',
             'location' : {
@@ -20,10 +20,10 @@ const Places = [{
             'site' : "www.przedszkole.kielce.pl",
             'phone' : "+48-535-953-935"
             }, {'id' : 34678648243,
-            'name' : "swimmingpool Delfin",
-            'pluralName' : "Pływalnia Delfin",
+            'name' : "Pływalnia Delfin",
+            'polishName' : "Pływalnia Delfin",
             'primary' : " ",
-            'shortName' : "Delfin",
+            'englishName' : "Swimmingpool Delfin",
             'hasPerk' :  " ",
             'img' : 'img/delfin.jpg',
             'location' : {
@@ -40,10 +40,10 @@ const Places = [{
             'site' : "www.mosir.kielce.pl",
             'phone' : "+48-41-366-90-13"
             }, {'id' : 436542343284,
-            'name' : "Cinema Multikino",
-            'pluralName' : "",
+            'name' : "Kinoteatr Multikino",
+            'polishName' : "",
             'primary' : " ",
-            'shortName' : "Multikino",
+            'englishName' : "Cinema Multikino",
             'hasPerk' :  " ",
             'img' : 'img/multikino.jpg',
             'location' : {
@@ -60,10 +60,10 @@ const Places = [{
             'site' : "www.multikino.pl",
             'phone' : "+48-41-248-64-10"
             },{ 'id' : 233434250678,
-            'name' : "Oddział Matematyczno-Przyrodniczy Uniwersytetu imienia Jana Kochanowskiego w Kielcach",
-            'pluralName' : "",
+            'name' : "Wydział Matematyki Uniwersyteta imienia Jana Kochanowskiego",
+            'polishName' : "Wydział Matematyki Uniwersyteta imienia Jana Kochanowskiego",
             'primary' : " ",
-            'shortName' : "Oddział Matematyki Uniwersyteta imienia Jana Kochanowskiego",
+            'englishName' : "Faculty of Mathematic UJK Kielce",
             'hasPerk' :  " ",
             'img' : 'img/Wydział_Matematyczno-Przyrodniczy_UJK.jpg',
             'location' : {
@@ -80,10 +80,10 @@ const Places = [{
             'site' : "www.ujk.edu.pl/wmp",
             'phone' : "+48-41-349-62-30"
             },{ 'id' : 3425487834923,
-            'name' : "Pomnik ofiarom terorryzmu",
-            'pluralName' : "",
+            'name' : "Homo Homini",
+            'polishName' : "Pomnik ofiarom terorryzmu",
             'primary' : " ",
-            'shortName' : "Homo Homini",
+            'englishName' : "Monument to victims of terrorism",
             'hasPerk' :  " ",
             'img' : 'img/Kielce-Homo-Homini.jpg',
             'location' : {
@@ -100,10 +100,10 @@ const Places = [{
             'site' : "www.um.kielce.pl",
             'phone' : ""
             }, { 'id' : 3428579255433,
-            'name' : "Cementery of Soviet Soldiers",
-            'pluralName' : "",
+            'name' : "Pomnik ofiarom armii radzieckiej",
+            'polishName' : "Pomnik ofiarom armii radzieckiej",
             'primary' : " ",
-            'shortName' : "Pomnik ofiarom armii radzieckiej",
+            'englishName' : "Cementery of Soviet Soldiers",
             'hasPerk' :  " ",
             'img' : 'img/cementry.jpg',
             'location' : {
@@ -122,9 +122,9 @@ const Places = [{
             'phone' : ""
             },{ 'id' : 4234928742304,
             'name' : "Wojewodzki Dom Kultury imienia Józefa Piłsudskiego",
-            'pluralName' : "",
+            'polishName' : "WDK",
             'primary' : " ",
-            'shortName' : "WDK",
+            'englishName' : "Regional House of Culture",
             'hasPerk' :  " ",
             'img' : 'img/multikino.jpg',
             'location' : {
@@ -143,9 +143,9 @@ const Places = [{
             'phone' : "+48-41-365-51-00"
             },{ 'id' : 342987593567425,
             'name' : "Rezerwat przyrody 'Kadzielnia'",
-            'pluralName' : "",
+            'polishName' : "Rezerwat przyrody 'Kadzielnia",
             'primary' : " ",
-            'shortName' : "Amfiteatr Kadzielnia",
+            'englishName' : "Nature Reserve",
             'hasPerk' :  " ",
             'img' : 'img/multikino.jpg',
             'location' : {
@@ -164,9 +164,9 @@ const Places = [{
                 'phone' : "+48-41-361-47-68"
             },{ 'id' : 342987593567483,
             'name' : "Wojewódzka Biblioteka Publiczna imienia Widolda Gombrowicza w Kielcach",
-            'pluralName' : "",
+            'polishName' : "Biblioteka Publiczna",
             'primary' : " ",
-            'shortName' : "WBP",
+            'englishName' : "Public Library",
             'hasPerk' :  " ",
             'img' : 'img/biblioteka.jpg',
             'location' : {
@@ -184,9 +184,9 @@ const Places = [{
             'phone' : "+48-41-361-53-51"
              }, { 'id' : '0236184354390',
         'name' : "Park Miejski imienia Stanisława Staszica",
-        'pluralName' : "",
+        'polishName' : "Park Miejski",
         'primary' : " ",
-        'shortName' : "Park Miejski",
+        'englishName' : "City Park",
         'hasPerk' :  " ",
         'img' : 'img/Staszica.jpg',
         'location' : {
@@ -204,9 +204,9 @@ const Places = [{
         'phone' : "+48-41-361-53-51"
         }, { 'id' : 342509852342,
         'name' : "Liceum Ogólnokształcące imienia Stefana Żeromskiego. Muzeum",
-        'pluralName' : "",
+        'polishName' : "Liceum Żeromskiego",
         'primary' : " ",
-        'shortName' : "Liceum Ogólnokształcące imienia Żeromskiego",
+        'englishName' : "City High School",
         'hasPerk' :  " ",
         'img' : 'img/zeromski.jpg',
         'location' : {
@@ -224,9 +224,9 @@ const Places = [{
         'phone' : "+48-41-344-57-92"
         }, { 'id' : 342509852342,
         'name' : "Muzeum zabawek i zabawy",
-        'pluralName' : "",
+        'polishName' : "Muzeum zabawek i zabawy",
         'primary' : " ",
-        'shortName' : "Liceum Ogólnokształcące imienia Żeromskiego",
+        'englishName' : "Museum of Toys",
         'hasPerk' :  " ",
         'img' : 'img/zabawki.jpg',
         'location' : {
@@ -244,9 +244,9 @@ const Places = [{
         'phone' : "+48-41-343-37-06"
         }, { 'id' : 323423098543,
         'name' : "Narodowe Muzeum w Kielcach",
-        'pluralName' : "",
+        'polishName' : "Narodowe Muzeum w Kielcach",
         'primary' : " ",
-        'shortName' : "The National Museum in Kielce",
+        'englishName' : "The National Museum in Kielce",
         'hasPerk' :  " ",
         'img' : 'img/muzeum_narodowe.jpg',
         'location' : {
@@ -264,9 +264,9 @@ const Places = [{
         'phone' : "+48-41-344-40-14"
         }, { 'id' : 324298752340,
         'name' : "Muzeum Wsi Kieleckiej",
-        'pluralName' : "",
+        'polishName' : "Muzeum Wsi Kieleckiej",
         'primary' : " ",
-        'shortName' : "Kielce Region Countryside Museum",
+        'englishName' : "Kielce Region Countryside Museum",
         'hasPerk' :  " ",
         'img' : 'img/wies.jpg',
         'location' : {
@@ -284,9 +284,9 @@ const Places = [{
         'phone' : "+48-41-344-40-14"
         }, { 'id' : 732430956723,
         'name' : "Muzeum Historii Kielc",
-        'pluralName' : "",
+        'polishName' : "",
         'primary' : " ",
-        'shortName' : "Kielce Region Countryside Museum",
+        'englishName' : "Museum of History",
         'hasPerk' :  " ",
         'img' : 'img/wies.jpg',
         'location' : {
@@ -304,9 +304,9 @@ const Places = [{
         'phone' : "+48-41-340-55-20"
         }, {'id' : 732430956715,
         'name' : "Pałac Tomasza Zielińskiego",
-        'pluralName' : "",
+        'polishName' : "Pałac Tomasza Zielińskiego",
         'primary' : " ",
-        'shortName' : "Tomasz Zieliński Palace",
+        'englishName' : "Zieliński Palace",
         'hasPerk' :  " ",
         'img' : 'img/Tomasza-Zielinskiego.jpg',
         'location' : {
@@ -324,9 +324,9 @@ const Places = [{
         'phone' : "+48-41-367-67-70"
         }, {'id' : 32343205347,
         'name' : "Pomnik Pamięci Kieleckiego Getta",
-        'pluralName' : "",
+        'polishName' : "Getto",
         'primary' : " ",
-        'shortName' : "Kielce Ghetto Monument",
+        'englishName' : "Monument for Victims of Ghetto",
         'hasPerk' :  " ",
         'img' : 'img/getto.jpg',
         'location' : {
@@ -344,9 +344,9 @@ const Places = [{
         'phone' : ""
         }, {'id' : 32432420545,
         'name' : "Świętokrzyski Urząd Wojewódski w Kielcach",
-        'pluralName' : "",
+        'polishName' : "Urząd Wojewódzki",
         'primary' : " ",
-        'shortName' : "Świętokrzyski Provincial Office in Kielce",
+        'englishName' : "Świętokrzyski Provincial Office in Kielce",
         'hasPerk' :  " ",
         'img' : 'img/urząd.jpg',
         'location' : {
@@ -364,9 +364,9 @@ const Places = [{
         'phone' : "+48-41-342-14-13"
         },{ 'id' : 342342564738,
         'name' : "Politechnika Świętokrzyska",
-        'pluralName' : "",
+        'polishName' : "Politechnika Świętokrzyska",
         'primary' : " ",
-        'shortName' : "Technical University in Kielce",
+        'englishName' : "Technical University in Kielce",
         'hasPerk' :  " ",
         'img' : 'img/Politechnika.jpg',
         'location' : {
@@ -384,9 +384,9 @@ const Places = [{
         'phone' : "+48-41-342-14-13"
         }, {'id' : 324545290567,
         'name' : "Kielecki Teatr Tańca",
-        'pluralName' : "",
+        'polishName' : "Kielecki Teatr Tańca",
         'primary' : " ",
-        'shortName' : "Kielce Dance Canter",
+        'englishName' : "Kielce Dance Canter",
         'hasPerk' :  " ",
         'img' : 'img/teatr_tanca.jpg',
         'location' : {
@@ -404,9 +404,9 @@ const Places = [{
         'phone' : "+48-41-367-67-12"
         },{ 'id' : 343243758943,
         'name' : "Fitness Club Tao",
-        'pluralName' : "Fitness Club Tao",
+        'polishName' : "Fitness Club Tao",
         'primary' : " ",
-        'shortName' : "",
+        'englishName' : "Fitness Club Tao",
         'hasPerk' :  " ",
         'img' : 'img/tao.jpg',
         'location' : {
