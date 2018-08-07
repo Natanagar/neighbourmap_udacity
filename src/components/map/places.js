@@ -222,7 +222,7 @@ const Places = [{
             'state' : "Europe" },
         'site' : "zeromski.mnki.pl",
         'phone' : "+48-41-344-57-92"
-        }, { 'id' : 342509852342,
+        }, { 'id' : 34250985234422,
         'name' : "Muzeum zabawek i zabawy",
         'polishName' : "Muzeum zabawek i zabawy",
         'primary' : " ",

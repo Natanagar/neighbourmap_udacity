@@ -6,15 +6,28 @@ class SearchBar extends Component {
     constructor(props){
         super(props);
     }
+
+    updateQuery = (query) =>{
+        this.setState({query : query})
+    }
+    state = {
+        query : ''
+    }
     render(){
         return(
             <div>
                 <Alert>
                     <InputGroup>
                         <InputGroupAddon addonType="prepend">
-                            <InputGroupText>Go to markers</InputGroupText>
+                            <InputGroupText className="bar" >Go to markers</InputGroupText>
                                 </InputGroupAddon>
-                                <Input placeholder="Seach"/>
+                                <Input 
+                                className='input' 
+                                type="text" 
+                                placeholder="Seach"
+                                value ={this.state.query}
+                                onChange ={(event) => {this.updateQuery(event.target.value)}} 
+                                />
                     </InputGroup>
                     <br/>
                 </Alert>            

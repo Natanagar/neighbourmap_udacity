@@ -10,3 +10,10 @@ body {
   background-color: #ecf9f2;
   font-style: italic;
 }
+.input{
+  font-size : 12px;
+  font-style : italic;
+}
+.bar{
+  font-size: 12px;
+}

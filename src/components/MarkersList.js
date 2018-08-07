@@ -6,8 +6,19 @@ import PropTypes from 'prop-types';
 
 
 
-const MarkersList = (props) =>{
-   //console.log(Places);
+class MarkersList extends Component{
+   constructor(props){
+    
+       super(props);
+       this.props = Places;   
+   }
+   
+   state= {
+    markers: [],
+    query : ''
+   }
+   render(){
+    
     return(
         <div>
             <Alert color="light">
@@ -33,6 +44,8 @@ const MarkersList = (props) =>{
             </Alert>            
         </div>
     )
+   }
+    
 }
 export default MarkersList;
 Alert.propTypes = {
