@@ -13,6 +13,9 @@ class SearchBar extends Component {
     state = {
         query: ''
     }
+    updateQuery = (query)=>{
+        this.setState({query : query})
+    }
     render(){
         return(
     
@@ -26,8 +29,8 @@ class SearchBar extends Component {
                                 className='input' 
                                 type="text" 
                                 placeholder="Seach"
-                                value ={this.props.query}
-                                onChange ={(event) => {this.props.onUpdate(event.target.value)}} 
+                                value ={this.state.query}
+                                onChange ={(event) => {this.updateQuery(event.target.value)}} 
                                 />
                     </InputGroup>
                     <br/>
