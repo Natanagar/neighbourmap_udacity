@@ -3,29 +3,21 @@ import { Alert } from 'reactstrap';
 import { InputGroup, InputGroupText, InputGroupAddon, Input } from 'reactstrap';
 import Places from './map/places';
 import PropTypes from 'prop-types';
-import escapeRegExp from 'escape-string-regexp';
-import sortBy from 'sort-by';
 
 
 
-class MarkersList extends Component{
+
+class MarkersList extends Component {
    constructor(props){
     
        super(props);
    }
    
-    update = (query) =>{
-        this.setState({query : query})
-    }
-    state = {
-        query : '',
-        places : []
-    }
-   
    render(){
-    const places =  this.props.showMarkers.listOfMarkers;
-   
+   console.log(this.props[0])
+   let places = this.props[0] 
     return(
+      
         <div>
             <Alert color="light">
                 <ol>

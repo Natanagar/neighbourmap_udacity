@@ -5,20 +5,11 @@ import PropTypes from 'prop-types';
 
 
 
-class SearchBar extends Component {
-    static propTypes = {
-        query: PropTypes.string.isRequired,
-        onUpdate: PropTypes.func.isRequired
-    }
-    state = {
-        query: ''
-    }
-    updateQuery = (query)=>{
-        this.setState({query : query})
-    }
-    render(){
+const SearchBar = (props) => {
+   // console.log(props)
+  
         return(
-    
+        
             <div>
                 <Alert>
                     <InputGroup>
@@ -28,9 +19,9 @@ class SearchBar extends Component {
                                 <Input 
                                 className='input' 
                                 type="text" 
-                                placeholder="Seach"
-                                value ={this.state.query}
-                                onChange ={(event) => {this.updateQuery(event.target.value)}} 
+                                value ={props.value}
+                                placeholder = "Search"
+                                onChange ={props.onHandleChange} 
                                 />
                     </InputGroup>
                     <br/>
@@ -38,5 +29,9 @@ class SearchBar extends Component {
             </div>
         )
     }
-} 
+ 
+SearchBar.propTypes = {
+    value: PropTypes.string.isRequired,
+    onHandleChange: PropTypes.func.isRequired
+}
 export default SearchBar;

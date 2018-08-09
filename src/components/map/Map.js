@@ -9,10 +9,7 @@ import Places from './places';
 class Map extends Component {
     constructor(props){
         super(props);
-    //state = {
-        //no state
-    //    }
-    //createRef()
+    
     this.myMapContainer = React.createRef()
     }
 
@@ -366,7 +363,7 @@ class Map extends Component {
    Places.map((place)=>{
     let title = place.name,
         image = place.img;
-        console.log(image)
+        
      //console.log(place.location.lat)
      //console.log(place.location.lng)
      //console.log(title)
@@ -383,7 +380,7 @@ class Map extends Component {
         });
         let position = {lat: place.location.lat, lng: place.location.lng};
         
-        console.log(position);
+      
         var marker = new google.maps.Marker({
           map: map,
           position: position,
