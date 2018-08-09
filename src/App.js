@@ -36,7 +36,9 @@ class App extends Component {
             />
           </Col>
           <Col ml="8" xl="8">
-            <Map />
+            <Map 
+            showInfoWindow={this.updateMarkers}
+            />
           </Col>
         </Row>
         <Row>

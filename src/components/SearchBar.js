@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 
 
 const SearchBar = (props) => {
-   // console.log(props)
   
         return(
         

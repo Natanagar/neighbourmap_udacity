@@ -14,7 +14,7 @@ class MarkersList extends Component {
    }
    
    render(){
-   console.log(this.props[0])
+   
    let places = this.props[0] 
     return(
       
@@ -26,7 +26,7 @@ class MarkersList extends Component {
                         return (
                         <li key={place.id}>
                             <div className="markerList"
-                                onUpdate={this.update}
+                                onClick={this.update}
                             style ={{
                                 borderStyle: "ridge",
                                 fontStyle: 'Bold',

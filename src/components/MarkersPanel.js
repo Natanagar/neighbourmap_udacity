@@ -32,11 +32,9 @@ onClearInput = () =>{
             foundedPlaces = this.props.listOfMarkers
         }
         
-        //const foundPlaces = this.props.listOfMarkers;
-        //console.log(foundPlaces)
         return(
             <div>
-                {JSON.stringify(this.state.value)}
+                
                 <Alert color="secondary">
                 
                     <SearchBar 
