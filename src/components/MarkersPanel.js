@@ -52,7 +52,7 @@ showInfowindow = (element)=> {
                     
                     />
                     <MarkersList
-                    showInfowindow = {this.showInfowindow(event.target)}
+                    showInfowindow = {this.showInfowindow}
                     {...[foundedPlaces]}
                     />
                 </Alert>

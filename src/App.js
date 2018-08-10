@@ -6,6 +6,7 @@ import { Container, Row, Col } from 'reactstrap';
 import Footer from './components/Footer';
 import Places from './components/map/places';
 import './App.css';
+import ErrorBoundary from './components/HandleError'
 
 
 class App extends Component {
@@ -35,10 +36,12 @@ class App extends Component {
             />
           </Col>
           <Col ml="8" xl="8">
-            <Map 
-            showInfoWindow={this.updateMarkers}
-            openInfoWindow={this.showInfoWindow.bind(this)}
-            />
+            <ErrorBoundary>
+              <Map 
+              showInfoWindow={this.updateMarkers}
+              openInfoWindow={this.showInfoWindow.bind(this)}
+              />
+            </ErrorBoundary>
           </Col>
         </Row>
         <Row>
