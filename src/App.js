@@ -12,7 +12,7 @@ import ErrorBoundary from './components/HandleError'
 class App extends Component {
   constructor(props){
     super(props)
-
+  
   }
   state ={
     Places : []
@@ -22,7 +22,7 @@ class App extends Component {
   }
   showInfowindow = (event)=> {
     console.log('yoyoy')
-    console.log(event.target)
+    console.log(event.target.innerHTML)
     //console.log(this.state.markers)
     //const marker = this.state.markers.find(el => el.id === element);        
     //new window.google.maps.event.trigger(marker, 'click');  
@@ -41,7 +41,7 @@ class App extends Component {
             <MarkersPanel 
             listOfMarkers={this.state.Places}
             changeMarkers={this.updateMarkers}
-            openInfoWindow={ (event)=>this.showInfoWindow(event) }
+            openInfoWindow={ (event) =>this.showInfowindow(event) }
             
             />
           </Col>
@@ -50,8 +50,7 @@ class App extends Component {
               <Map
               tabIndex="0" 
               aria-label="google map"
-              showInfoWindow={this.updateMarkers}
-              openInfoWindow={ (event)=>this.showInfoWindow(event) }
+              openInfoWindow={ (event) =>this.showInfowindow(event) }
               />
             </ErrorBoundary>
           </Col>

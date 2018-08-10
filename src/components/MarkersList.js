@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 
 const MarkersList = (props) =>{
-console.log(props)   
+console.log(props.showWindow)   
    let places = props[0] 
     return(
       
@@ -30,7 +30,7 @@ console.log(props)
                                 
                             }} >{place.name}
                             <div 
-                            onClick={(event) => props.showWindow(event)}
+                            onClick={(event)=>props.showWindow(event)}
                             >{place.englishName}</div>
                             </div>
                         </li>
