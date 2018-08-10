@@ -1,21 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Alert } from 'reactstrap';
-import { InputGroup, InputGroupText, InputGroupAddon, Input } from 'reactstrap';
-import Places from './map/places';
 import PropTypes from 'prop-types';
 
 
 
 
-class MarkersList extends Component {
-   constructor(props){
-    
-       super(props);
-   }
-   
-   render(){
-   
-   let places = this.props[0] 
+const MarkersList = (props) =>{
+console.log(props)   
+   let places = props[0] 
     return(
       
         <div>
@@ -26,7 +18,9 @@ class MarkersList extends Component {
                         return (
                         <li key={place.id}>
                             <div className="markerList"
-                                onClick={this.update}
+                                role={'menuitem'}
+                                tabIndex={'0'}
+                                onClick={props.showInfoWindow}
                             style ={{
                                 borderStyle: "ridge",
                                 fontStyle: 'Bold',
@@ -45,9 +39,9 @@ class MarkersList extends Component {
             </Alert>            
         </div>
     )
-   }
-    
 }
+    
+
 export default MarkersList;
 Alert.propTypes = {
     className: PropTypes.string,

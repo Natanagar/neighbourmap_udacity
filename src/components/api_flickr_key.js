@@ -88,3 +88,7 @@ markers - массив с элементами типа window.google.maps.Marke
 Людмила, 5:06 PM
  getInfo() дергаю из компонента с фильтром
 
+firebase url for downloading https://firebasestorage.googleapis.com/v0/b/neighboorhood-map-211813.appspot.com/o/places.json?alt=media&token=9a49ea5d-dea0-4b55-9e6b-798a12343e1e
+(places.json)
+идентификатор клиента 133958429733-cvdtf49rhg0f2ve2qor8d7va3q8i4gcd.apps.googleusercontent.com
+секрет вебклиента qagn0Yov61oyvR3WBi7MLFPj

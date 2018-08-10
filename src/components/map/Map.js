@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import './Map.css';
 import Places from './places';
 
@@ -12,12 +11,15 @@ class Map extends Component {
     
     this.myMapContainer = React.createRef()
     }
-
+    state = {
+      markers : []
+    }
+   
     componentDidMount(){
       const markers = [];
-    console.log(this.props)  
+    //console.log(this.props)  
       //console.log(Places);
-      //console.log (markers);
+    //console.log (markers);
         var styledMapType = new google.maps.StyledMapType(
             [
                 {
@@ -400,8 +402,11 @@ class Map extends Component {
       marker.addListener('click', function () {
         marker.setAnimation(null);
       });
+    this.setState({markers : markers});
+    
 
    })
+//console.log(markers)
 
 // This function takes in a COLOR, and then creates a new marker
 // icon of that color. The icon will be 21 px wide by 34 high, have an origin
@@ -418,11 +423,15 @@ class Map extends Component {
   }
     
 }
- 
+
 
     render(){
+      console.log(this.state.markers)
         return(
-            <div ref={this.myMapContainer} id="map" />
+            <div ref={this.myMapContainer} 
+            id="map" 
+            onClick={this.showMarkers}
+            />
         )
     }
 }

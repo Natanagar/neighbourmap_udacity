@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Alert } from 'reactstrap';
 import { InputGroup, InputGroupText, InputGroupAddon, Input } from 'reactstrap';
 import PropTypes from 'prop-types';

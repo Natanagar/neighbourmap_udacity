@@ -22,7 +22,14 @@ handleChange = (event, props)=>{
 onClearInput = () =>{
     this.setState({value: ''})
 }  
+showInfowindow = (element)=> {
+    console.log(this.state.markers)
+    //const marker = this.state.markers.find(el => el.id === element);        
+    //new window.google.maps.event.trigger(marker, 'click');  
+}
+
     render(){
+        
         let foundedPlaces
         if(this.state.value){
             const match = new RegExp(escapeRegExp(this.state.value, 'i'))
@@ -31,6 +38,7 @@ onClearInput = () =>{
         } else {
             foundedPlaces = this.props.listOfMarkers
         }
+        foundedPlaces.sort(sortBy('name'))
         
         return(
             <div>
@@ -43,7 +51,8 @@ onClearInput = () =>{
                     onClearInput={this.onClearInput}
                     
                     />
-                    <MarkersList 
+                    <MarkersList
+                    showInfowindow = {this.showInfowindow(event.target)}
                     {...[foundedPlaces]}
                     />
                 </Alert>

@@ -41,6 +41,20 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <!-- firebase-->
+    <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCbaC3VjeWiJMqqq_slli6ks9WMlhZkvhU",
+        authDomain: "neighboorhood-map-211813.firebaseapp.com",
+        databaseURL: "https://neighboorhood-map-211813.firebaseio.com",
+        projectId: "neighboorhood-map-211813",
+        storageBucket: "",
+        messagingSenderId: "133958429733"
+      };
+      firebase.initializeApp(config);
+    </script>
     <script async defer
      src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBw_PATjLS-V0nRAx6oaLL18CKhN9aRNrE">
     </script>
