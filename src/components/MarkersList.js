@@ -32,7 +32,7 @@ console.log(props.showWindow)
                                 
                             }} >{place.englishName}
                         
-                        
+                            <div>{place.name}</div>
                             </div>
                         </li>
                         );

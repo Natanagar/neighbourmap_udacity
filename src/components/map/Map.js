@@ -18,27 +18,23 @@ class Map extends Component {
     componentDidMount(){
       const markers = [];
     console.log(this.props)  
-      //console.log(Places);
-    //console.log (markers);
-
-        var styledMapType = new google.maps.StyledMapType(this.props.styleMap, {'name' : 'Styled Map'});
+  //create stylish map    
+  let styledMapType = new google.maps.StyledMapType(this.props.styleMap, {'name' : 'Styled Map'});
       
-        let map = new google.maps.Map(this.myMapContainer.current, this.props.optionMap)
+  let map = new google.maps.Map(this.myMapContainer.current, this.props.optionMap)
         map.mapTypes.set('styled_map', styledMapType);
         map.setMapTypeId('styled_map');
         
-      //type of icons in markers  
-    var defaultIcon = makeMarkerIcon('558000');
-    var highlightedIcon = makeMarkerIcon('FFFF24');
+  //type of icons in markers  
+  let defaultIcon = makeMarkerIcon('558000');
+  let highlightedIcon = makeMarkerIcon('FFFF24');
         
     //create list of markers
    Places.map((place)=>{
     let title = place.name,
-        image = place.img;
-        
-     //console.log(place.location.lat)
-     //console.log(place.location.lng)
-     //console.log(title)
+        image = place.img,
+        id = place.id;
+    //create infoWindow
      var infowindow = new google.maps.InfoWindow({
           content : `<div className="container" style ={{height : '125px'}}>
                       <h3>${title}</h3>
@@ -49,30 +45,32 @@ class Map extends Component {
         });
         let position = {lat: place.location.lat, lng: place.location.lng};
         
+  //create new Marker   
+  var marker = new google.maps.Marker({
+    map: map,
+    position: position,
+    title : title,
+    animation: google.maps.Animation.DROP,
+    icon: defaultIcon,
+    id: id
+  });
       
-        var marker = new google.maps.Marker({
-          map: map,
-          position: position,
-          title : title,
-          animation: google.maps.Animation.DROP,
-          icon: defaultIcon,
-          id: 1
-        });
-      markers.push(marker);
-      //open infowindow
-      marker.addListener('click', function() {
-        infowindow.open(map, marker);
-      });
-      google.maps.event.addListener(infowindow,'closeclick',function(){
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-      });
-      marker.addListener('click', function () {
-        marker.setAnimation(null);
-      });
-    this.setState({markers : markers});
-    
+  markers.push(marker);
+      
+  //open infowindow
+marker.addListener('click', function() {
+  infowindow.open(map, marker);
+});
 
-   })
+google.maps.event.addListener(infowindow,'closeclick',function(){
+  marker.setAnimation(google.maps.Animation.BOUNCE);
+});
+marker.addListener('click', function () {
+  marker.setAnimation(null);
+});
+  //add markers to state    
+  this.setState({markers : markers});
+})
 //console.log(markers)
 
 // This function takes in a COLOR, and then creates a new marker
@@ -93,7 +91,7 @@ class Map extends Component {
 
 
     render(){
-      //console.log(this.state.markers)
+      console.log(this.state.markers)
         return(
             <div ref={this.myMapContainer} 
             id="map" 
