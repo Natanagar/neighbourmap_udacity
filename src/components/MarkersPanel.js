@@ -8,7 +8,7 @@ import sortBy from 'sort-by';
 
 class MarkersPanel extends Component {
     constructor(props){
-        super(props);
+        super(props);    
     }
     state={
         value: '',
@@ -22,14 +22,10 @@ handleChange = (event, props)=>{
 onClearInput = () =>{
     this.setState({value: ''})
 }  
-showInfowindow = (element)=> {
-    console.log(this.state.markers)
-    //const marker = this.state.markers.find(el => el.id === element);        
-    //new window.google.maps.event.trigger(marker, 'click');  
-}
+
 
     render(){
-        
+        console.log(this.props)
         let foundedPlaces
         if(this.state.value){
             const match = new RegExp(escapeRegExp(this.state.value, 'i'))
@@ -52,7 +48,7 @@ showInfowindow = (element)=> {
                     
                     />
                     <MarkersList
-                    showInfowindow = {this.showInfowindow}
+                    showWindow = {(event)=>this.props.openInfowindow(event)}
                     {...[foundedPlaces]}
                     />
                 </Alert>

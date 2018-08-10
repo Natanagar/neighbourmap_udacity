@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './Map.css';
 import Places from './places';
-
- /* global google */
+/* global google */
+/*import { url } from 'inspector';*/
 
 
 class Map extends Component {
@@ -17,7 +17,7 @@ class Map extends Component {
    
     componentDidMount(){
       const markers = [];
-    //console.log(this.props)  
+    console.log(this.props)  
       //console.log(Places);
     //console.log (markers);
         var styledMapType = new google.maps.StyledMapType(
@@ -370,14 +370,11 @@ class Map extends Component {
      //console.log(place.location.lng)
      //console.log(title)
      var infowindow = new google.maps.InfoWindow({
-          content : `<div className="container" style ={{
-              height : '125px'
-          }}>
+          content : `<div className="container" style ={{height : '125px'}}>
                       <h3>${title}</h3>
                         <span>${place.site}</span>
                         <span>tel. ${place.phone}</span>
-                          <div><img src=${image} height = "100" width="100"></img>
-                          </div>
+                        <div><img src=${image} height = "100" width="300" alt=${title}></img></div>
                       </div>`
         });
         let position = {lat: place.location.lat, lng: place.location.lng};
@@ -420,17 +417,18 @@ class Map extends Component {
         new google.maps.Point(10, 34),
         new google.maps.Size(21,34));
     return markerImage;
-  }
+    }
     
 }
 
 
     render(){
-      console.log(this.state.markers)
+      //console.log(this.state.markers)
         return(
             <div ref={this.myMapContainer} 
             id="map" 
             onClick={this.showMarkers}
+            
             />
         )
     }

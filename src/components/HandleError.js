@@ -16,7 +16,7 @@ export default class ErrorBoundary extends Component {
                     <Row>
                      <Col ml="4" xl="4">
                          <Alert color="danger">
-                             We have an erro!
+                         Something went wrong!
                          </Alert>
                      </Col>
                      <Col ml="8" xl="8">

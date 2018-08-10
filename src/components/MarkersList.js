@@ -20,7 +20,8 @@ console.log(props)
                             <div className="markerList"
                                 role={'menuitem'}
                                 tabIndex={'0'}
-                                onClick={props.showInfoWindow}
+                               
+                                
                             style ={{
                                 borderStyle: "ridge",
                                 fontStyle: 'Bold',
@@ -28,8 +29,9 @@ console.log(props)
                                 fontSize: "13px"
                                 
                             }} >{place.name}
-                            <div>{place.englishName}</div>
-                            
+                            <div 
+                            onClick={(event) => props.showWindow(event)}
+                            >{place.englishName}</div>
                             </div>
                         </li>
                         );
