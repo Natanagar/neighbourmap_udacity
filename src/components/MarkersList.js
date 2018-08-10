@@ -16,7 +16,9 @@ console.log(props.showWindow)
                     {places.map((place) => {
             
                         return (
-                        <li key={place.id}>
+                        <li key={place.id}
+                            onClick={(event)=>props.showWindow(event)}
+                            >
                             <div className="markerList"
                                 role={'menuitem'}
                                 tabIndex={'0'}
@@ -28,10 +30,9 @@ console.log(props.showWindow)
                                 paddingLeft : "5px",
                                 fontSize: "13px"
                                 
-                            }} >{place.name}
-                            <div 
-                            onClick={(event)=>props.showWindow(event)}
-                            >{place.englishName}</div>
+                            }} >{place.englishName}
+                        
+                        
                             </div>
                         </li>
                         );
