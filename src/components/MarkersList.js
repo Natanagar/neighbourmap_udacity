@@ -16,13 +16,15 @@ const MarkersList = (props) =>{
                     {places.map((place) => {
             
                         return (
-                        <li key={place.id}
+                        <li iD={place.id} 
+                            key={place.id}
                             onClick={(event)=>props.showWindow(event)}
                             >
                             <div className="markerList"
                                 role={'menuitem'}
                                 tabIndex={'0'}
-                                id={place.id}
+                                
+                                
                                
                                 
                             style ={{
@@ -34,7 +36,7 @@ const MarkersList = (props) =>{
                             }} >{place.englishName}
                         
                             <div
-                            id={place.id}
+            
                             >{place.name}</div>
                             </div>
                         </li>

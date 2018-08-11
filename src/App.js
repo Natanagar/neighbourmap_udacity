@@ -369,11 +369,13 @@ class App extends Component {
 
  
   showInfowindow = (event, markers)=> {
-    //console.log('yoyoy')
-    console.log(event.target)
-    this.setState({
-      markers: this.state.markers
-    });
+    console.log('yoyoy')
+    console.log(event.currentTarget)
+    console.log(this.state.Places)
+   
+    //this.setState({
+    //  markers: this.state.markers
+    //});
     /*() => console.log(this.state.markers)*/
     //const marker = this.state.markers.find(el => el.id === element);        
     //new window.google.maps.event.trigger(marker, 'click');  

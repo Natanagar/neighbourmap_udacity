@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Map.css';
 import Places from './places';
+import axios from 'axios'
 /* global google */
 /*import { url } from 'inspector';*/
 
@@ -30,18 +31,22 @@ class Map extends Component {
   }
   fetchDataFromFlickr = ()=> {
     let flickrKey = `8eea6e08f3cf6c850184fa8eebf05893`,
-    url = `https://www.flickr.com/services/oauth/request_token`,
+    url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrKey}text=%E7%8C%AB&per_page=5&page=1&format=rest&api_sig=9f1beab3f0da8f620e197104eb81aa2a`,
     flickrSecret = `503f32d3c226e73f`;
     fetch(url)
+      .then(reponse=>{
+
+      })
+      .catch(alert);
   }  
 
     componentDidMount() {
       const markers = [];
     
   //create stylish map    
-  let styledMapType = new google.maps.StyledMapType(this.props.styleMap, {'name' : 'Styled Map'});
+  let styledMapType = new window.google.maps.StyledMapType(this.props.styleMap, {'name' : 'Styled Map'});
       
-  let map = new google.maps.Map(this.myMapContainer.current, this.props.optionMap)
+  let map = new window.google.maps.Map(this.myMapContainer.current, this.props.optionMap)
         map.mapTypes.set('styled_map', styledMapType);
         map.setMapTypeId('styled_map');
         
@@ -55,18 +60,18 @@ class Map extends Component {
         image = place.img,
         id = place.id;
     //create infoWindow
-     var infowindow = new google.maps.InfoWindow({
+     var infowindow = new window.google.maps.InfoWindow({
           content : `<div className="container" style ={{height : '325px'}}>
                       <h3>${title}</h3>
                         <span>${place.site}</span>
                         <span>tel. ${place.phone}</span>
-                        <div><img src=${image} height = "100" width="100" alt=${title}></img></div>
+                        <div><img src={require(${image})} height = "100" width="100" alt=${title}></img></div>
                       </div>`
         });
         let position = {lat: place.location.lat, lng: place.location.lng};
         
   //create new Marker   
-  var marker = new google.maps.Marker({
+  var marker = new window.google.maps.Marker({
     map: map,
     position: position,
     title : title,
@@ -82,7 +87,7 @@ marker.addListener('click', function() {
   infowindow.open(map, marker);
 });
 
-google.maps.event.addListener(infowindow,'closeclick',function(){
+window.google.maps.event.addListener(infowindow,'closeclick',function(){
   marker.setAnimation(google.maps.Animation.BOUNCE);
 });
 marker.addListener('click', function () {
@@ -108,6 +113,18 @@ console.log(markers)
         new google.maps.Size(21,34));
     return markerImage;
     }
+
+  //fetch to flickr
+  axios.get("https://api.flickr.com/services/feeds/photos_public.gne?tags=kitten&format=json&nojsoncallback=true") 
+  .then((response) => {
+    console.log(response.data.items);
+    this.setState({
+        items: response.data.items
+    })
+  })
+  .catch((err) => {
+  console.log(err)
+  })
     
 }
 
