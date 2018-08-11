@@ -93,3 +93,4 @@ firebase url for downloading https://firebasestorage.googleapis.com/v0/b/neighbo
 идентификатор клиента 133958429733-cvdtf49rhg0f2ve2qor8d7va3q8i4gcd.apps.googleusercontent.com
 секрет вебклиента qagn0Yov61oyvR3WBi7MLFPj
 <img src=${image} height = "100" width="100"></img>
+onClick={this.showMarkers} 

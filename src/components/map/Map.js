@@ -14,10 +14,30 @@ class Map extends Component {
     state = {
       markers : []
     }
-   
-    componentDidMount(){
+
+  //Set timeout to check if the Map is loaded
+  checkTheMapIsLoaded = (timer) => {
+    this.refs.mapContainer.innerHTML = '<div class="message">Trying to load GoogleMap, please wait...</div>';
+    let timeout = timer || 5000;
+
+    window.gm_authFailure = (error)=> {
+      console.log(`error ${error}`)
+      alert(`Couldn't load the Google Map. Check your internet connection`);
+    } 
+  }
+  getMarkers = (markers)=>{
+    this.props.openInfoWindow(this.state.markers)
+  }
+  fetchDataFromFlickr = ()=> {
+    let flickrKey = `8eea6e08f3cf6c850184fa8eebf05893`,
+    url = `https://www.flickr.com/services/oauth/request_token`,
+    flickrSecret = `503f32d3c226e73f`;
+    fetch(url)
+  }  
+
+    componentDidMount() {
       const markers = [];
-    console.log(this.props)  
+    
   //create stylish map    
   let styledMapType = new google.maps.StyledMapType(this.props.styleMap, {'name' : 'Styled Map'});
       
@@ -36,11 +56,11 @@ class Map extends Component {
         id = place.id;
     //create infoWindow
      var infowindow = new google.maps.InfoWindow({
-          content : `<div className="container" style ={{height : '125px'}}>
+          content : `<div className="container" style ={{height : '325px'}}>
                       <h3>${title}</h3>
                         <span>${place.site}</span>
                         <span>tel. ${place.phone}</span>
-                        <div><img src=${image} height = "100" width="300" alt=${title}></img></div>
+                        <div><img src=${image} height = "100" width="100" alt=${title}></img></div>
                       </div>`
         });
         let position = {lat: place.location.lat, lng: place.location.lng};
@@ -68,11 +88,13 @@ google.maps.event.addListener(infowindow,'closeclick',function(){
 marker.addListener('click', function () {
   marker.setAnimation(null);
 });
-  //add markers to state    
+  //add markers to state 
+    
   this.setState({markers : markers});
+  
 })
-//console.log(markers)
-
+console.log(markers)
+ 
 // This function takes in a COLOR, and then creates a new marker
 // icon of that color. The icon will be 21 px wide by 34 high, have an origin
 // of 0, 0 and be anchored at 10, 34).
@@ -91,12 +113,13 @@ marker.addListener('click', function () {
 
 
     render(){
-      console.log(this.state.markers)
+      //console.log(this.props.openInfoWindow)
+      //console.log(this.state.markers)
         return(
             <div ref={this.myMapContainer} 
             id="map" 
-            onClick={this.showMarkers}
-            
+            onClick={this.props.openInfoWindow(this.state.markers)} 
+            getMarkers={this.getMarkers.bind(this)}
             />
         )
     }

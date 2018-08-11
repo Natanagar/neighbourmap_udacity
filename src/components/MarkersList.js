@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 
 const MarkersList = (props) =>{
-console.log(props.showWindow)   
+//console.log(props.showWindow)   
    let places = props[0] 
     return(
       
@@ -22,6 +22,7 @@ console.log(props.showWindow)
                             <div className="markerList"
                                 role={'menuitem'}
                                 tabIndex={'0'}
+                                id={place.id}
                                
                                 
                             style ={{
@@ -32,7 +33,9 @@ console.log(props.showWindow)
                                 
                             }} >{place.englishName}
                         
-                            <div>{place.name}</div>
+                            <div
+                            id={place.id}
+                            >{place.name}</div>
                             </div>
                         </li>
                         );

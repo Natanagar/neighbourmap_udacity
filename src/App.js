@@ -15,6 +15,7 @@ class App extends Component {
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
   state ={
+    markers : [],
     width : 0,
     height : 0,
     Places : [],
@@ -366,17 +367,21 @@ class App extends Component {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
   } 
 
-  showInfowindow = (event)=> {
-    console.log('yoyoy')
-    console.log(event.target.innerHTML)
-    //console.log(this.state.markers)
+ 
+  showInfowindow = (event, markers)=> {
+    //console.log('yoyoy')
+    console.log(event.target)
+    this.setState({
+      markers: this.state.markers
+    });
+    /*() => console.log(this.state.markers)*/
     //const marker = this.state.markers.find(el => el.id === element);        
     //new window.google.maps.event.trigger(marker, 'click');  
 }
   
   render() {
-    console.log(this.state.width)
-    console.log(this.state.height)
+    //console.log(this.state.width)
+    //console.log(this.state.height)
     return (
       <Container className="App">
         <Row>
@@ -396,6 +401,7 @@ class App extends Component {
           <Col ml="8" xl="8">
             <ErrorBoundary>
               <Map
+              markers={this.state.markers}
               map={this.state.map}
               optionMap = {this.state.optionMap}
               styleMap={this.state.styleMap}
