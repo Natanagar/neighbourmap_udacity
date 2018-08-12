@@ -368,9 +368,10 @@ class App extends Component {
   } 
 
  
-  showInfowindow = (event, markers)=> {
+  showInfowindow = (event)=> {
     console.log('yoyoy')
     console.log(event.currentTarget)
+    //console.log(event.currentTarget.getAttribute('id'))
     console.log(this.state.Places)
    
     //this.setState({
@@ -396,7 +397,7 @@ class App extends Component {
             <MarkersPanel 
             listOfMarkers={this.state.Places}
             changeMarkers={this.updateMarkers}
-            openInfoWindow={ (event) =>this.showInfowindow(event) }
+            openInfoWindow={ this.showInfowindow }
             
             />
           </Col>
@@ -409,7 +410,7 @@ class App extends Component {
               styleMap={this.state.styleMap}
               tabIndex="0" 
               aria-label="google map"
-              openInfoWindow={ (event) =>this.showInfowindow(event) }
+              openInfoWindow={ this.showInfowindow }
               />
             </ErrorBoundary>
           </Col>

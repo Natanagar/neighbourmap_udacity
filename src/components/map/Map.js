@@ -15,6 +15,10 @@ class Map extends Component {
     state = {
       markers : []
     }
+  componentDidMount(){
+    this.sendRequestToTheFlickrAPI();
+    //add photo to InfoWindow
+  }
 
   //Set timeout to check if the Map is loaded
   checkTheMapIsLoaded = (timer) => {
@@ -114,17 +118,48 @@ console.log(markers)
     return markerImage;
     }
 
+  getPhotosFromFlickr = () => {
+    const pic = responseJSONpihotos.filter(photo => (photo.ispublic) & !(photo.isfamily) & !(photoisfriend))[0]
+        return {
+            imgSource: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_n.jpg`,
+            author: `http://www.flickr.com/photos/${photo.owner}/${photo.id}`
+        }
+    }
+  }  
+
   //fetch to flickr
-  axios.get("https://api.flickr.com/services/feeds/photos_public.gne?tags=kitten&format=json&nojsoncallback=true") 
+  sendRequestToTheFlickrAPI(){
+    const api_key = `8eea6e08f3cf6c850184fa8eebf05893`,
+  requestFormat = 'rest',
+  method = 'flickr.photos.search',
+  sort = 'relevance',
+  limit = 1,
+  format = 'json',
+  callback = 'nojsoncallback=1'
+  url = `https://api.flickr.com/services/${requestFormat}/?api_key=${api_key}&method=${method}&sort=${sort}&format=${format}&per_page=${limit}&${callback}`;
+  axios.get(url) 
   .then((response) => {
-    console.log(response.data.items);
-    this.setState({
-        items: response.data.items
-    })
-  })
-  .catch((err) => {
-  console.log(err)
-  })
+    if(response.status !== 200){
+      if(response.status === 400){
+          alert("Foursquare authorization failed")
+      } else {
+          alert("Sorry , something is  broken");
+      } 
+    } else {
+        response.json().then((data) => {
+            if(data.photos.total === "0"){
+              throw new Error('Empty response');
+            }
+        return this.getPhotosFromFlickr(data.photos.photo)
+        });
+      }
+    }
+  )
+  .catch((error) => {
+        console.log(error)
+  });
+  }
+  
     
 }
 
