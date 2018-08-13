@@ -23,7 +23,7 @@ const Footer = () => {
                     <Col ml="8" xl="6">
                         <Media body>
                             <Media heading>
-                            <h4>Neibourhood Map</h4>
+                                Neibourhood Map
                             </Media>
                                 This is education project. Powered by Flickr and GoogleMaps API.
                         </Media>

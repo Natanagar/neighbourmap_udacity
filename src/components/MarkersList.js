@@ -16,7 +16,7 @@ const MarkersList = (props) =>{
                     {places.map((place) => {
             
                         return (
-                        <li iD={place.id} 
+                        <li id={place.id} 
                             key={place.id}
                             onClick={(event)=>props.showWindow(event)}
                             >

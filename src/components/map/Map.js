@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Map.css';
 import Places from './places';
-import axios from 'axios'
+import axios from 'axios';
 /* global google */
 /*import { url } from 'inspector';*/
 
@@ -15,10 +15,6 @@ class Map extends Component {
     state = {
       markers : []
     }
-  componentDidMount(){
-    this.sendRequestToTheFlickrAPI();
-    //add photo to InfoWindow
-  }
 
   //Set timeout to check if the Map is loaded
   checkTheMapIsLoaded = (timer) => {
@@ -30,27 +26,38 @@ class Map extends Component {
       alert(`Couldn't load the Google Map. Check your internet connection`);
     } 
   }
-  getMarkers = (markers)=>{
-    this.props.openInfoWindow(this.state.markers)
+  getMarkers1 = (markers)=>{
+     this.props.openInfoWindow(this.state.markers)
   }
   fetchDataFromFlickr = ()=> {
-    let flickrKey = `8eea6e08f3cf6c850184fa8eebf05893`,
-    url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrKey}text=%E7%8C%AB&per_page=5&page=1&format=rest&api_sig=9f1beab3f0da8f620e197104eb81aa2a`,
-    flickrSecret = `503f32d3c226e73f`;
-    fetch(url)
-      .then(reponse=>{
+    let flickrProperties = {
+      api_key : `51bcd20ecdbb552106279fb88e806ee8`,
+      format : `json`,
+      method : `flickr.photos.search`,
+      lat : this.lat,
+      lon : this.lng,
+      radius : 5,
 
+    };
+    console.log(flickrProperties.api_key);
+    const url = `https://api.flickr.com/services/rest/?method=${flickrProperties.method}&api_key=${flickrProperties.api_key}
+    &lat=${flickrProperties.lat}&lon=${flickrProperties.lon}&radius=${flickrProperties.radius}&format=${flickrProperties.format}&
+    nojsoncallback=1&api_sig=06e5b87b66973167e7e0fdc55c9021ca`;
+    axios.get(url)
+      .then(response =>{
+        if (response.status === "200")
+        let photos = response.json();
+        return photos;
       })
-      .catch(alert);
-  }  
+  }; 
 
     componentDidMount() {
       const markers = [];
     
   //create stylish map    
-  let styledMapType = new window.google.maps.StyledMapType(this.props.styleMap, {'name' : 'Styled Map'});
+  let styledMapType = new google.maps.StyledMapType(this.props.styleMap, {'name' : 'Styled Map'});
       
-  let map = new window.google.maps.Map(this.myMapContainer.current, this.props.optionMap)
+  let map = new google.maps.Map(this.myMapContainer.current, this.props.optionMap)
         map.mapTypes.set('styled_map', styledMapType);
         map.setMapTypeId('styled_map');
         
@@ -64,18 +71,20 @@ class Map extends Component {
         image = place.img,
         id = place.id;
     //create infoWindow
-     var infowindow = new window.google.maps.InfoWindow({
+     var infowindow = new google.maps.InfoWindow({
           content : `<div className="container" style ={{height : '325px'}}>
                       <h3>${title}</h3>
                         <span>${place.site}</span>
                         <span>tel. ${place.phone}</span>
-                        <div><img src={require(${image})} height = "100" width="100" alt=${title}></img></div>
+                        <div><img src=${image} height = "100" width="100" alt=${title}></img></div>
                       </div>`
         });
         let position = {lat: place.location.lat, lng: place.location.lng};
+
+  console.log(place.location.lat, place.location.lng);
         
   //create new Marker   
-  var marker = new window.google.maps.Marker({
+  var marker = new google.maps.Marker({
     map: map,
     position: position,
     title : title,
@@ -83,7 +92,7 @@ class Map extends Component {
     icon: defaultIcon,
     id: id
   });
-      
+ this.fetchDataFromFlickr(lat=place.location.lat, lon=place.location.lng);    
   markers.push(marker);
       
   //open infowindow
@@ -91,7 +100,7 @@ marker.addListener('click', function() {
   infowindow.open(map, marker);
 });
 
-window.google.maps.event.addListener(infowindow,'closeclick',function(){
+google.maps.event.addListener(infowindow,'closeclick',function(){
   marker.setAnimation(google.maps.Animation.BOUNCE);
 });
 marker.addListener('click', function () {
@@ -117,49 +126,6 @@ console.log(markers)
         new google.maps.Size(21,34));
     return markerImage;
     }
-
-  getPhotosFromFlickr = () => {
-    const pic = responseJSONpihotos.filter(photo => (photo.ispublic) & !(photo.isfamily) & !(photoisfriend))[0]
-        return {
-            imgSource: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_n.jpg`,
-            author: `http://www.flickr.com/photos/${photo.owner}/${photo.id}`
-        }
-    }
-  }  
-
-  //fetch to flickr
-  sendRequestToTheFlickrAPI(){
-    const api_key = `8eea6e08f3cf6c850184fa8eebf05893`,
-  requestFormat = 'rest',
-  method = 'flickr.photos.search',
-  sort = 'relevance',
-  limit = 1,
-  format = 'json',
-  callback = 'nojsoncallback=1'
-  url = `https://api.flickr.com/services/${requestFormat}/?api_key=${api_key}&method=${method}&sort=${sort}&format=${format}&per_page=${limit}&${callback}`;
-  axios.get(url) 
-  .then((response) => {
-    if(response.status !== 200){
-      if(response.status === 400){
-          alert("Foursquare authorization failed")
-      } else {
-          alert("Sorry , something is  broken");
-      } 
-    } else {
-        response.json().then((data) => {
-            if(data.photos.total === "0"){
-              throw new Error('Empty response');
-            }
-        return this.getPhotosFromFlickr(data.photos.photo)
-        });
-      }
-    }
-  )
-  .catch((error) => {
-        console.log(error)
-  });
-  }
-  
     
 }
 
@@ -171,7 +137,7 @@ console.log(markers)
             <div ref={this.myMapContainer} 
             id="map" 
             onClick={this.props.openInfoWindow(this.state.markers)} 
-            getMarkers={this.getMarkers.bind(this)}
+            getMarkers={this.getMarkers}
             />
         )
     }
