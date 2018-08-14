@@ -94,3 +94,8 @@ firebase url for downloading https://firebasestorage.googleapis.com/v0/b/neighbo
 секрет вебклиента qagn0Yov61oyvR3WBi7MLFPj
 <img src=${image} height = "100" width="100"></img>
 onClick={this.showMarkers} 
+
+//uthentification flickr
+{ "auth": { 
+  "access_token": { "oauth_token": "72157672314813888-2eb099b623451c1b", "oauth_token_secret": "a32a10f14eda308b" } }, "stat": "ok" }
+

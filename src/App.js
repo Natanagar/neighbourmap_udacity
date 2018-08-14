@@ -16,6 +16,7 @@ class App extends Component {
   }
   state ={
     markers : [],
+    infoWindow : [],
     width : 0,
     height : 0,
     Places : [],
@@ -369,10 +370,9 @@ class App extends Component {
 
  
   showInfowindow = (event)=> {
-    console.log('yoyoy')
-    console.log(event.currentTarget)
-    //console.log(event.currentTarget.getAttribute('id'))
-    console.log(this.state.Places)
+    //console.log('yoyoy');
+    console.log(event.currentTarget);
+    console.log(this.state.Places);
    
     //this.setState({
     //  markers: this.state.markers
@@ -383,6 +383,7 @@ class App extends Component {
 }
   
   render() {
+
     //console.log(this.state.width)
     //console.log(this.state.height)
     return (

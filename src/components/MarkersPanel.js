@@ -25,7 +25,7 @@ onClearInput = () =>{
 
 
     render(){
-        console.log(this.props.openInfoWindow)
+       
         let foundedPlaces
         if(this.state.value){
             const match = new RegExp(escapeRegExp(this.state.value, 'i'))

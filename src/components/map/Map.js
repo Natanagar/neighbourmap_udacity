@@ -29,24 +29,31 @@ class Map extends Component {
   getMarkers1 = (markers)=>{
      this.props.openInfoWindow(this.state.markers)
   }
-  fetchDataFromFlickr = ()=> {
+
+  //authentification user flickr
+  
+  fetchDataFromFlickr = (lat, lon)=> {
     let flickrProperties = {
-      api_key : `51bcd20ecdbb552106279fb88e806ee8`,
+      api_key : `e38a8998dd272cf5787d1cbc9cff28b4 `,
       format : `json`,
       method : `flickr.photos.search`,
-      lat : this.lat,
-      lon : this.lng,
+      lat : 50.865228,
+      lon : 20.626127,
       radius : 5,
-
     };
-    console.log(flickrProperties.lat);
-    console.log(flickrProperties.lon);
-    const url = `https://api.flickr.com/services/rest/?method=${flickrProperties.method}&api_key=${flickrProperties.api_key}
-    &lat=${flickrProperties.lat}&lon=${flickrProperties.lon}&radius=${flickrProperties.radius}&format=${flickrProperties.format}&
-    nojsoncallback=1&api_sig=06e5b87b66973167e7e0fdc55c9021ca`;
-    axios.get(url)
-      .then(response => response.json())
-        .then(response => console.log(response));
+    let myHeaders = new Headers({
+      "Access-Control-Allow-Origin": '*'
+    });
+
+    const url = ` https://api.flickr.com/services/rest/?method=flickr.photos.search&
+    api_key=${flickrProperties.api_key}&
+    lat=${flickrProperties.lat}0&lon=${flickrProperties.lon}&radius=${flickrProperties.radius}&format=${flickrProperties.format}
+    &nojsoncallback=1&api_sig=71306b26663cf9b45806ec963674b74d`;
+    console.log(url);
+    
+    axios.get(url, myHeaders)
+      .then(response => console.log(response.data))  
+        //.then(data => console.log(data));
         //if (response.status === "200")
        // let photos = response.json();
        // return photos;
@@ -69,14 +76,14 @@ class Map extends Component {
 
     componentDidMount(){
       const markers = [];
-
-  this.checkConnection();
+  
+      this.checkConnection();
   //this.addGoogleMapsScriptToPage();
     
   //create stylish map    
-  let styledMapType = new google.maps.StyledMapType(this.props.styleMap, {'name' : 'Styled Map'});
+  let styledMapType = new window.google.maps.StyledMapType(this.props.styleMap, {'name' : 'Styled Map'});
       
-  let map = new google.maps.Map(this.myMapContainer.current, this.props.optionMap)
+  let map = new window.google.maps.Map(this.myMapContainer.current, this.props.optionMap)
         map.mapTypes.set('styled_map', styledMapType);
         map.setMapTypeId('styled_map');
         
@@ -88,9 +95,12 @@ class Map extends Component {
         
     //create list of markers
    Places.map((place)=>{
+   
     let title = place.name,
         image = place.img,
-        id = place.id;
+        id = place.id,
+        lat = place.location.lat,
+        lng = place.location.lng;
     //create infoWindow
      var infowindow = new google.maps.InfoWindow({
           content : `<div className="container" style ={{height : '325px'}}>
@@ -102,7 +112,8 @@ class Map extends Component {
         });
         let position = {lat: place.location.lat, lng: place.location.lng};
 
-  console.log(place.location.lat, place.location.lng);
+
+  this.fetchDataFromFlickr(lat, lng); 
         
   //create new Marker   
   var marker = new google.maps.Marker({
@@ -113,7 +124,7 @@ class Map extends Component {
     icon: defaultIcon,
     id: id
   });
- this.fetchDataFromFlickr(place.location.lat, place.location.lng);    
+    
   markers.push(marker);
       
   //open infowindow
@@ -132,7 +143,7 @@ marker.addListener('click', function () {
   this.setState({markers : markers});
   
 })
-console.log(markers)
+//console.log(markers)
  
 // This function takes in a COLOR, and then creates a new marker
 // icon of that color. The icon will be 21 px wide by 34 high, have an origin
@@ -153,7 +164,7 @@ console.log(markers)
 
     render(){
 
-      //console.log(this.props.openInfoWindow)
+      console.log(this.props)
       //console.log(this.state.markers)
         return(
             <div ref={this.myMapContainer} 
