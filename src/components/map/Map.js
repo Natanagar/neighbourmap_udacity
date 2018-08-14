@@ -39,20 +39,39 @@ class Map extends Component {
       radius : 5,
 
     };
-    console.log(flickrProperties.api_key);
+    console.log(flickrProperties.lat);
+    console.log(flickrProperties.lon);
     const url = `https://api.flickr.com/services/rest/?method=${flickrProperties.method}&api_key=${flickrProperties.api_key}
     &lat=${flickrProperties.lat}&lon=${flickrProperties.lon}&radius=${flickrProperties.radius}&format=${flickrProperties.format}&
     nojsoncallback=1&api_sig=06e5b87b66973167e7e0fdc55c9021ca`;
     axios.get(url)
-      .then(response =>{
-        if (response.status === "200")
-        let photos = response.json();
-        return photos;
-      })
+      .then(response => response.json())
+        .then(response => console.log(response));
+        //if (response.status === "200")
+       // let photos = response.json();
+       // return photos;
+      
   }; 
+  checkConnection(){
+    if(!navigator.onLine) {
+      alert('Check your internet connection');
+    }
+  }
+  addGoogleMapsScriptToPage(){
+    let google_key = 'AIzaSyDk1ofIQBQEDmSeVrt1PU0FmokyLWp2KvQ';
+    let script = document.createElement('script');
+    script.src = "https://maps.googleapis.com/maps/api/js?v=3&key=${google_key}"
+    script.async = true;
+    script.defer = true;
+    console.log(script);
+    document.body.appendChild(script);
+  }
 
-    componentDidMount() {
+    componentDidMount(){
       const markers = [];
+
+  this.checkConnection();
+  //this.addGoogleMapsScriptToPage();
     
   //create stylish map    
   let styledMapType = new google.maps.StyledMapType(this.props.styleMap, {'name' : 'Styled Map'});
@@ -64,6 +83,8 @@ class Map extends Component {
   //type of icons in markers  
   let defaultIcon = makeMarkerIcon('558000');
   let highlightedIcon = makeMarkerIcon('FFFF24');
+
+  
         
     //create list of markers
    Places.map((place)=>{
@@ -92,7 +113,7 @@ class Map extends Component {
     icon: defaultIcon,
     id: id
   });
- this.fetchDataFromFlickr(lat=place.location.lat, lon=place.location.lng);    
+ this.fetchDataFromFlickr(place.location.lat, place.location.lng);    
   markers.push(marker);
       
   //open infowindow
@@ -131,6 +152,7 @@ console.log(markers)
 
 
     render(){
+
       //console.log(this.props.openInfoWindow)
       //console.log(this.state.markers)
         return(
