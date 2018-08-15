@@ -30,11 +30,20 @@ class Map extends Component {
      this.props.openInfoWindow(this.state.markers)
   }
 
+  
+  getPicsFromFlickr(array){
+    let photo = this.getPicsFromFlickr.filter(pic => pic.ispublic & !(pic.isfamily) & !(pic.isfriend))[0]
+    return {
+      imgSource: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_n.jpg`,
+      author: `http://www.flickr.com/photos/${photo.owner}/${photo.id}`
+    }
+  }
+  
   //authentification user flickr
   
   fetchDataFromFlickr = (lat, lon)=> {
     let flickrProperties = {
-      api_key : `e38a8998dd272cf5787d1cbc9cff28b4 `,
+      api_key : `8eea6e08f3cf6c850184fa8eebf05893`,
       format : `json`,
       method : `flickr.photos.search`,
       lat : 50.865228,
@@ -42,21 +51,36 @@ class Map extends Component {
       radius : 5,
     };
     let myHeaders = new Headers({
-      "Access-Control-Allow-Origin": '*'
+      "Access-Control-Allow-Origin":  '*'
     });
 
-    const url = ` https://api.flickr.com/services/rest/?method=flickr.photos.search&
-    api_key=${flickrProperties.api_key}&
-    lat=${flickrProperties.lat}0&lon=${flickrProperties.lon}&radius=${flickrProperties.radius}&format=${flickrProperties.format}
-    &nojsoncallback=1&api_sig=71306b26663cf9b45806ec963674b74d`;
+    const url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=e48f0c07d0b08d84074e64950867468a&lat=50.761190&lon=20.626127&radius=5&format=json&nojsoncallback=1`;
     console.log(url);
     
-    axios.get(url, myHeaders)
-      .then(response => console.log(response.data))  
-        //.then(data => console.log(data));
-        //if (response.status === "200")
-       // let photos = response.json();
-       // return photos;
+    axios.get(url)
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+          return response;
+      } else {
+          let error = new Error(response.statusText);
+          error.response = response;
+          throw error
+      }
+      })
+      .then((response) => {
+      if (response.headers['content-type'] !== 'application/json') {
+          let error = new Error('Некорректный ответ от сервера');
+          error.response = response;
+          throw error
+      }
+      return response.data;
+      })
+      .then((json) => {
+      console.log(json.photos.photo);
+      })
+      .catch((error) => {
+       console.log(error);
+  });
       
   }; 
   checkConnection(){
