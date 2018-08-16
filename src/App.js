@@ -13,10 +13,10 @@ class App extends Component {
   constructor(props){
     super(props)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-  }
-  state ={
+  } 
+  state = {
     markers : [],
-    infoWindow : [],
+    openWindow : [],
     width : 0,
     height : 0,
     Places : [],
@@ -351,7 +351,7 @@ class App extends Component {
       zoom : 14,
       mapTypeControl: false
     },
-    //map : false
+    map : false
   
   }
   componentDidMount() {
@@ -370,9 +370,9 @@ class App extends Component {
 
  
   showInfowindow = (event)=> {
-    //console.log('yoyoy');
-    console.log(event.currentTarget);
-    console.log(this.state.Places);
+    console.log('yoyoy');
+    console.log(event.currentTarget.id);
+    
    
     //this.setState({
     //  markers: this.state.markers
@@ -384,7 +384,7 @@ class App extends Component {
   
   render() {
 
-    //console.log(this.state.width)
+    //console.log(this.state)
     //console.log(this.state.height)
     return (
       <Container className="App">
@@ -399,19 +399,23 @@ class App extends Component {
             listOfMarkers={this.state.Places}
             changeMarkers={this.updateMarkers}
             openInfoWindow={ this.showInfowindow }
-            
+           
             />
           </Col>
           <Col ml="8" xl="8">
+            
             <ErrorBoundary>
               <Map
               markers={this.state.markers}
               map={this.state.map}
               optionMap = {this.state.optionMap}
               styleMap={this.state.styleMap}
+              markers={this.state.markers}
+              infoWindow={this.state.openWindow}
+              places={this.state.Places}
               tabIndex="0" 
               aria-label="google map"
-              openInfoWindow={ this.showInfowindow }
+              openInfoWindow={event => this.showInfowindow }
               />
             </ErrorBoundary>
           </Col>

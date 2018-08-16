@@ -8,13 +8,14 @@ import sortBy from 'sort-by';
 
 class MarkersPanel extends Component {
     constructor(props){
-        super(props);    
+        super(props);
+       
+        
     }
-    state={
+    state = {
         value: '',
         places : []
     }
-
 
 handleChange = (event, props)=>{
         this.setState({value: event.target.value.substr(0,20)})

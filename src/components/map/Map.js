@@ -7,56 +7,26 @@ import axios from 'axios';
 
 
 class Map extends Component {
-    constructor(props){
-        super(props);
-    
+  constructor(props) {
+    super(props);
+
     this.myMapContainer = React.createRef()
-    }
-    state = {
-      markers : []
-    }
-
-  //Set timeout to check if the Map is loaded
-  checkTheMapIsLoaded = (timer) => {
-    this.refs.mapContainer.innerHTML = '<div class="message">Trying to load GoogleMap, please wait...</div>';
-    let timeout = timer || 5000;
-
-    window.gm_authFailure = (error)=> {
-      console.log(`error ${error}`)
-      alert(`Couldn't load the Google Map. Check your internet connection`);
-    } 
   }
-  getMarkers1 = (markers)=>{
-     this.props.openInfoWindow(this.state.markers)
-  }
-
-  
-  getPicsFromFlickr(array){
-    let photo = this.getPicsFromFlickr.filter(pic => pic.ispublic & !(pic.isfamily) & !(pic.isfriend))[0]
-    return {
-      imgSource: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_n.jpg`,
-      author: `http://www.flickr.com/photos/${photo.owner}/${photo.id}`
-    }
+  state = {
+    markers: []
   }
   
   //authentification user flickr
-  
   fetchDataFromFlickr = (lat, lon)=> {
     let flickrProperties = {
-      api_key : `8eea6e08f3cf6c850184fa8eebf05893`,
+      apikey : `c9351625e1f32762afe260a1a6d8f28d`,
       format : `json`,
       method : `flickr.photos.search`,
-      lat : 50.865228,
-      lon : 20.626127,
       radius : 5,
     };
-    let myHeaders = new Headers({
-      "Access-Control-Allow-Origin":  '*'
-    });
+    const url = `https://api.flickr.com/services/rest/?method=${flickrProperties.method}&api_key=e73b2fc39a8bff011654d80ef1bccf93&tags=Kielce&radius=5&format=json&nojsoncallback=1`;
 
-    const url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=e48f0c07d0b08d84074e64950867468a&lat=50.761190&lon=20.626127&radius=5&format=json&nojsoncallback=1`;
-    console.log(url);
-    
+    //response with axios
     axios.get(url)
     .then((response) => {
       if (response.status >= 200 && response.status < 300) {
@@ -69,20 +39,41 @@ class Map extends Component {
       })
       .then((response) => {
       if (response.headers['content-type'] !== 'application/json') {
-          let error = new Error('Некорректный ответ от сервера');
+          let error = new Error('This is uncorrect response from server');
           error.response = response;
           throw error
       }
       return response.data;
       })
       .then((json) => {
-      console.log(json.photos.photo);
+          let arrayPics = json.photos.photo;
+          let photo = arrayPics.filter(pic => pic.ispublic & !(pic.isfamily) & !(pic.isfriend))[0]
+          console.log(photo);
+          return {
+            imgSource: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
+            author: `http://www.flickr.com/photos/${photo.owner}/${photo.id}`
+          
+        }
+        
       })
       .catch((error) => {
        console.log(error);
-  });
-      
+     });
   }; 
+  //Set timeout to check if the Map is loaded
+  checkTheMapIsLoaded = (timer) => {
+    this.myMapContainer = '<div class="message">Trying to load GoogleMap, please wait...</div>';
+    let timeout = timer || 5000;
+
+    window.gm_authFailure = (error)=> {
+      console.log(`error ${error}`)
+      alert(`Couldn't load the Google Map. Check your internet connection`);
+    } 
+  }
+  //getMarkers1 = (markers)=>{
+   //  this.props.openInfoWindow(this.state.markers)
+ // }
+  
   checkConnection(){
     if(!navigator.onLine) {
       alert('Check your internet connection');
@@ -99,10 +90,10 @@ class Map extends Component {
   }
 
     componentDidMount(){
-      const markers = [];
-  
-      this.checkConnection();
-  //this.addGoogleMapsScriptToPage();
+    this.checkConnection();
+    
+    //this.addGoogleMapsScriptToPage();
+    
     
   //create stylish map    
   let styledMapType = new window.google.maps.StyledMapType(this.props.styleMap, {'name' : 'Styled Map'});
@@ -110,6 +101,9 @@ class Map extends Component {
   let map = new window.google.maps.Map(this.myMapContainer.current, this.props.optionMap)
         map.mapTypes.set('styled_map', styledMapType);
         map.setMapTypeId('styled_map');
+
+  //checked load Map from googleAPI
+  this.checkTheMapIsLoaded();
         
   //type of icons in markers  
   let defaultIcon = makeMarkerIcon('558000');
@@ -134,6 +128,12 @@ class Map extends Component {
                         <div><img src=${image} height = "100" width="100" alt=${title}></img></div>
                       </div>`
         });
+      //send request to Flickr
+      this.fetchDataFromFlickr();
+      //add infowindow to this.props.infoWindow
+      this.props.infoWindow.push(infowindow);
+      
+     
         let position = {lat: place.location.lat, lng: place.location.lng};
 
 
@@ -148,8 +148,7 @@ class Map extends Component {
     icon: defaultIcon,
     id: id
   });
-    
-  markers.push(marker);
+  
       
   //open infowindow
 marker.addListener('click', function() {
@@ -162,12 +161,12 @@ google.maps.event.addListener(infowindow,'closeclick',function(){
 marker.addListener('click', function () {
   marker.setAnimation(null);
 });
-  //add markers to state 
-    
-  this.setState({markers : markers});
+  
+//add markers to state to App.js 
+  this.props.markers.push(marker);  
   
 })
-//console.log(markers)
+
  
 // This function takes in a COLOR, and then creates a new marker
 // icon of that color. The icon will be 21 px wide by 34 high, have an origin
@@ -187,9 +186,7 @@ marker.addListener('click', function () {
 
 
     render(){
-
-      console.log(this.props)
-      //console.log(this.state.markers)
+      
         return(
             <div ref={this.myMapContainer} 
             id="map" 
