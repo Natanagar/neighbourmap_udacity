@@ -13,7 +13,7 @@ class App extends Component {
   constructor(props){
     super(props)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-    //this.getArrayMarkers = this.getArrayMarkers.bind(this);
+    this.getArrayMarkers = this.getArrayMarkers.bind(this);
     this.getArrayInfoWindow = this.getArrayInfoWindow.bind(this);
   } 
   state = {
@@ -356,13 +356,25 @@ class App extends Component {
   
   }
 
- //get array with markers
+ //get array with infoWindow
  getArrayInfoWindow(arrayInfoWindow){
       this.setState({
         InfoWindow : arrayInfoWindow
    })
-   console.log(this.state.InfoWindow);
+
+   //array with infoWindow
+   //console.log(this.state.InfoWindow);
  }
+
+//get array with markers from map component
+ getArrayMarkers(arrayWithMarkers){
+  
+   this.setState({
+    markers : arrayWithMarkers
+  })
+  console.log(this.state.markers)
+  
+}
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener("resize", this.updateWindowDimensions.bind(this));
@@ -393,8 +405,8 @@ class App extends Component {
   
   render() {
 
-    //console.log(this.state)
-    //console.log(this.state.height)
+    
+    console.log(this.state)
     return (
       <Container className="App">
         <Row>
@@ -423,7 +435,7 @@ class App extends Component {
               tabIndex="0" 
               aria-label="google map"
               openInfoWindow={event => this.showInfowindow }
-              getMarkers={this.getArrayMarkers}
+              getArrayMarkers={this.getArrayMarkers}
               getArrayInfoWindow={this.getArrayInfoWindow}
               />
             </ErrorBoundary>

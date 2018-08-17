@@ -12,7 +12,7 @@ class Map extends Component {
     this.myMapContainer = React.createRef()
   }
   state = {
-    markers: [],
+    arrayWithMarkers: [],
     arrayInfoWindow : []
   }
   
@@ -161,8 +161,8 @@ marker.addListener('click', function () {
 });
   
 //add markers to state to App.js 
-  this.state.markers.push(marker);
-  
+  this.state.arrayWithMarkers.push(marker);
+
   
 })
 
@@ -185,12 +185,12 @@ marker.addListener('click', function () {
 
 
     render(){
-      let arrayWithMarkers = this.state.markers;
+      let arrayWithMarkers = this.state.arrayWithMarkers;
       let arrayInfoWindow = this.state.arrayInfoWindow;
         return(
             <div ref={this.myMapContainer} 
             id="map" 
-            onClick={this.props.openInfoWindow(arrayWithMarkers)} 
+            onKeyPress={() => this.props.getArrayMarkers(arrayWithMarkers)} 
             onClick = {() => this.props.getArrayInfoWindow(arrayInfoWindow)}
             />
         )
