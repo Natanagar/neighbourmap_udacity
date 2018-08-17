@@ -5,7 +5,6 @@ import axios from 'axios';
 /* global google */
 /*import { url } from 'inspector';*/
 
-
 class Map extends Component {
   constructor(props) {
     super(props);
@@ -13,11 +12,12 @@ class Map extends Component {
     this.myMapContainer = React.createRef()
   }
   state = {
-    markers: []
+    markers: [],
+    arrayInfoWindow : []
   }
   
   //authentification user flickr
-  fetchDataFromFlickr = (lat, lon)=> {
+  fetchDataFromFlickr = ()=> {
     let flickrProperties = {
       apikey : `c9351625e1f32762afe260a1a6d8f28d`,
       format : `json`,
@@ -70,10 +70,7 @@ class Map extends Component {
       alert(`Couldn't load the Google Map. Check your internet connection`);
     } 
   }
-  //getMarkers1 = (markers)=>{
-   //  this.props.openInfoWindow(this.state.markers)
- // }
-  
+ 
   checkConnection(){
     if(!navigator.onLine) {
       alert('Check your internet connection');
@@ -125,19 +122,20 @@ class Map extends Component {
                       <h3>${title}</h3>
                         <span>${place.site}</span>
                         <span>tel. ${place.phone}</span>
-                        <div><img src=${image} height = "100" width="100" alt=${title}></img></div>
+                        <div>
+                          <img src={images['0.jpg']} height = "200" width="200" alt=${title} />
+                        </div>
                       </div>`
         });
       //send request to Flickr
       this.fetchDataFromFlickr();
+      
       //add infowindow to this.props.infoWindow
-      this.props.infoWindow.push(infowindow);
+      this.state.arrayInfoWindow.push(infowindow);
       
      
         let position = {lat: place.location.lat, lng: place.location.lng};
 
-
-  this.fetchDataFromFlickr(lat, lng); 
         
   //create new Marker   
   var marker = new google.maps.Marker({
@@ -163,7 +161,8 @@ marker.addListener('click', function () {
 });
   
 //add markers to state to App.js 
-  this.props.markers.push(marker);  
+  this.state.markers.push(marker);
+  
   
 })
 
@@ -186,12 +185,13 @@ marker.addListener('click', function () {
 
 
     render(){
-      
+      let arrayWithMarkers = this.state.markers;
+      let arrayInfoWindow = this.state.arrayInfoWindow;
         return(
             <div ref={this.myMapContainer} 
             id="map" 
-            onClick={this.props.openInfoWindow(this.state.markers)} 
-            getMarkers={this.getMarkers}
+            onClick={this.props.openInfoWindow(arrayWithMarkers)} 
+            onClick = {() => this.props.getArrayInfoWindow(arrayInfoWindow)}
             />
         )
     }
