@@ -15,12 +15,15 @@ class App extends Component {
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.getArrayMarkers = this.getArrayMarkers.bind(this);
     this.getArrayInfoWindow = this.getArrayInfoWindow.bind(this);
+    this.getFoundPlaces = this.getFoundPlaces.bind(this);
   } 
   state = {
     width : 0,
     height : 0,
     Places : [],
+    foundPlaces : [],
     InfoWindow : [],
+    allMarkers : [], 
     styleMap : [
       {
         "elementType": "geometry",
@@ -355,6 +358,14 @@ class App extends Component {
     map : false
   
   }
+//get foundPlaces from markerpanel
+getFoundPlaces(foundPlaces){
+  console.log('yahoo-yahoo')
+  //this.setState({
+  //  foundPlaces : places
+  //})
+  console.log(this.state.foundPlaces)
+}
 
  //get array with infoWindow
  getArrayInfoWindow(arrayInfoWindow){
@@ -368,13 +379,24 @@ class App extends Component {
 
 //get array with markers from map component
  getArrayMarkers(arrayWithMarkers){
-  
+   console.log('yahoo')
    this.setState({
-    markers : arrayWithMarkers
+    allMarkers : arrayWithMarkers
   })
   console.log(this.state.markers)
-  
 }
+ // open and close InfoWindow
+ showInfowindow = (event, element)=> {
+  console.log('yoyoy');
+  let markerID = (event.currentTarget.id);
+  console.log(markerID);
+  return markerID;
+  
+
+  //const marker = this.state.markers.filter(marker => marker.id === markerID);        
+  //new window.google.maps.event.trigger(marker, 'click');  
+}
+
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener("resize", this.updateWindowDimensions.bind(this));
@@ -389,24 +411,12 @@ class App extends Component {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
   } 
 
- // open and close InfoWindow
-  showInfowindow = (event)=> {
-    console.log('yoyoy');
-    console.log(event.currentTarget.id);
-    
-   
-    //this.setState({
-    //  markers: this.state.markers
-    //});
-    /*() => console.log(this.state.markers)*/
-    //const marker = this.state.markers.find(el => el.id === element);        
-    //new window.google.maps.event.trigger(marker, 'click');  
-}
+
   
   render() {
-
-    
-    console.log(this.state)
+  //console.log(this.state.InfoWindow);
+  // console.log(this.state.allMarkers);
+  //const marker = this.state.markers.filter(marker => {marker.id===markerID})
     return (
       <Container className="App">
         <Row>
@@ -419,7 +429,8 @@ class App extends Component {
             <MarkersPanel 
             listOfMarkers={this.state.Places}
             changeMarkers={this.updateMarkers}
-            openInfoWindow={ this.showInfowindow }
+            openInfoWindow={this.showInfowindow}
+            getFoundPlaces={this.getFoundPlaces}
            
             />
           </Col>
@@ -427,7 +438,7 @@ class App extends Component {
             
             <ErrorBoundary>
               <Map
-              markers={this.state.markers}
+              markers={this.state.allMarkers}
               map={this.state.map}
               optionMap = {this.state.optionMap}
               styleMap={this.state.styleMap}

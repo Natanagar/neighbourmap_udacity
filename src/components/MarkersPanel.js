@@ -26,7 +26,7 @@ onClearInput = () =>{
 
 
     render(){
-       
+       console.log(this.props.getFoundPlaces)
         let foundedPlaces
         if(this.state.value){
             const match = new RegExp(escapeRegExp(this.state.value, 'i'))
@@ -51,6 +51,7 @@ onClearInput = () =>{
                     <MarkersList
                     showWindow = {this.props.openInfoWindow}
                     {...[foundedPlaces]}
+                    onClick={() => this.getFoundPlaces(foundedPlaces)}
                     />
                 </Alert>
             </div>

@@ -16,6 +16,7 @@ class Map extends Component {
     arrayInfoWindow : []
   }
   
+
   //authentification user flickr
   fetchDataFromFlickr = ()=> {
     let flickrProperties = {
@@ -24,7 +25,8 @@ class Map extends Component {
       method : `flickr.photos.search`,
       radius : 5,
     };
-    const url = `https://api.flickr.com/services/rest/?method=${flickrProperties.method}&api_key=e73b2fc39a8bff011654d80ef1bccf93&tags=Kielce&radius=5&format=json&nojsoncallback=1`;
+    const url = `https://api.flickr.com/services/rest/?method=${flickrProperties.method}&
+    api_key=884f864a560913889588323bb96d4433&tags=Kielce&radius=${flickrProperties.radius}&format=${flickrProperties.format}&nojsoncallback=1`;
 
     //response with axios
     axios.get(url)
@@ -47,6 +49,7 @@ class Map extends Component {
       })
       .then((json) => {
           let arrayPics = json.photos.photo;
+          console.log(arrayPics);
           let photo = arrayPics.filter(pic => pic.ispublic & !(pic.isfamily) & !(pic.isfriend))[0]
           console.log(photo);
           return {
@@ -86,66 +89,68 @@ class Map extends Component {
     document.body.appendChild(script);
   }
 
+
     componentDidMount(){
     this.checkConnection();
     
     //this.addGoogleMapsScriptToPage();
     
     
-  //create stylish map    
-  let styledMapType = new window.google.maps.StyledMapType(this.props.styleMap, {'name' : 'Styled Map'});
-      
-  let map = new window.google.maps.Map(this.myMapContainer.current, this.props.optionMap)
-        map.mapTypes.set('styled_map', styledMapType);
-        map.setMapTypeId('styled_map');
+      //create stylish map    
+      let styledMapType = new window.google.maps.StyledMapType(this.props.styleMap, {'name' : 'Styled Map'});
+          
+      let map = new window.google.maps.Map(this.myMapContainer.current, this.props.optionMap)
+            map.mapTypes.set('styled_map', styledMapType);
+            map.setMapTypeId('styled_map');
 
-  //checked load Map from googleAPI
-  this.checkTheMapIsLoaded();
-        
-  //type of icons in markers  
-  let defaultIcon = makeMarkerIcon('558000');
-  let highlightedIcon = makeMarkerIcon('FFFF24');
+      //checked load Map from googleAPI
+      this.checkTheMapIsLoaded();
+            
+      //type of icons in markers  
+      let defaultIcon = makeMarkerIcon('558000');
+      let highlightedIcon = makeMarkerIcon('FFFF24');
 
   
         
-    //create list of markers
-   Places.map((place)=>{
-   
-    let title = place.name,
-        image = place.img,
-        id = place.id,
-        lat = place.location.lat,
-        lng = place.location.lng;
-    //create infoWindow
-     var infowindow = new google.maps.InfoWindow({
-          content : `<div className="container" style ={{height : '325px'}}>
-                      <h3>${title}</h3>
-                        <span>${place.site}</span>
-                        <span>tel. ${place.phone}</span>
-                        <div>
-                          <img src={images['0.jpg']} height = "200" width="200" alt=${title} />
-                        </div>
-                      </div>`
-        });
-      //send request to Flickr
-      this.fetchDataFromFlickr();
+        //create list of markers
+      Places.map((place)=>{
       
-      //add infowindow to this.props.infoWindow
-      this.state.arrayInfoWindow.push(infowindow);
-      
-     
-        let position = {lat: place.location.lat, lng: place.location.lng};
+        let title = place.name,
+            image = place.img,
+            id = place.id,
+            lat = place.location.lat,
+            lng = place.location.lng;
+        //create infoWindow
+        var infowindow = new google.maps.InfoWindow({
+              content : `<div className="container" style ={{height : '325px'}}>
+                          <h3>${title}</h3>
+                            <span>${place.site}</span>
+                            <span>tel. ${place.phone}</span>
+                            <div>
+                              <img src={images['0.jpg']} height = "200" width="200" alt=${title} />
+                            </div>
+                          </div>`
+            });
+          //send request to Flickr
+          this.fetchDataFromFlickr();
+          
+          //add infowindow to this.props.infoWindow
+          this.state.arrayInfoWindow.push(infowindow);
+          
+        
+            let position = {lat: place.location.lat, lng: place.location.lng};
 
         
-  //create new Marker   
-  var marker = new google.maps.Marker({
-    map: map,
-    position: position,
-    title : title,
-    animation: google.maps.Animation.DROP,
-    icon: defaultIcon,
-    id: id
-  });
+      //create new Marker   
+      var marker = new google.maps.Marker({
+        map: map,
+        position: position,
+        title : title,
+        animation: google.maps.Animation.DROP,
+        icon: defaultIcon,
+        id: id
+      });
+    
   
       
   //open infowindow
@@ -162,6 +167,7 @@ marker.addListener('click', function () {
   
 //add markers to state to App.js 
   this.state.arrayWithMarkers.push(marker);
+
 
   
 })
@@ -187,10 +193,13 @@ marker.addListener('click', function () {
     render(){
       let arrayWithMarkers = this.state.arrayWithMarkers;
       let arrayInfoWindow = this.state.arrayInfoWindow;
+      
         return(
             <div ref={this.myMapContainer} 
             id="map" 
-            onKeyPress={() => this.props.getArrayMarkers(arrayWithMarkers)} 
+            onKeyDown = {() => this.getInfoAboutMarkers}
+
+            onLoad={() => this.props.getArrayMarkers(arrayWithMarkers)} 
             onClick = {() => this.props.getArrayInfoWindow(arrayInfoWindow)}
             />
         )
