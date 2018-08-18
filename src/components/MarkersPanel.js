@@ -26,7 +26,7 @@ onClearInput = () =>{
 
 
     render(){
-       console.log(this.props.getFoundPlaces)
+         
         let foundedPlaces
         if(this.state.value){
             const match = new RegExp(escapeRegExp(this.state.value, 'i'))
@@ -35,23 +35,24 @@ onClearInput = () =>{
         } else {
             foundedPlaces = this.props.listOfMarkers
         }
-        foundedPlaces.sort(sortBy('name'))
+       
         
+        foundedPlaces.sort(sortBy('name'))
+        this.props.getPlaces(foundedPlaces)
         return(
+          
             <div>
-                
                 <Alert color="secondary">
                 
                     <SearchBar 
                     value={this.state.value}
                     onHandleChange={this.handleChange.bind(this)}
                     onClearInput={this.onClearInput}
-                    
                     />
                     <MarkersList
+                    
                     showWindow = {this.props.openInfoWindow}
                     {...[foundedPlaces]}
-                    onClick={() => this.getFoundPlaces(foundedPlaces)}
                     />
                 </Alert>
             </div>

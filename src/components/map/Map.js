@@ -9,6 +9,7 @@ class Map extends Component {
   constructor(props) {
     super(props);
 
+
     this.myMapContainer = React.createRef()
   }
   state = {
@@ -20,13 +21,13 @@ class Map extends Component {
   //authentification user flickr
   fetchDataFromFlickr = ()=> {
     let flickrProperties = {
-      apikey : `c9351625e1f32762afe260a1a6d8f28d`,
+      apikey : `dc1fa29f1d6ba587a26ef719ef5f1107`,
       format : `json`,
       method : `flickr.photos.search`,
       radius : 5,
     };
     const url = `https://api.flickr.com/services/rest/?method=${flickrProperties.method}&
-    api_key=884f864a560913889588323bb96d4433&tags=Kielce&radius=${flickrProperties.radius}&format=${flickrProperties.format}&nojsoncallback=1`;
+    api_key=${flickrProperties.apikey}&tags=Kielce&radius=${flickrProperties.radius}&format=${flickrProperties.format}&nojsoncallback=1`;
 
     //response with axios
     axios.get(url)
@@ -51,7 +52,6 @@ class Map extends Component {
           let arrayPics = json.photos.photo;
           console.log(arrayPics);
           let photo = arrayPics.filter(pic => pic.ispublic & !(pic.isfamily) & !(pic.isfriend))[0]
-          console.log(photo);
           return {
             imgSource: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
             author: `http://www.flickr.com/photos/${photo.owner}/${photo.id}`
@@ -127,7 +127,7 @@ class Map extends Component {
                             <span>${place.site}</span>
                             <span>tel. ${place.phone}</span>
                             <div>
-                              <img src={images['0.jpg']} height = "200" width="200" alt=${title} />
+                              <img src=${image} height = "200" width="200" alt=${title} />
                             </div>
                           </div>`
             });

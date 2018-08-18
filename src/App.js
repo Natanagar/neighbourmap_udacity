@@ -21,7 +21,7 @@ class App extends Component {
     width : 0,
     height : 0,
     Places : [],
-    foundPlaces : [],
+    foundPlacesFromMarkerPanel : [],
     InfoWindow : [],
     allMarkers : [], 
     styleMap : [
@@ -359,12 +359,11 @@ class App extends Component {
   
   }
 //get foundPlaces from markerpanel
-getFoundPlaces(foundPlaces){
-  console.log('yahoo-yahoo')
-  //this.setState({
-  //  foundPlaces : places
-  //})
-  console.log(this.state.foundPlaces)
+getFoundPlaces = (foundedPlaces) => {
+  this.setState({
+    foundPlacesFromMarkerPanel : foundedPlaces
+  })
+  
 }
 
  //get array with infoWindow
@@ -414,6 +413,7 @@ getFoundPlaces(foundPlaces){
 
   
   render() {
+ // console.log(this.state.foundPlacesFromMarkerPanel);
   //console.log(this.state.InfoWindow);
   // console.log(this.state.allMarkers);
   //const marker = this.state.markers.filter(marker => {marker.id===markerID})
@@ -430,7 +430,7 @@ getFoundPlaces(foundPlaces){
             listOfMarkers={this.state.Places}
             changeMarkers={this.updateMarkers}
             openInfoWindow={this.showInfowindow}
-            getFoundPlaces={this.getFoundPlaces}
+            getPlaces={this.getFoundPlaces}
            
             />
           </Col>
