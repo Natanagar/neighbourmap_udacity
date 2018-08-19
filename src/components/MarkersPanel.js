@@ -12,33 +12,31 @@ class MarkersPanel extends Component {
        
         
     }
-    state = {
+    initialState = () => ({
         value: '',
+        foundedPlaces: this.props.listOfMarkers,
         places : []
+    })
+    state = this.initialState()
+
+
+    handleChange = (event, props)=>{
+            const match = new RegExp(escapeRegExp(this.state.value, 'i'));
+            const foundedPlaces = this.state.foundedPlaces.filter((place)=>match.test(place.name));
+            this.setState({
+                value: event.target.value.substr(0,20),
+                foundedPlaces: foundedPlaces.sort(sortBy('name'))
+            })
     }
-
-handleChange = (event, props)=>{
-        this.setState({value: event.target.value.substr(0,20)})
-}
-onClearInput = () =>{
-    this.setState({value: ''})
-}  
+    onClearInput = () =>{
+        this.setState(this.initialState())
+    }  
 
 
-    render(){
+    render(){   
          
-        let foundedPlaces
-        if(this.state.value){
-            const match = new RegExp(escapeRegExp(this.state.value, 'i'))
-            foundedPlaces = this.props.listOfMarkers.filter((place)=>match.test(place.name))
+    const {foundedPlaces} = this.state;
 
-        } else {
-            foundedPlaces = this.props.listOfMarkers
-        }
-       
-        
-        foundedPlaces.sort(sortBy('name'))
-        
         return(
           
             <div>
@@ -50,7 +48,7 @@ onClearInput = () =>{
                     onClearInput={this.onClearInput}
                     />
                     <MarkersList
-                    sendArray={this.props.getPlaces(foundedPlaces)}
+                    sendArray={foundedPlaces}
                     showWindow = {this.props.openInfoWindow}
                     {...[foundedPlaces]}
                     />

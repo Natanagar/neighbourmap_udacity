@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Map.css';
 import Places from './places';
 import axios from 'axios';
+import styledMap from './styledMap';
 /* global google */
 /*import { url } from 'inspector';*/
 
@@ -80,41 +81,50 @@ class Map extends Component {
     }
   }
 
-  //load google map async
-  addGoogleMapsScriptToPage(url, callback){
-    let script = document.createElement('script');
-    script.type = 'text/javascript'; 
+ loadScript = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
     const google_key = 'AIzaSyDk1ofIQBQEDmSeVrt1PU0FmokyLWp2KvQ';
-    script.src = "https://maps.googleapis.com/maps/api/js?v=3&key=${google_key}&sensor=false&callback=initialize"
-    if(callback)script.onload=callback;
+    script.src = "https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDk1ofIQBQEDmSeVrt1PU0FmokyLWp2KvQ&sensor=false"
+    script.defer = true;
+    setTimeout(function () {
+          try{
+              if (!window.google || !window.google.maps) {
+                  //This will Throw the error if 'google' is not defined
+              }
+          }
+          catch (e) {
+              //You can write the code for error handling here
+              //Something like alert('Ah...Error Occurred!');
+          }
+      }, 5000);
     document.body.appendChild(script);
   }
   
 
+ 
+componentDidMount(){
+window.onload = this.loadScript;
+  
+//create googleMaps with Google API
+  let optionMap = {
+    center: {
+      lat: 50.866077, 
+      lng: 20.628568
+  },
+  scrollwheel : false,
+  zoom : 14,
+  mapTypeControl: false
+  };
 
+  let map = new google.maps.Map(this.myMapContainer.current, optionMap);
+  let styledMapType = new google.maps.StyledMapType(styledMap,{name: 'Styled Map'}); 
+  //Associate the styled map with the MapTypeId and set it to display.
+  map.mapTypes.set('styled_map', styledMapType);
+  map.setMapTypeId('styled_map');
+  
+this.checkConnection();
 
-    componentDidMount(){
-
-  //create googleMaps with Google API
-  initialize =  () => {
-    console.log(this.myMapContainer.current)
-    let optionMap = {
-      center: {
-        lat: 50.866077, 
-        lng: 20.628568
-    },
-    scrollwheel : false,
-    zoom : 14,
-    mapTypeControl: false
-    };
-    let styledMapType = new google.maps.StyledMapType(this.props.styleMap, {'name' : 'Styled Map'});  
-    /*let map = new google.maps.Map(this.myMapContainer.current, optionMap);
-    map.mapTypes.set('styled_map', styledMapType);
-    map.setMapTypeId('styled_map');*/
-  }
-
-    this.checkConnection();
-    this.initialize();
       //checked load Map from googleAPI
       this.checkTheMapIsLoaded();
             
@@ -204,7 +214,6 @@ marker.addListener('click', function () {
 
     render(){
 
-    console.log(this.props)
       let arrayWithMarkers = this.state.arrayWithMarkers;
       let arrayInfoWindow = this.state.arrayInfoWindow;
       
@@ -220,3 +229,4 @@ marker.addListener('click', function () {
     }
 }
 export default Map;
+
