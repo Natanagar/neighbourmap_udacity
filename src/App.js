@@ -6,7 +6,9 @@ import { Container, Row, Col } from 'reactstrap';
 import Footer from './components/Footer';
 import Places from './components/map/places';
 import './App.css';
-import ErrorBoundary from './components/HandleError'
+import ErrorBoundary from './components/HandleError';
+import escapeRegExp from 'escape-string-regexp';
+import sortBy from 'sort-by'; 
 
 
 class App extends Component {
@@ -23,7 +25,8 @@ class App extends Component {
     Places : [],
     foundPlacesFromMarkerPanel : [],
     InfoWindow : [],
-    allMarkers : [], 
+    allMarkers : [],
+    foundedPlaces : [],
     styleMap : [
       {
         "elementType": "geometry",
@@ -358,11 +361,27 @@ class App extends Component {
     map : false
   
   }
+//sorting foundedPlaces doesn't work
+sortFoundedPlaces = () => {
+  let foundedPlaces
+  if(this.state.value){
+      const match = new RegExp(escapeRegExp(this.state.value, 'i'))
+      foundedPlaces = this.props.listOfMarkers.filter((place)=>match.test(place.name))
+
+  } else {
+      foundedPlaces = this.props.listOfMarkers
+  }
+  foundedPlaces.sort(sortBy('name'))
+}
+
 //get foundPlaces from markerpanel
 getFoundPlaces = (foundedPlaces) => {
+  //
+  if(foundedPlaces !== this.state.foundPlacesFromMarkerPanel){
   this.setState({
     foundPlacesFromMarkerPanel : foundedPlaces
-  })
+   })
+  }
   
 }
 

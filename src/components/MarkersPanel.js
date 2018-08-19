@@ -38,7 +38,7 @@ onClearInput = () =>{
        
         
         foundedPlaces.sort(sortBy('name'))
-        this.props.getPlaces(foundedPlaces)
+        
         return(
           
             <div>
@@ -50,7 +50,7 @@ onClearInput = () =>{
                     onClearInput={this.onClearInput}
                     />
                     <MarkersList
-                    
+                    sendArray={this.props.getPlaces(foundedPlaces)}
                     showWindow = {this.props.openInfoWindow}
                     {...[foundedPlaces]}
                     />

@@ -79,30 +79,42 @@ class Map extends Component {
       alert('Check your internet connection');
     }
   }
-  addGoogleMapsScriptToPage(){
-    let google_key = 'AIzaSyDk1ofIQBQEDmSeVrt1PU0FmokyLWp2KvQ';
+
+  //load google map async
+  addGoogleMapsScriptToPage(url, callback){
     let script = document.createElement('script');
-    script.src = "https://maps.googleapis.com/maps/api/js?v=3&key=${google_key}"
-    script.async = true;
-    script.defer = true;
-    console.log(script);
+    script.type = 'text/javascript'; 
+    const google_key = 'AIzaSyDk1ofIQBQEDmSeVrt1PU0FmokyLWp2KvQ';
+    script.src = "https://maps.googleapis.com/maps/api/js?v=3&key=${google_key}&sensor=false&callback=initialize"
+    if(callback)script.onload=callback;
     document.body.appendChild(script);
   }
+  
+
 
 
     componentDidMount(){
-    this.checkConnection();
-    
-    //this.addGoogleMapsScriptToPage();
-    
-    
-      //create stylish map    
-      let styledMapType = new window.google.maps.StyledMapType(this.props.styleMap, {'name' : 'Styled Map'});
-          
-      let map = new window.google.maps.Map(this.myMapContainer.current, this.props.optionMap)
-            map.mapTypes.set('styled_map', styledMapType);
-            map.setMapTypeId('styled_map');
 
+  //create googleMaps with Google API
+  initialize =  () => {
+    console.log(this.myMapContainer.current)
+    let optionMap = {
+      center: {
+        lat: 50.866077, 
+        lng: 20.628568
+    },
+    scrollwheel : false,
+    zoom : 14,
+    mapTypeControl: false
+    };
+    let styledMapType = new google.maps.StyledMapType(this.props.styleMap, {'name' : 'Styled Map'});  
+    /*let map = new google.maps.Map(this.myMapContainer.current, optionMap);
+    map.mapTypes.set('styled_map', styledMapType);
+    map.setMapTypeId('styled_map');*/
+  }
+
+    this.checkConnection();
+    this.initialize();
       //checked load Map from googleAPI
       this.checkTheMapIsLoaded();
             
@@ -191,6 +203,8 @@ marker.addListener('click', function () {
 
 
     render(){
+
+    console.log(this.props)
       let arrayWithMarkers = this.state.arrayWithMarkers;
       let arrayInfoWindow = this.state.arrayInfoWindow;
       
