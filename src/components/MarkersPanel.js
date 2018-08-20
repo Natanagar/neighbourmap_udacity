@@ -14,19 +14,20 @@ class MarkersPanel extends Component {
     }
     initialState = () => ({
         value: '',
-        foundedPlaces: this.props.listOfMarkers,
-        places : []
+        foundedPlaces: this.props.listOfMarkers
     })
     state = this.initialState()
 
 
     handleChange = (event, props)=>{
-            const match = new RegExp(escapeRegExp(this.state.value, 'i'));
-            const foundedPlaces = this.state.foundedPlaces.filter((place)=>match.test(place.name));
-            this.setState({
-                value: event.target.value.substr(0,20),
-                foundedPlaces: foundedPlaces.sort(sortBy('name'))
-            })
+            
+                const match = new RegExp(escapeRegExp(this.state.value, 'i'));
+                const foundedPlaces = this.state.foundedPlaces.filter((place)=>match.test(place.name));
+                this.setState({
+                    value: event.target.value.substr(0,20),
+                    foundedPlaces: foundedPlaces.sort(sortBy('name'))
+                })
+                this.props.getPlaces(this.state.foundedPlaces);
     }
     onClearInput = () =>{
         this.setState(this.initialState())
@@ -34,7 +35,7 @@ class MarkersPanel extends Component {
 
 
     render(){   
-         
+    console.log(this.props.getPlaces)    
     const {foundedPlaces} = this.state;
 
         return(

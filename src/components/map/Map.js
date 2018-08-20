@@ -51,7 +51,7 @@ class Map extends Component {
       })
       .then((json) => {
           let arrayPics = json.photos.photo;
-          console.log(arrayPics);
+          //console.log(arrayPics);
           let photo = arrayPics.filter(pic => pic.ispublic & !(pic.isfamily) & !(pic.isfriend))[0]
           return {
             imgSource: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
@@ -81,25 +81,29 @@ class Map extends Component {
     }
   }
 
- loadScript = () => {
+  loadScript = (url, callback) => {
     var script = document.createElement("script");
     script.type = "text/javascript";
     const google_key = 'AIzaSyDk1ofIQBQEDmSeVrt1PU0FmokyLWp2KvQ';
     script.src = "https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDk1ofIQBQEDmSeVrt1PU0FmokyLWp2KvQ&sensor=false"
-    script.defer = true;
-    setTimeout(function () {
+    script.onreadystatechange = callback;
+    script.onload = callback;
+    /*setTimeout(function () {
           try{
-              if (!window.google || !window.google.maps) {
+              if (!google || !google.maps) {
                   //This will Throw the error if 'google' is not defined
+                 alert('Google is not defined') 
               }
           }
           catch (e) {
               //You can write the code for error handling here
               //Something like alert('Ah...Error Occurred!');
+              alert(`'Ah...Error Occurred!`);
           }
-      }, 5000);
-    document.body.appendChild(script);
+      }, 5000);*/
+    document.head.appendChild(script);
   }
+
   
 
  
@@ -170,7 +174,11 @@ this.checkConnection();
         title : title,
         animation: google.maps.Animation.DROP,
         icon: defaultIcon,
-        id: id
+        id: id,
+        labelContent: "$425K",
+        labelAnchor: new google.maps.Point(22, 0),
+        labelClass: "labels", // the CSS class for the label
+        labelStyle: {opacity: 0.75}
       });
     
   
@@ -209,11 +217,12 @@ marker.addListener('click', function () {
     return markerImage;
     }
     
+
 }
 
 
     render(){
-
+      console.log(this.props)
       let arrayWithMarkers = this.state.arrayWithMarkers;
       let arrayInfoWindow = this.state.arrayInfoWindow;
       

@@ -28,32 +28,16 @@ class App extends Component {
     allMarkers : [],
     foundedPlaces : [],
     map : false
-  
-  }
-//sorting foundedPlaces doesn't work
-sortFoundedPlaces = () => {
-  let foundedPlaces
-  if(this.state.value){
-      const match = new RegExp(escapeRegExp(this.state.value, 'i'))
-      foundedPlaces = this.props.listOfMarkers.filter((place)=>match.test(place.name))
-
-  } else {
-      foundedPlaces = this.props.listOfMarkers
-  }
-  foundedPlaces.sort(sortBy('name'))
 }
-
-//get foundPlaces from markerpanel
+//get array with sorting places from markerlist
 getFoundPlaces = (foundedPlaces) => {
-  //
-  if(foundedPlaces !== this.state.foundPlacesFromMarkerPanel){
-  this.setState({
-    foundPlacesFromMarkerPanel : foundedPlaces
-   })
-  }
-  
+  console.log(foundedPlaces)
+ if(foundedPlaces !== this.state.foundPlacesFromMarkerPanel){
+    this.setState({
+      foundPlacesFromMarkerPanel : foundedPlaces
+    })
+ }
 }
-
  //get array with infoWindow
  getArrayInfoWindow(arrayInfoWindow){
       this.setState({
