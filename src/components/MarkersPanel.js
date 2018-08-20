@@ -35,7 +35,6 @@ class MarkersPanel extends Component {
 
 
     render(){   
-    console.log(this.props.getPlaces)    
     const {foundedPlaces} = this.state;
 
         return(

@@ -197,7 +197,8 @@ marker.addListener('click', function () {
   
 //add markers to state to App.js 
   this.state.arrayWithMarkers.push(marker);
-
+  //console.log(this.state.arrayWithMarkers);
+  this.props.getArrayMarkers(this.state.arrayWithMarker);
 
   
 })
@@ -222,16 +223,16 @@ marker.addListener('click', function () {
 
 
     render(){
-      console.log(this.props)
+      
       let arrayWithMarkers = this.state.arrayWithMarkers;
       let arrayInfoWindow = this.state.arrayInfoWindow;
+      
       
         return(
             <div ref={this.myMapContainer} 
             id="map" 
             onKeyDown = {() => this.getInfoAboutMarkers}
-
-            onLoad={() => this.props.getArrayMarkers(arrayWithMarkers)} 
+            sendArray = {this.props.getArrayMarkers(arrayWithMarkers)} 
             onClick = {() => this.props.getArrayInfoWindow(arrayInfoWindow)}
             />
         )

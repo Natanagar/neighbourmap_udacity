@@ -31,7 +31,6 @@ class App extends Component {
 }
 //get array with sorting places from markerlist
 getFoundPlaces = (foundedPlaces) => {
-  console.log(foundedPlaces)
  if(foundedPlaces !== this.state.foundPlacesFromMarkerPanel){
     this.setState({
       foundPlacesFromMarkerPanel : foundedPlaces
@@ -50,18 +49,18 @@ getFoundPlaces = (foundedPlaces) => {
 
 //get array with markers from map component
  getArrayMarkers(arrayWithMarkers){
-   console.log('yahoo')
-   this.setState({
-    allMarkers : arrayWithMarkers
-  })
-  console.log(this.state.markers)
+   if(this.state.allMarkers !== arrayWithMarkers){
+    this.setState({
+      allMarkers : arrayWithMarkers
+    })
+   }
 }
  // open and close InfoWindow
  showInfowindow = (event, element)=> {
   console.log('yoyoy');
-  let markerID = (event.currentTarget.id);
-  console.log(markerID);
-  return markerID;
+  let markerId = this.state.allMarkers.filter(marker => (console.log(marker.get('id'))));  
+  //console.log(markerID);
+  return markerId;
   
 
   //const marker = this.state.markers.filter(marker => marker.id === markerID);        
@@ -85,7 +84,7 @@ getFoundPlaces = (foundedPlaces) => {
 
   
   render() {
- // console.log(this.state.foundPlacesFromMarkerPanel);
+ console.log(this.state);
   //console.log(this.state.InfoWindow);
   // console.log(this.state.allMarkers);
   //const marker = this.state.markers.filter(marker => {marker.id===markerID})
