@@ -17,6 +17,7 @@ class MarkersPanel extends Component {
         foundedPlaces: this.props.listOfMarkers
     })
     state = this.initialState()
+    
 
 
     handleChange = (event, props)=>{
@@ -34,9 +35,12 @@ class MarkersPanel extends Component {
     }  
 
 
-    render(){   
-    const {foundedPlaces} = this.state;
-
+    render(){  
+    
+    const {foundedPlaces, value} = this.state;
+    
+    console.log(value)
+    
         return(
           
             <div>
@@ -44,12 +48,19 @@ class MarkersPanel extends Component {
                 
                     <SearchBar 
                     value={this.state.value}
+                    sendValue={this.props.getValueFromMarkerPanel(value)}
                     onHandleChange={this.handleChange.bind(this)}
                     onClearInput={this.onClearInput}
+                    aria-label="Filter markers form"
+                    role="search"
+                    label="Filter markers"
                     />
                     <MarkersList
+                    role='menu'
+                    className="marker-list"
+                    tabIndex="0"
                     sendArray={foundedPlaces}
-                    showWindow = {this.props.openInfoWindow}
+                    sortedMarkers = {this.props.sortingMarkers}
                     {...[foundedPlaces]}
                     />
                 </Alert>

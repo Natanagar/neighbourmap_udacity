@@ -18,6 +18,7 @@ class App extends Component {
     this.getArrayMarkers = this.getArrayMarkers.bind(this);
     this.getArrayInfoWindow = this.getArrayInfoWindow.bind(this);
     this.getFoundPlaces = this.getFoundPlaces.bind(this);
+    this.getValueFromMarkerPanel = this.getValueFromMarkerPanel.bind(this)
   } 
   state = {
     width : 0,
@@ -27,24 +28,29 @@ class App extends Component {
     InfoWindow : [],
     allMarkers : [],
     foundedPlaces : [],
-    map : false
+    map : false,
+    value : ""
 }
 //get array with sorting places from markerlist
 getFoundPlaces = (foundedPlaces) => {
- if(foundedPlaces !== this.state.foundPlacesFromMarkerPanel){
+  
+ /*if(foundedPlaces !== this.state.foundPlacesFromMarkerPanel){
     this.setState({
       foundPlacesFromMarkerPanel : foundedPlaces
     })
- }
+    console.log(this.state.foundPlacesFromMarkerPanel)
+ }*/
 }
  //get array with infoWindow
  getArrayInfoWindow(arrayInfoWindow){
+
+   if(arrayInfoWindow !== this.state.InfoWindow){
       this.setState({
         InfoWindow : arrayInfoWindow
-   })
-
+    })
+   }
    //array with infoWindow
-   //console.log(this.state.InfoWindow);
+  console.log(this.state.InfoWindow);
  }
 
 //get array with markers from map component
@@ -53,19 +59,56 @@ getFoundPlaces = (foundedPlaces) => {
     this.setState({
       allMarkers : arrayWithMarkers
     })
-   }
+  }
 }
  // open and close InfoWindow
- showInfowindow = (event, element)=> {
-  console.log('yoyoy');
-  let markerId = this.state.allMarkers.filter(marker => (console.log(marker.get('id'))));  
-  //console.log(markerID);
-  return markerId;
+ sortingMarkers = (event, element) => {
+  let filterPlaces = this.state.foundPlacesFromMarkerPanel;
+  let markers = Array.from(this.state.allMarkers);
+  let placeID = event.currentTarget.id;
+  console.log(placeID);
+  const markerSorted = markers.find(marker =>  marker.get('id') === placeID);
   
+  /*return filterPlaces.map((place, i) => {
+    if (markers.some(marker => marker.get('id') === place.id)) {  // If there's a match
+      this.marker.setVisible(true);
+    } else {
+      this.marker.setVisible(false);
+    }*/
+  }
 
-  //const marker = this.state.markers.filter(marker => marker.id === markerID);        
-  //new window.google.maps.event.trigger(marker, 'click');  
+getValueFromMarkerPanel = (value) => {
+  if(value !== this.state.value){
+    this.setState({
+      value : value
+    })
+    console.log(this.state.value)
+  }
 }
+
+
+  /*const markerID = event.currentTarget.id;
+  let filterMarker = this.state.foundPlacesFromMarkerPanel;
+  let markers = this.state.allMarkers;
+  for(let i = 0; i < filterMarker.length; i++ ){
+      let filteredMarker = filterMarker[i].id;
+      console.log(filteredMarker)
+        for(let j=0; j< markers.length; i++){
+          let marker = markers[j].get('id');
+            console.log(marker)
+            if(filteredMarker === marker){
+              marker.setVisible(true)
+              console.log(`WE HAVE MATCHING MARKERS`);
+            } else {
+              console.log(`MARKERS ARE NOT MATCHING`)
+              marker.setVisible(false);
+            }
+      
+    }
+    
+  } 
+  //new window.google.maps.event.trigger(marker, 'click'); */
+
 
   componentDidMount() {
     this.updateWindowDimensions();
@@ -75,7 +118,7 @@ getFoundPlaces = (foundedPlaces) => {
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateWindowDimensions.bind(this));
-  }
+  } 
 
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
@@ -84,15 +127,17 @@ getFoundPlaces = (foundedPlaces) => {
 
   
   render() {
- console.log(this.state);
-  //console.log(this.state.InfoWindow);
   // console.log(this.state.allMarkers);
   //const marker = this.state.markers.filter(marker => {marker.id===markerID})
     return (
       <Container className="App">
         <Row>
             <Col>
-              <Navbar />
+              <Navbar 
+              aria-label="Main menu button" 
+              tabIndex="0" 
+              role="menu"
+              />
             </Col>
           </Row>
         <Row>
@@ -100,8 +145,9 @@ getFoundPlaces = (foundedPlaces) => {
             <MarkersPanel 
             listOfMarkers={this.state.Places}
             changeMarkers={this.updateMarkers}
-            openInfoWindow={this.showInfowindow}
+            sortingMarkers={this.sortingMarkers}
             getPlaces={this.getFoundPlaces}
+            getValueFromMarkerPanel={this.getValueFromMarkerPanel}
            
             />
           </Col>
@@ -114,7 +160,8 @@ getFoundPlaces = (foundedPlaces) => {
               optionMap = {this.state.optionMap}
               styleMap={this.state.styleMap}
               places={this.state.Places}
-              tabIndex="0" 
+              tabIndex="-1"
+              role = "application"
               aria-label="google map"
               openInfoWindow={event => this.showInfowindow }
               getArrayMarkers={this.getArrayMarkers}

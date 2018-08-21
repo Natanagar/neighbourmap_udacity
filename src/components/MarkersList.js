@@ -18,7 +18,7 @@ const MarkersList = (props) =>{
                         return (
                         <li id={place.id} 
                             key={place.id}
-                            onClick={(event) => props.showWindow(event)}
+                            onClick={(event) => props.sortedMarkers(event)}
                             >
                             <div className="markerList"
                                 role={'menuitem'}

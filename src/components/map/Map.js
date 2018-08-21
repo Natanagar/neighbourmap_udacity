@@ -15,7 +15,9 @@ class Map extends Component {
   }
   state = {
     arrayWithMarkers: [],
-    arrayInfoWindow : []
+    arrayInfoWindow : [],
+    imageFlickr : [],
+    authorFlickr : []
   }
   
 
@@ -53,11 +55,16 @@ class Map extends Component {
           let arrayPics = json.photos.photo;
           //console.log(arrayPics);
           let photo = arrayPics.filter(pic => pic.ispublic & !(pic.isfamily) & !(pic.isfriend))[0]
-          return {
-            imgSource: `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
-            author: `http://www.flickr.com/photos/${photo.owner}/${photo.id}`
           
-        }
+          let imageFromFlickr = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
+              authorPics = `http://www.flickr.com/photos/${photo.owner}/${photo.id}`;
+            
+          this.setState({
+            imageFlickr : imageFromFlickr
+          }) 
+          this.setState({
+            authorFlickr : authorPics
+          });
         
       })
       .catch((error) => {
@@ -146,17 +153,20 @@ this.checkConnection();
             id = place.id,
             lat = place.location.lat,
             lng = place.location.lng;
+           
         //create infoWindow
         var infowindow = new google.maps.InfoWindow({
-              content : `<div className="container" style ={{height : '325px'}}>
+              content : `<div className="infowindow" style ={{height : '500px', width : '400px'}}>
                           <h3>${title}</h3>
                             <span>${place.site}</span>
                             <span>tel. ${place.phone}</span>
                             <div>
-                              <img src=${image} height = "200" width="200" alt=${title} />
+                              <img {require(this.state.imageFlickr)} width="200" height="200" alt=${title} />
+                              <img src={require(this.state.authorFlickr)} width="100" height="100" alt='author'/>
                             </div>
                           </div>`
             });
+       
           //send request to Flickr
           this.fetchDataFromFlickr();
           
@@ -223,7 +233,6 @@ marker.addListener('click', function () {
 
 
     render(){
-      
       let arrayWithMarkers = this.state.arrayWithMarkers;
       let arrayInfoWindow = this.state.arrayInfoWindow;
       
