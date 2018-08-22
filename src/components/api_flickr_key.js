@@ -104,3 +104,9 @@ https://farm2.staticflickr.com/1795/$43322381464_b32a1574e9_n.jpg
 https://farm2.staticflickr.com/1795/43322381464_b32a1574e9.jpg
 
 https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
+
+initialState = () => ({
+  value: '',
+  foundedPlaces: this.props.listOfMarkers
+})
+state = this.initialState()

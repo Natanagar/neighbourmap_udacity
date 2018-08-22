@@ -24,11 +24,13 @@ class MarkersPanel extends Component {
             
                 const match = new RegExp(escapeRegExp(this.state.value, 'i'));
                 const foundedPlaces = this.state.foundedPlaces.filter((place)=>match.test(place.name));
+                console.log(foundedPlaces)
                 this.setState({
-                    value: event.target.value.substr(0,20),
-                    foundedPlaces: foundedPlaces.sort(sortBy('name'))
-                })
-                this.props.getPlaces(this.state.foundedPlaces);
+                        value: event.target.value.substr(0,20),
+                        foundedPlaces: foundedPlaces.sort(sortBy('name'))
+                    })
+                console.log(this.state.foundedPlaces)
+        this.props.getPlaces(this.state.foundedPlaces);
     }
     onClearInput = () =>{
         this.setState(this.initialState())
@@ -38,8 +40,6 @@ class MarkersPanel extends Component {
     render(){  
     
     const {foundedPlaces, value} = this.state;
-    
-    console.log(value)
     
         return(
           
