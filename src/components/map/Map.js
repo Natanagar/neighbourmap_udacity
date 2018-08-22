@@ -240,7 +240,7 @@ marker.addListener('click', function () {
 
 
     render(){
-      console.log(this.state)
+      //console.log(this.state)
 
       let arrayWithMarkers = this.state.arrayWithMarkers;
       let arrayInfoWindow = this.state.arrayInfoWindow;
