@@ -24,6 +24,9 @@ If you want to sort markers, please, sort your favourite places in the *Seach* a
 
 #### API:
 In this project was implemented two APIs:
-..* [Google Maps API] (https://developers.google.com/maps/documentation/embed/start)
-..* [Flickr API with method _flick.photo.search_](https://www.flickr.com/services/api/)
+* [Google Maps API](https://developers.google.com/maps/documentation/embed/start)
+* [Flickr API with method _flick.photo.search_](https://www.flickr.com/services/api/)
+
+#### Contribution
+Any contribution is appreciated!
 
