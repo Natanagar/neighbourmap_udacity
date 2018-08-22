@@ -110,3 +110,7 @@ initialState = () => ({
   foundedPlaces: this.props.listOfMarkers
 })
 state = this.initialState()
+onClearInput = () =>{
+  this.setState(this.initialState())
+}  
+<img src=${authorFlickr} alt='author'> by the ${authorFlickr}</img>

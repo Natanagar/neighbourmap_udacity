@@ -58,19 +58,22 @@ class Map extends Component {
           
           let imageFromFlickr = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
               authorPics = `http://www.flickr.com/photos/${photo.owner}/${photo.id}`;
-            
-          this.setState({
-            imageFlickr : imageFromFlickr
-          }) 
-          this.setState({
-            authorFlickr : authorPics
+          
+          window.setTimeout(() => {
+            this.setState({imageFlickr: imageFromFlickr});
           });
+      
+          window.setTimeout(() => {
+            this.setState({authorFlickr: authorPics});
+          });
+
         
       })
       .catch((error) => {
        console.log(error);
      });
   }; 
+  
   //Set timeout to check if the Map is loaded
   checkTheMapIsLoaded = (timer) => {
     this.myMapContainer = '<div class="message">Trying to load GoogleMap, please wait...</div>';
@@ -95,11 +98,11 @@ class Map extends Component {
     script.src = "https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDk1ofIQBQEDmSeVrt1PU0FmokyLWp2KvQ&sensor=false"
     script.onreadystatechange = callback;
     script.onload = callback;
-    /*setTimeout(function () {
+    setTimeout(() => {
           try{
               if (!google || !google.maps) {
                   //This will Throw the error if 'google' is not defined
-                 alert('Google is not defined') 
+                 alert('Google is not defined');
               }
           }
           catch (e) {
@@ -107,7 +110,7 @@ class Map extends Component {
               //Something like alert('Ah...Error Occurred!');
               alert(`'Ah...Error Occurred!`);
           }
-      }, 5000);*/
+      }, 5000);
     document.head.appendChild(script);
   }
 
@@ -115,6 +118,7 @@ class Map extends Component {
 
  
 componentDidMount(){
+
 window.onload = this.loadScript;
   
 //create googleMaps with Google API
@@ -147,28 +151,31 @@ this.checkConnection();
         
         //create list of markers
       Places.map((place)=>{
-      
+        
         let title = place.name,
             image = place.img,
             id = place.id,
             lat = place.location.lat,
             lng = place.location.lng;
-           
+            
+            
+        this.fetchDataFromFlickr(); 
+        let {imageFlickr, authorFlickr} = this.state;
         //create infoWindow
         var infowindow = new google.maps.InfoWindow({
-              content : `<div className="infowindow" style ={{height : '500px', width : '400px'}}>
+              content : `<div className="infowindow">
                           <h3>${title}</h3>
                             <span>${place.site}</span>
                             <span>tel. ${place.phone}</span>
                             <div>
-                              <img {require(this.state.imageFlickr)} width="200" height="200" alt=${title} />
-                              <img src={require(this.state.authorFlickr)} width="100" height="100" alt='author'/>
+                              <img ${imageFlickr} alt=${title} />
+                              <img src=${authorFlickr} alt='author'> by the ${authorFlickr}</img>
                             </div>
                           </div>`
             });
-       
+          infowindow.addListener('closeclick', (() => infowindow.setMarker = null));
           //send request to Flickr
-          this.fetchDataFromFlickr();
+          
           
           //add infowindow to this.props.infoWindow
           this.state.arrayInfoWindow.push(infowindow);
@@ -233,6 +240,8 @@ marker.addListener('click', function () {
 
 
     render(){
+      console.log(this.state)
+
       let arrayWithMarkers = this.state.arrayWithMarkers;
       let arrayInfoWindow = this.state.arrayInfoWindow;
       
