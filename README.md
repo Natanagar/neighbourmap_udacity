@@ -12,9 +12,9 @@ Next step you can use command *yarn install* or *npm install*,
 After that you can run the application with command *yarn start*  or *npm start* and open address _http://localhost:3000/_ or _http://localhost:3001/_ (if you use port 3000)
 
 #### Dependencies: 
-..* [React] (https://reactjs.org/), 
-..* [React-dom] (https://www.npmjs.com/package/react-dom), 
-..* [React-router-dom] (https://www.npmjs.com/search?q=react-router-dom);
+* [React](https://reactjs.org/), 
+* [React-dom](https://www.npmjs.com/package/react-dom), 
+* [React-router-dom](https://www.npmjs.com/search?q=react-router-dom);
 
 
 How it works?
