@@ -3,8 +3,12 @@ import './Map.css';
 import Places from './places';
 import axios from 'axios';
 import styledMap from './styledMap';
+//import { AsyncResource } from 'async_hooks';
 /* global google */
 /*import { url } from 'inspector';*/
+
+//global variable
+
 
 class Map extends Component {
   constructor(props) {
@@ -16,8 +20,7 @@ class Map extends Component {
   state = {
     arrayWithMarkers: [],
     arrayInfoWindow : [],
-    imageFlickr : [],
-    authorFlickr : []
+    content : '',
   }
   
 
@@ -58,17 +61,14 @@ class Map extends Component {
           
           let imageFromFlickr = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
               authorPics = `http://www.flickr.com/photos/${photo.owner}/${photo.id}`;
-          
-          window.setTimeout(() => {
-            this.setState({imageFlickr: imageFromFlickr});
-          });
-      
-          window.setTimeout(() => {
-            this.setState({authorFlickr: authorPics});
-          });
-
-        
-      })
+            this.setState({
+              content : `<div className="infowindow">
+                <img src=${imageFromFlickr} alt='photo' />
+                <img src=${authorPics} alt='author'> by the ${authorPics}</img>
+            </div>`
+            }) 
+        })  
+            
       .catch((error) => {
        console.log(error);
      });
@@ -92,7 +92,7 @@ class Map extends Component {
   }
 
   loadScript = (url, callback) => {
-    var script = document.createElement("script");
+    let script = document.createElement("script");
     script.type = "text/javascript";
     const google_key = 'AIzaSyDk1ofIQBQEDmSeVrt1PU0FmokyLWp2KvQ';
     script.src = "https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDk1ofIQBQEDmSeVrt1PU0FmokyLWp2KvQ&sensor=false"
@@ -162,13 +162,13 @@ this.checkConnection();
         this.fetchDataFromFlickr(); 
         let {imageFlickr, authorFlickr} = this.state;
         //create infoWindow
-        var infowindow = new google.maps.InfoWindow({
+        let infowindow = new google.maps.InfoWindow({
               content : `<div className="infowindow">
                           <h3>${title}</h3>
                             <span>${place.site}</span>
                             <span>tel. ${place.phone}</span>
                             <div>
-                              <img ${imageFlickr} alt=${title} />
+                              <img src=${imageFlickr} alt=${title} />
                               <img src=${authorFlickr} alt='author'> by the ${authorFlickr}</img>
                             </div>
                           </div>`
@@ -237,13 +237,26 @@ marker.addListener('click', function () {
     
 
 }
+/*createInfoWindow = (props) => {
+  this.props.places.map(place => {
+    let infowindow = new google.maps.InfoWindow({
+      content : `<div className="infowindow">
+                  <h3>${place.title}</h3>
+                    <span>${place.site}</span>
+                    <span>tel. ${place.phone}</span>
+                    <div>
+                      <img src=${place.image} alt=${place.title} />
+                    </div>
+                  </div>`
+                });
+              })
+            });*/
 
 
     render(){
-      //console.log(this.state)
-
       let arrayWithMarkers = this.state.arrayWithMarkers;
       let arrayInfoWindow = this.state.arrayInfoWindow;
+      console.log(this.state.content)
       
       
         return(
@@ -257,4 +270,3 @@ marker.addListener('click', function () {
     }
 }
 export default Map;
-

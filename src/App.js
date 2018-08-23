@@ -17,6 +17,8 @@ class App extends Component {
     this.getArrayMarkers = this.getArrayMarkers.bind(this);
     this.getArrayInfoWindow = this.getArrayInfoWindow.bind(this);
     this.getValueFromMarkerPanel = this.getValueFromMarkerPanel.bind(this);
+    this.clickInfoWindow = this.clickInfoWindow.bind(this);
+    this.getContentInfoWindow = this.getContentInfoWindow.bind(this);
   } 
   state = {
     width : 0,
@@ -39,7 +41,6 @@ class App extends Component {
     })
    }
    //array with infoWindow
-  console.log(this.state.InfoWindow);
  }
 
 //get array with markers from map component
@@ -63,7 +64,11 @@ class App extends Component {
     }
   }
 }
-  
+
+//click to InfoWindow and add new Content
+clickInfoWindow = (event) => {
+  console.log('yoyoyoy');
+}
 
 //get array with sorting places from markerlist
 getFoundPlaces = (foundedPlaces) => {
@@ -72,7 +77,7 @@ getFoundPlaces = (foundedPlaces) => {
      this.setState({
        foundPlacesFromMarkerPanel : foundedPlaces
      })
-     console.log(this.state.foundPlacesFromMarkerPanel)
+     //console.log(this.state.foundPlacesFromMarkerPanel)
   }
  }
 //get value from MarkerPanel
@@ -82,6 +87,10 @@ getValueFromMarkerPanel = (value) => {
       value : value
     })
   }
+}
+//get content from Map.js
+getContentInfoWindow = (event) => {
+  console.log('click-click')
 }
   //new window.google.maps.event.trigger(marker, 'click'); */
   render(){
@@ -105,6 +114,7 @@ getValueFromMarkerPanel = (value) => {
               sortingMarkers={this.sortingMarkers}
               getPlaces={this.getFoundPlaces}
               getValueFromMarkerPanel={this.getValueFromMarkerPanel}
+              clickInfoWindow={this.clickInfoWindow}
              
               />
             </Col>
@@ -123,6 +133,8 @@ getValueFromMarkerPanel = (value) => {
                 openInfoWindow={event => this.showInfowindow }
                 getArrayMarkers={this.getArrayMarkers}
                 getArrayInfoWindow={this.getArrayInfoWindow}
+                getContentInfoWindow={this.getContentInfoWindow}
+                
                 />
               </ErrorBoundary>
             </Col>

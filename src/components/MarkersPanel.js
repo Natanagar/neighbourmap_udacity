@@ -38,7 +38,7 @@ class MarkersPanel extends Component {
     render(){  
     
     const {foundedPlaces, value} = this.state;
-    
+    let { clickInfoWindow } = this.props;
         return(
           
             <div>
@@ -60,6 +60,7 @@ class MarkersPanel extends Component {
                     sendArray={foundedPlaces}
                     sortedMarkers = {this.props.sortingMarkers}
                     {...[foundedPlaces]}
+                    clickInfoWindow={clickInfoWindow}
                     />
                 </Alert>
             </div>
