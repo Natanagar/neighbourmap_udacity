@@ -8,7 +8,8 @@ import Places from './components/map/places';
 import './App.css';
 import ErrorBoundary from './components/HandleError';
 import escapeRegExp from 'escape-string-regexp';
-import sortBy from 'sort-by'; 
+import sortBy from 'sort-by';
+import axios from 'axios';
 
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
     this.getValueFromMarkerPanel = this.getValueFromMarkerPanel.bind(this);
     this.clickInfoWindow = this.clickInfoWindow.bind(this);
     this.getContentInfoWindow = this.getContentInfoWindow.bind(this);
+    this.getMapFromMapJS = this.getMapFromMapJS.bind(this);
   } 
   state = {
     width : 0,
@@ -33,6 +35,56 @@ class App extends Component {
     content : ''
 }
 
+ //authentification user flickr
+ fetchDataFromFlickr = ()=> {
+  let flickrProperties = {
+    apikey : `dc1fa29f1d6ba587a26ef719ef5f1107`,
+    format : `json`,
+    method : `flickr.photos.search`,
+    radius : 5,
+  };
+  const url = `https://api.flickr.com/services/rest/?method=${flickrProperties.method}&
+  api_key=${flickrProperties.apikey}&tags=Kielce&radius=${flickrProperties.radius}&format=${flickrProperties.format}&nojsoncallback=1`;
+
+  //response with axios
+  axios.get(url)
+  .then((response) => {
+    if (response.status >= 200 && response.status < 300) {
+        return response;
+    } else {
+        let error = new Error(response.statusText);
+        error.response = response;
+        throw error
+    }
+    })
+    .then((response) => {
+    if (response.headers['content-type'] !== 'application/json') {
+        let error = new Error('This is uncorrect response from server');
+        error.response = response;
+        throw error
+    }
+    return response.data;
+    })
+    .then((json) => {
+        let arrayPics = json.photos.photo;
+        //console.log(arrayPics);
+        let photo = arrayPics.filter(pic => pic.ispublic & !(pic.isfamily) & !(pic.isfriend))[0]
+        
+        let imageFromFlickr = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
+            authorPics = `http://www.flickr.com/photos/${photo.owner}/${photo.id}`;
+          this.setState({
+            content : `<div className="infowindow">
+              <img src=${imageFromFlickr} alt='photo' />
+              <img src=${authorPics} alt='author'> by the ${authorPics}</img>
+          </div>`
+          }) 
+      })  
+          
+    .catch((error) => {
+     console.log(error);
+   });
+}; 
+
  //get array with infoWindow
  getArrayInfoWindow(arrayInfoWindow){
 
@@ -43,7 +95,11 @@ class App extends Component {
    }
    //array with infoWindow
  }
-
+getMapFromMapJS = (map) => {
+  if(this.state.map !== map){
+    this.setState({map : map})
+  }
+}
 //get array with markers from map component
  getArrayMarkers(arrayWithMarkers){
    if(this.state.allMarkers !== arrayWithMarkers){
@@ -72,10 +128,14 @@ clickInfoWindow = (event, element) => {
   console.log(placeID);
   let { allMarkers } = this.state;
   
+  
   let marker = allMarkers.filter(marker => marker.id == placeID);
-  let marker.infowindow = infowindow;
-  infowindow.setContent(this.state.content);
   console.log(marker);
+  let { map } = this.state;
+  this.fetchDataFromFlickr();
+  this.bindInfoWindow(marker, map);
+  
+  //console.log(marker);
   /*for(let i=0; i < allMarkers.length; i++){
      if(allMarkers[i].id == placeID){
       console.log(allMarkers[i].id);
@@ -86,6 +146,14 @@ clickInfoWindow = (event, element) => {
   //let marker  = allMarkers.filter(marker => marker.get('id') === placeID)
   //console.log(marker);
 }
+bindInfoWindow = (marker, map, infowindow, content) =>{
+  console.log (`<div className = "infowindow">Infowindow</div>`);
+  console.log(this.state.content);
+  window.google.maps.event.addListener(marker, 'click', function() {
+      infowindow.setContent(this.state.content);
+      infowindow.open(map, marker);
+  });
+} 
 
 //get array with sorting places from markerlist
 getFoundPlaces = (foundedPlaces) => {
@@ -118,7 +186,7 @@ getContentInfoWindow = (content) => {
 }
   //new window.google.maps.event.trigger(marker, 'click'); */
   render(){
-
+    console.log(this.state.map)
     //const marker = this.state.markers.filter(marker => {marker.id===markerID})
       return (
         <Container className="App">
@@ -159,6 +227,7 @@ getContentInfoWindow = (content) => {
                 getArrayMarkers={this.getArrayMarkers}
                 getArrayInfoWindow={this.getArrayInfoWindow}
                 getContentInfoWindow={event => this.getContentInfoWindow}
+                getMapFromMapJS={this.getMapFromMapJS}
                 
                 />
               </ErrorBoundary>

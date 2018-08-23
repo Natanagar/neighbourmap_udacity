@@ -21,11 +21,12 @@ class Map extends Component {
     arrayWithMarkers: [],
     arrayInfoWindow : [],
     content : '',
+    map: false
   }
   
 
   //authentification user flickr
-  fetchDataFromFlickr = ()=> {
+ /* fetchDataFromFlickr = ()=> {
     let flickrProperties = {
       apikey : `dc1fa29f1d6ba587a26ef719ef5f1107`,
       format : `json`,
@@ -72,7 +73,7 @@ class Map extends Component {
       .catch((error) => {
        console.log(error);
      });
-  }; 
+  }; */
   
   //Set timeout to check if the Map is loaded
   checkTheMapIsLoaded = (timer) => {
@@ -133,6 +134,7 @@ window.onload = this.loadScript;
   };
 
   let map = new google.maps.Map(this.myMapContainer.current, optionMap);
+  this.setState({map});
   let styledMapType = new google.maps.StyledMapType(styledMap,{name: 'Styled Map'}); 
   //Associate the styled map with the MapTypeId and set it to display.
   map.mapTypes.set('styled_map', styledMapType);
@@ -159,7 +161,7 @@ this.checkConnection();
             lng = place.location.lng;
             
             
-        this.fetchDataFromFlickr(); 
+       // this.fetchDataFromFlickr(); 
         let {imageFlickr, authorFlickr} = this.state;
         //create infoWindow
         let infowindow = new google.maps.InfoWindow({
@@ -199,8 +201,8 @@ this.checkConnection();
       });
     
     marker.infowindow = infowindow;
+    infowindow.marker = marker;
   
-  console.log(marker.infowindow)  
   //open infowindow
 marker.addListener('click', function() {
   infowindow.open(map, marker);
@@ -257,8 +259,10 @@ marker.addListener('click', function () {
 
     render(){
       let arrayWithMarkers = this.state.arrayWithMarkers;
+      //arrayWithMarkers.map(marker => console.log(marker.infowindow));
       let arrayInfoWindow = this.state.arrayInfoWindow;
-      this.props.getContentInfoWindow(this.state.content);
+      // this.props.getContentInfoWindow(this.state.content);
+      this.props.getMapFromMapJS(this.state.map);
       
       
         return(
