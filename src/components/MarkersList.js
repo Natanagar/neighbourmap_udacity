@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 const MarkersList = (props) =>{   
    let places = props[0] 
+   
     return(
       
         <div>
@@ -18,7 +19,7 @@ const MarkersList = (props) =>{
                         <li id={place.id} 
                             key={place.id}
                             onClick={(event) => props.sortedMarkers(event)}
-                            onKeyDown={() => props.clickInfoWindow}
+                            onMouseUp={(event) => props.clickInfoWindow(event)}
                             >
                             <div className="markerList"
                                 role={'menuitem'}

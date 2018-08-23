@@ -20,16 +20,16 @@ class MarkersPanel extends Component {
     
 
 
-        handleChange = (event, props)=>{
+    handleChange = (event, props)=>{
                 
-                    const match = new RegExp(escapeRegExp(this.state.value, 'i'));
-                    const value = event.target.value.substr(0,20);
-                    const foundedPlaces = this.state.foundedPlaces.filter((place)=>match.test(place.name)).sort(sortBy('name'));
-                    this.setState( {value, foundedPlaces}, () => {
-                        this.props.getPlaces(this.state.foundedPlaces)
-                    });
+        const match = new RegExp(escapeRegExp(this.state.value, 'i'));
+        const value = event.target.value.substr(0,20);
+        const foundedPlaces = this.state.foundedPlaces.filter((place)=>match.test(place.name)).sort(sortBy('name'));
+        this.setState( {value, foundedPlaces}, () => {
+        this.props.getPlaces(this.state.foundedPlaces)
+    });
             
-        }
+}
     onClearInput = () =>{
         this.setState(this.initialState())
     }  
@@ -59,8 +59,9 @@ class MarkersPanel extends Component {
                     tabIndex="0"
                     sendArray={foundedPlaces}
                     sortedMarkers = {this.props.sortingMarkers}
+                    clickInfoWindow={this.props.clickInfoWindow}
                     {...[foundedPlaces]}
-                    clickInfoWindow={clickInfoWindow}
+                    
                     />
                 </Alert>
             </div>

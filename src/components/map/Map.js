@@ -198,8 +198,9 @@ this.checkConnection();
         labelStyle: {opacity: 0.75}
       });
     
+    marker.infowindow = infowindow;
   
-      
+  console.log(marker.infowindow)  
   //open infowindow
 marker.addListener('click', function() {
   infowindow.open(map, marker);
@@ -216,6 +217,7 @@ marker.addListener('click', function () {
   this.state.arrayWithMarkers.push(marker);
   //console.log(this.state.arrayWithMarkers);
   this.props.getArrayMarkers(this.state.arrayWithMarker);
+
 
   
 })
@@ -256,7 +258,7 @@ marker.addListener('click', function () {
     render(){
       let arrayWithMarkers = this.state.arrayWithMarkers;
       let arrayInfoWindow = this.state.arrayInfoWindow;
-      console.log(this.state.content)
+      this.props.getContentInfoWindow(this.state.content);
       
       
         return(
@@ -265,6 +267,7 @@ marker.addListener('click', function () {
             onKeyDown = {() => this.getInfoAboutMarkers}
             sendArray = {this.props.getArrayMarkers(arrayWithMarkers)} 
             onClick = {() => this.props.getArrayInfoWindow(arrayInfoWindow)}
+            
             />
         )
     }

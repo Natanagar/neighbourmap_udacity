@@ -29,7 +29,8 @@ class App extends Component {
     allMarkers : [],
     foundedPlaces : [],
     map : false,
-    value : ""
+    value : "",
+    content : ''
 }
 
  //get array with infoWindow
@@ -66,8 +67,24 @@ class App extends Component {
 }
 
 //click to InfoWindow and add new Content
-clickInfoWindow = (event) => {
-  console.log('yoyoyoy');
+clickInfoWindow = (event, element) => {
+  let placeID = event.currentTarget.id;
+  console.log(placeID);
+  let { allMarkers } = this.state;
+  
+  let marker = allMarkers.filter(marker => marker.id == placeID);
+  let marker.infowindow = infowindow;
+  infowindow.setContent(this.state.content);
+  console.log(marker);
+  /*for(let i=0; i < allMarkers.length; i++){
+     if(allMarkers[i].id == placeID){
+      console.log(allMarkers[i].id);
+     }
+    }*/
+  
+  
+  //let marker  = allMarkers.filter(marker => marker.get('id') === placeID)
+  //console.log(marker);
 }
 
 //get array with sorting places from markerlist
@@ -82,18 +99,26 @@ getFoundPlaces = (foundedPlaces) => {
  }
 //get value from MarkerPanel
 getValueFromMarkerPanel = (value) => {
-  if(value !== this.state.value){
+  if(value !== this.state.value){ 
     this.setState({
       value : value
     })
   }
 }
 //get content from Map.js
-getContentInfoWindow = (event) => {
-  console.log('click-click')
+getContentInfoWindow = (content) => {
+  if(content !== this.state.content){
+    this.setState({
+      content : content
+    })
+  }
+    
+  
+  
 }
   //new window.google.maps.event.trigger(marker, 'click'); */
   render(){
+
     //const marker = this.state.markers.filter(marker => {marker.id===markerID})
       return (
         <Container className="App">
@@ -133,7 +158,7 @@ getContentInfoWindow = (event) => {
                 openInfoWindow={event => this.showInfowindow }
                 getArrayMarkers={this.getArrayMarkers}
                 getArrayInfoWindow={this.getArrayInfoWindow}
-                getContentInfoWindow={this.getContentInfoWindow}
+                getContentInfoWindow={event => this.getContentInfoWindow}
                 
                 />
               </ErrorBoundary>
