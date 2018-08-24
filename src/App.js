@@ -7,8 +7,6 @@ import Footer from './components/Footer';
 import Places from './components/map/places';
 import './App.css';
 import ErrorBoundary from './components/HandleError';
-import escapeRegExp from 'escape-string-regexp';
-import sortBy from 'sort-by';
 import axios from 'axios';
 
 
@@ -72,13 +70,13 @@ class App extends Component {
         
         let imageFromFlickr = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
             authorPics = `http://www.flickr.com/photos/${photo.owner}/${photo.id}`;
-          this.setState({
-            content : `<div className="infowindow">
-              <img src=${imageFromFlickr} alt='photo' />
-              <img src=${authorPics} alt='author'> by the ${authorPics}</img>
-          </div>`
-          }) 
-      })  
+            this.setState({
+              content : `<div className="infowindow">
+              <a href=${imageFromFlickr} alt='photo' >Pics from Flickr</a>
+              <a href=${authorPics} alt='author'> by the ${authorPics}</a>
+            </div>`}) ;
+          })
+          
           
     .catch((error) => {
      console.log(error);
@@ -112,11 +110,12 @@ getMapFromMapJS = (map) => {
  sortingMarkers = (event, element) => {
   let filterPlaces = this.state.foundPlacesFromMarkerPanel;
   let markers = Array.from(this.state.allMarkers);
-  let placeID = event.currentTarget.id;
   for(let i=0; i< filterPlaces.length; i++){
     for(let a=0; a<markers.length; a++){
       if(markers[a].get('id') === filterPlaces[i].id){
-          markers[a].setVisible(true)
+          markers[a].setVisible(true);
+          let { map } = this.state;
+          this.bindInfoWindow(markers[a], map)
       } else {markers[a].setVisible(false)}
     }
   }
@@ -125,35 +124,25 @@ getMapFromMapJS = (map) => {
 //click to InfoWindow and add new Content
 clickInfoWindow = (event, element) => {
   let placeID = event.currentTarget.id;
-  console.log(placeID);
+  //console.log(placeID);
   let { allMarkers } = this.state;
   
   
   let marker = allMarkers.filter(marker => marker.id == placeID);
-  console.log(marker);
+  //console.log(marker);
   let { map } = this.state;
   this.fetchDataFromFlickr();
   this.bindInfoWindow(marker, map);
   
-  //console.log(marker);
-  /*for(let i=0; i < allMarkers.length; i++){
-     if(allMarkers[i].id == placeID){
-      console.log(allMarkers[i].id);
-     }
-    }*/
-  
-  
-  //let marker  = allMarkers.filter(marker => marker.get('id') === placeID)
-  //console.log(marker);
 }
-bindInfoWindow = (marker, map, infowindow, content) =>{
-  console.log (`<div className = "infowindow">Infowindow</div>`);
-  console.log(this.state.content);
-  window.google.maps.event.addListener(marker, 'click', function() {
-      infowindow.setContent(this.state.content);
-      infowindow.open(map, marker);
-  });
-} 
+bindInfoWindow = (marker, map, content, event) =>{
+  console.log(marker);
+  let html = this.state.content;
+  let infowindow = marker.infowindow;
+   infowindow.setContent(html);
+   infowindow.open(map.marker);
+  };
+ 
 
 //get array with sorting places from markerlist
 getFoundPlaces = (foundedPlaces) => {
@@ -180,14 +169,10 @@ getContentInfoWindow = (content) => {
       content : content
     })
   }
-    
-  
-  
+
 }
-  //new window.google.maps.event.trigger(marker, 'click'); */
-  render(){
-    console.log(this.state.map)
-    //const marker = this.state.markers.filter(marker => {marker.id===markerID})
+
+  render(){ 
       return (
         <Container className="App">
           <Row>

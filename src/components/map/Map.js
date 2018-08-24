@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import './Map.css';
 import Places from './places';
-import axios from 'axios';
 import styledMap from './styledMap';
-//import { AsyncResource } from 'async_hooks';
 /* global google */
-/*import { url } from 'inspector';*/
 
-//global variable
+
 
 
 class Map extends Component {
@@ -23,57 +20,6 @@ class Map extends Component {
     content : '',
     map: false
   }
-  
-
-  //authentification user flickr
- /* fetchDataFromFlickr = ()=> {
-    let flickrProperties = {
-      apikey : `dc1fa29f1d6ba587a26ef719ef5f1107`,
-      format : `json`,
-      method : `flickr.photos.search`,
-      radius : 5,
-    };
-    const url = `https://api.flickr.com/services/rest/?method=${flickrProperties.method}&
-    api_key=${flickrProperties.apikey}&tags=Kielce&radius=${flickrProperties.radius}&format=${flickrProperties.format}&nojsoncallback=1`;
-
-    //response with axios
-    axios.get(url)
-    .then((response) => {
-      if (response.status >= 200 && response.status < 300) {
-          return response;
-      } else {
-          let error = new Error(response.statusText);
-          error.response = response;
-          throw error
-      }
-      })
-      .then((response) => {
-      if (response.headers['content-type'] !== 'application/json') {
-          let error = new Error('This is uncorrect response from server');
-          error.response = response;
-          throw error
-      }
-      return response.data;
-      })
-      .then((json) => {
-          let arrayPics = json.photos.photo;
-          //console.log(arrayPics);
-          let photo = arrayPics.filter(pic => pic.ispublic & !(pic.isfamily) & !(pic.isfriend))[0]
-          
-          let imageFromFlickr = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
-              authorPics = `http://www.flickr.com/photos/${photo.owner}/${photo.id}`;
-            this.setState({
-              content : `<div className="infowindow">
-                <img src=${imageFromFlickr} alt='photo' />
-                <img src=${authorPics} alt='author'> by the ${authorPics}</img>
-            </div>`
-            }) 
-        })  
-            
-      .catch((error) => {
-       console.log(error);
-     });
-  }; */
   
   //Set timeout to check if the Map is loaded
   checkTheMapIsLoaded = (timer) => {
@@ -95,7 +41,6 @@ class Map extends Component {
   loadScript = (url, callback) => {
     let script = document.createElement("script");
     script.type = "text/javascript";
-    const google_key = 'AIzaSyDk1ofIQBQEDmSeVrt1PU0FmokyLWp2KvQ';
     script.src = "https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDk1ofIQBQEDmSeVrt1PU0FmokyLWp2KvQ&sensor=false"
     script.onreadystatechange = callback;
     script.onload = callback;
@@ -147,7 +92,7 @@ this.checkConnection();
             
       //type of icons in markers  
       let defaultIcon = makeMarkerIcon('558000');
-      let highlightedIcon = makeMarkerIcon('FFFF24');
+      //let highlightedIcon = makeMarkerIcon('FFFF24');
 
   
         
@@ -155,24 +100,22 @@ this.checkConnection();
       Places.map((place)=>{
         
         let title = place.name,
-            image = place.img,
-            id = place.id,
-            lat = place.location.lat,
-            lng = place.location.lng;
+            id = place.id;
             
             
        // this.fetchDataFromFlickr(); 
         let {imageFlickr, authorFlickr} = this.state;
         //create infoWindow
+        let style = {
+          'width': '300px',
+          'borderRadius' : '5px',
+          'backgroundColor' : "#ffe6e6"
+        }
         let infowindow = new google.maps.InfoWindow({
-              content : `<div className="infowindow">
+              content : `<div className="infowindow" style={style}>
                           <h3>${title}</h3>
                             <span>${place.site}</span>
                             <span>tel. ${place.phone}</span>
-                            <div>
-                              <img src=${imageFlickr} alt=${title} />
-                              <img src=${authorFlickr} alt='author'> by the ${authorFlickr}</img>
-                            </div>
                           </div>`
             });
           infowindow.addListener('closeclick', (() => infowindow.setMarker = null));
@@ -241,21 +184,6 @@ marker.addListener('click', function () {
     
 
 }
-/*createInfoWindow = (props) => {
-  this.props.places.map(place => {
-    let infowindow = new google.maps.InfoWindow({
-      content : `<div className="infowindow">
-                  <h3>${place.title}</h3>
-                    <span>${place.site}</span>
-                    <span>tel. ${place.phone}</span>
-                    <div>
-                      <img src=${place.image} alt=${place.title} />
-                    </div>
-                  </div>`
-                });
-              })
-            });*/
-
 
     render(){
       let arrayWithMarkers = this.state.arrayWithMarkers;

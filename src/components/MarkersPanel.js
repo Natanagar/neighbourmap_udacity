@@ -59,7 +59,7 @@ class MarkersPanel extends Component {
                     tabIndex="0"
                     sendArray={foundedPlaces}
                     sortedMarkers = {this.props.sortingMarkers}
-                    clickInfoWindow={this.props.clickInfoWindow}
+                    clickInfoWindow={this.props.clickInfoWindow}    
                     {...[foundedPlaces]}
                     
                     />
