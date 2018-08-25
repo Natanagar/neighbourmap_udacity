@@ -26,7 +26,7 @@ class MarkersPanel extends Component {
     render(){  
     //console.log(this.props.handleChangePlacesAndMarkers)
     
-    const {foundedPlaces, value} = this.state;
+    const {foundPlaces, value} = this.state;
     let { clickInfoWindow, places } = this.props;
 
         return(
@@ -47,7 +47,7 @@ class MarkersPanel extends Component {
                     role='menu'
                     className="marker-list"
                     tabIndex="0"
-                    sendArray={foundedPlaces}
+                    sendArray={foundPlaces}
                     sortedMarkers = {this.props.sortingMarkers}
                     clickInfoWindow={this.props.clickInfoWindow}
                     changePlaces={this.props.handleChangePlacesAndMarkers}   

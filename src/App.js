@@ -29,7 +29,7 @@ class App extends Component {
     Places : Places,
     InfoWindow : [],
     allMarkers : [],
-    foundedPlaces : Places,
+    foundPlaces : Places,
     map : false,
     value : "",
     content : ''
@@ -67,34 +67,23 @@ onClearInput = () =>{
 
 handleChangePlacesAndMarkers(event, element){
   const match = new RegExp(escapeRegExp(this.state.value, 'i'));
-  const foundPlaces = this.state.foundedPlaces.filter((place)=>match.test(place.name));
-  if (foundPlaces !== this.state.foundedPlaces) 
+  const sortedPlaces = this.state.foundPlaces.filter((place)=>match.test(place.name));
+  if (sortedPlaces !== this.state.foundPlaces) 
     this.setState({
-      foundedPlaces : foundPlaces.sort(sortBy('name'))
+      foundPlaces : sortedPlaces.sort(sortBy('name'))
     });
     this.sortingMarkers();
 }
  // open and close InfoWindow
  sortingMarkers = (event, element) => {
-   console.log("banana");
-   console.log( this.state.foundPlacesFromMarkerPanel);
-  /*const { foundedPlaces, allMarkers } = this.state;
-  for(let i=0; i<foundedPlaces.length; i++){
-    for(let a=0; a < allMarkers.length; i++){
-      //console.log(allMarkers[a].id)
-    }
-  }*/
-  /*let markers = Array.from(this.state.allMarkers);
-  for(let i=0; i< foundPlaces.length; i++){
-    for(let a=0; a<markers.length; a++){
-      if(markers[a].get('id') === foundPlaces[i].id){
-          markers[a].setVisible(true);
-          let { map } = this.state;
-          this.bindInfoWindow(markers[a], map)
-      } else {markers[a].setVisible(false)}
-    }
-  }*/
-}
+  const { foundPlaces, allMarkers, map } = this.state;
+  console.log(foundPlaces, allMarkers);
+  //logics with compare markers maybe reduce
+  this.fetchDataFromFlickr();
+  console.log(this.state.content)
+    
+
+  }
 
 //click to InfoWindow and add new Content
 clickInfoWindow = (event, element) => {
@@ -186,7 +175,7 @@ getContentInfoWindow = (content) => {
 
 
   render(){ 
-    const { foundedPlaces } = this.state;
+    const { foundPlaces } = this.state;
       return (
         <Container className="App">
           <Row>
@@ -208,7 +197,7 @@ getContentInfoWindow = (content) => {
               getValueFromMarkerPanel={this.getValueFromMarkerPanel}
               clickInfoWindow={this.clickInfoWindow}
               handleChangePlacesAndMarkers={this.handleChangePlacesAndMarkers}
-              places = {foundedPlaces}
+              places = {foundPlaces}
              
               />
             </Col>
