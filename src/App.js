@@ -8,6 +8,8 @@ import Places from './components/map/places';
 import './App.css';
 import ErrorBoundary from './components/HandleError';
 import axios from 'axios';
+import escapeRegExp from 'escape-string-regexp';
+import sortBy from 'sort-by';
 
 
 class App extends Component {
@@ -19,21 +21,120 @@ class App extends Component {
     this.clickInfoWindow = this.clickInfoWindow.bind(this);
     this.getContentInfoWindow = this.getContentInfoWindow.bind(this);
     this.getMapFromMapJS = this.getMapFromMapJS.bind(this);
+    this.handleChangePlacesAndMarkers = this.handleChangePlacesAndMarkers.bind(this);
   } 
   state = {
     width : 0,
     height : 0,
     Places : Places,
-    foundPlacesFromMarkerPanel : [],
     InfoWindow : [],
     allMarkers : [],
-    foundedPlaces : [],
+    foundedPlaces : Places,
     map : false,
     value : "",
     content : ''
 }
 
- //authentification user flickr
+
+ //get array with infoWindow
+ getArrayInfoWindow(arrayInfoWindow){
+
+   if(arrayInfoWindow !== this.state.InfoWindow){
+      this.setState({
+        InfoWindow : arrayInfoWindow
+    })
+   }
+   //array with infoWindow
+ }
+getMapFromMapJS = (map) => {
+  if(this.state.map !== map){
+    this.setState({map : map})
+  }
+}
+//get array with markers from map component
+ getArrayMarkers(arrayWithMarkers){
+   if(this.state.allMarkers !== arrayWithMarkers){
+    this.setState({
+      allMarkers : arrayWithMarkers
+    })
+  }
+}
+
+
+onClearInput = () =>{
+  console.log('clear')
+} 
+
+handleChangePlacesAndMarkers(event, element){
+  const match = new RegExp(escapeRegExp(this.state.value, 'i'));
+  const foundPlaces = this.state.foundedPlaces.filter((place)=>match.test(place.name));
+  if (foundPlaces !== this.state.foundedPlaces) 
+    this.setState({
+      foundedPlaces : foundPlaces.sort(sortBy('name'))
+    });
+    this.sortingMarkers();
+}
+ // open and close InfoWindow
+ sortingMarkers = (event, element) => {
+   console.log("banana");
+   console.log( this.state.foundPlacesFromMarkerPanel);
+  /*const { foundedPlaces, allMarkers } = this.state;
+  for(let i=0; i<foundedPlaces.length; i++){
+    for(let a=0; a < allMarkers.length; i++){
+      //console.log(allMarkers[a].id)
+    }
+  }*/
+  /*let markers = Array.from(this.state.allMarkers);
+  for(let i=0; i< foundPlaces.length; i++){
+    for(let a=0; a<markers.length; a++){
+      if(markers[a].get('id') === foundPlaces[i].id){
+          markers[a].setVisible(true);
+          let { map } = this.state;
+          this.bindInfoWindow(markers[a], map)
+      } else {markers[a].setVisible(false)}
+    }
+  }*/
+}
+
+//click to InfoWindow and add new Content
+clickInfoWindow = (event, element) => {
+  let placeID = event.currentTarget.id;
+  //console.log(placeID);
+  let { allMarkers } = this.state;
+  
+  
+  let marker = allMarkers.filter(marker => marker.id == placeID);
+  //console.log(marker);
+  let { map } = this.state;
+  this.fetchDataFromFlickr();
+  this.bindInfoWindow(marker, map);
+  
+}
+bindInfoWindow = (marker, map, content, event) =>{
+  let html = this.state.content;
+  let infowindow = marker.infowindow;
+   infowindow.setContent(html);
+   infowindow.open(map.marker);
+  };
+ 
+//get value from MarkerPanel
+getValueFromMarkerPanel = (value) => {
+  if(value !== this.state.value){ 
+    this.setState({
+      value : value
+    })
+  }
+}
+//get content from Map.js
+getContentInfoWindow = (content) => {
+  if(content !== this.state.content){
+    this.setState({
+      content : content
+    })
+  }
+
+}
+   //authentification user flickr
  fetchDataFromFlickr = ()=> {
   let flickrProperties = {
     apikey : `dc1fa29f1d6ba587a26ef719ef5f1107`,
@@ -83,96 +184,9 @@ class App extends Component {
    });
 }; 
 
- //get array with infoWindow
- getArrayInfoWindow(arrayInfoWindow){
-
-   if(arrayInfoWindow !== this.state.InfoWindow){
-      this.setState({
-        InfoWindow : arrayInfoWindow
-    })
-   }
-   //array with infoWindow
- }
-getMapFromMapJS = (map) => {
-  if(this.state.map !== map){
-    this.setState({map : map})
-  }
-}
-//get array with markers from map component
- getArrayMarkers(arrayWithMarkers){
-   if(this.state.allMarkers !== arrayWithMarkers){
-    this.setState({
-      allMarkers : arrayWithMarkers
-    })
-  }
-}
- // open and close InfoWindow
- sortingMarkers = (event, element) => {
-  let filterPlaces = this.state.foundPlacesFromMarkerPanel;
-  let markers = Array.from(this.state.allMarkers);
-  for(let i=0; i< filterPlaces.length; i++){
-    for(let a=0; a<markers.length; a++){
-      if(markers[a].get('id') === filterPlaces[i].id){
-          markers[a].setVisible(true);
-          let { map } = this.state;
-          this.bindInfoWindow(markers[a], map)
-      } else {markers[a].setVisible(false)}
-    }
-  }
-}
-
-//click to InfoWindow and add new Content
-clickInfoWindow = (event, element) => {
-  let placeID = event.currentTarget.id;
-  //console.log(placeID);
-  let { allMarkers } = this.state;
-  
-  
-  let marker = allMarkers.filter(marker => marker.id == placeID);
-  //console.log(marker);
-  let { map } = this.state;
-  this.fetchDataFromFlickr();
-  this.bindInfoWindow(marker, map);
-  
-}
-bindInfoWindow = (marker, map, content, event) =>{
-  console.log(marker);
-  let html = this.state.content;
-  let infowindow = marker.infowindow;
-   infowindow.setContent(html);
-   infowindow.open(map.marker);
-  };
- 
-
-//get array with sorting places from markerlist
-getFoundPlaces = (foundedPlaces) => {
-  
-  if(foundedPlaces !== this.state.foundPlacesFromMarkerPanel){
-     this.setState({
-       foundPlacesFromMarkerPanel : foundedPlaces
-     })
-     //console.log(this.state.foundPlacesFromMarkerPanel)
-  }
- }
-//get value from MarkerPanel
-getValueFromMarkerPanel = (value) => {
-  if(value !== this.state.value){ 
-    this.setState({
-      value : value
-    })
-  }
-}
-//get content from Map.js
-getContentInfoWindow = (content) => {
-  if(content !== this.state.content){
-    this.setState({
-      content : content
-    })
-  }
-
-}
 
   render(){ 
+    const { foundedPlaces } = this.state;
       return (
         <Container className="App">
           <Row>
@@ -193,6 +207,8 @@ getContentInfoWindow = (content) => {
               getPlaces={this.getFoundPlaces}
               getValueFromMarkerPanel={this.getValueFromMarkerPanel}
               clickInfoWindow={this.clickInfoWindow}
+              handleChangePlacesAndMarkers={this.handleChangePlacesAndMarkers}
+              places = {foundedPlaces}
              
               />
             </Col>
@@ -213,6 +229,7 @@ getContentInfoWindow = (content) => {
                 getArrayInfoWindow={this.getArrayInfoWindow}
                 getContentInfoWindow={event => this.getContentInfoWindow}
                 getMapFromMapJS={this.getMapFromMapJS}
+                handleChangePlacesAndMarkers = {this.handleChangePlacesAndMarkers}
                 
                 />
               </ErrorBoundary>

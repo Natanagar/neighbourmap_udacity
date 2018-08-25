@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 
 
 const SearchBar = (props) => {
-  
-        return(
+       
+    return(
         
             <div>
                 <Alert>

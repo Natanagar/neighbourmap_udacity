@@ -8,37 +8,27 @@ import sortBy from 'sort-by';
 
 class MarkersPanel extends Component {
     constructor(props){
-        super(props);
-       
-        
+        super(props); 
+    this.handleChange = this.handleChange.bind(this); 
+}
+    state = {
+        value : ''
     }
-    initialState = () => ({
-        value: '',
-        foundedPlaces: this.props.listOfMarkers
-    })
-    state = this.initialState()
-    
-
 
     handleChange = (event, props)=>{
-                
-        const match = new RegExp(escapeRegExp(this.state.value, 'i'));
-        const value = event.target.value.substr(0,20);
-        const foundedPlaces = this.state.foundedPlaces.filter((place)=>match.test(place.name)).sort(sortBy('name'));
-        this.setState( {value, foundedPlaces}, () => {
-        this.props.getPlaces(this.state.foundedPlaces)
-    });
-            
-}
-    onClearInput = () =>{
-        this.setState(this.initialState())
-    }  
+       this.setState({
+            value : event.target.value.substr(0,20)
+       }) 
+       this.props.handleChangePlacesAndMarkers();       
+    }
 
 
     render(){  
+    //console.log(this.props.handleChangePlacesAndMarkers)
     
     const {foundedPlaces, value} = this.state;
-    let { clickInfoWindow } = this.props;
+    let { clickInfoWindow, places } = this.props;
+
         return(
           
             <div>
@@ -46,8 +36,8 @@ class MarkersPanel extends Component {
                 
                     <SearchBar 
                     value={this.state.value}
-                    sendValue={this.props.getValueFromMarkerPanel(value)}
-                    onHandleChange={this.handleChange.bind(this)}
+                    sendValue={this.props.getValueFromMarkerPanel(value)}//
+                    onHandleChange={this.handleChange}
                     onClearInput={this.onClearInput}
                     aria-label="Filter markers form"
                     role="search"
@@ -59,8 +49,10 @@ class MarkersPanel extends Component {
                     tabIndex="0"
                     sendArray={foundedPlaces}
                     sortedMarkers = {this.props.sortingMarkers}
-                    clickInfoWindow={this.props.clickInfoWindow}    
-                    {...[foundedPlaces]}
+                    clickInfoWindow={this.props.clickInfoWindow}
+                    changePlaces={this.props.handleChangePlacesAndMarkers}   
+                    places={places}
+                    //{...[foundedPlaces]}
                     
                     />
                 </Alert>

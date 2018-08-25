@@ -184,6 +184,9 @@ marker.addListener('click', function () {
     
 
 }
+//componentWillMount(){
+ // this.props.getMapFromMapJS(this.state.map);
+//}
 
     render(){
       let arrayWithMarkers = this.state.arrayWithMarkers;
