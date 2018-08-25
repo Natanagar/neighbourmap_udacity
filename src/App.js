@@ -78,14 +78,24 @@ handleChangePlacesAndMarkers(event, element){
  sortingMarkers = (event, element) => {
   const { foundPlaces, allMarkers, map } = this.state;
   console.log(foundPlaces, allMarkers);
+  
   //logics with compare markers maybe reduce
   // ОПОЗДАНИЕ СО Стейта!!!
   allMarkers.forEach((marker)=>{
+    this.fetchDataFromFlickr(); 
     let toogle = foundPlaces.find(place => place.id === marker.id) ? true : false
      marker.setVisible(toogle);
+     //change content infowindow
+     this.changeContentInfoWindow(marker);
   })
-  this.fetchDataFromFlickr();
-  console.log(this.state.content)
+  
+}
+
+//change content infowndow
+changeContentInfoWindow = (marker) => {
+ if (marker.getVisible) {
+  marker.infowindow.setContent(this.state.content);
+ }
 }
 
 //click to InfoWindow and add new Content
