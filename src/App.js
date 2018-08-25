@@ -79,11 +79,14 @@ handleChangePlacesAndMarkers(event, element){
   const { foundPlaces, allMarkers, map } = this.state;
   console.log(foundPlaces, allMarkers);
   //logics with compare markers maybe reduce
+  // ОПОЗДАНИЕ СО Стейта!!!
+  allMarkers.forEach((marker)=>{
+    let toogle = foundPlaces.find(place => place.id === marker.id) ? true : false
+     marker.setVisible(toogle);
+  })
   this.fetchDataFromFlickr();
   console.log(this.state.content)
-    
-
-  }
+}
 
 //click to InfoWindow and add new Content
 clickInfoWindow = (event, element) => {
