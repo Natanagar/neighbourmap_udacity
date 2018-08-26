@@ -6,39 +6,17 @@ import escapeRegExp from 'escape-string-regexp';
 import sortBy from 'sort-by';
 
 
-class MarkersPanel extends Component {
-    constructor(props){
-        super(props); 
-    this.handleChange = this.handleChange.bind(this); 
-}
-    state = {
-        value : ''
-    }
-
-    handleChange = (event, props)=>{
-       this.setState({
-            value : event.target.value.substr(0,20)
-       }) 
-       this.props.handleChangePlacesAndMarkers();       
-    }
-
-
-    render(){  
-    //console.log(this.props.handleChangePlacesAndMarkers)
+const MarkersPanel = (props) =>  {
     
-    const {foundPlaces, value} = this.state;
-    let { clickInfoWindow, places } = this.props;
-
-        return(
-          
-            <div>
+    let { clickInfoWindow, sortPlaces, value } = props;
+return(
+    <div>
                 <Alert color="secondary">
                 
                     <SearchBar 
-                    value={this.state.value}
-                    sendValue={this.props.getValueFromMarkerPanel(value)}//
-                    onHandleChange={this.handleChange}
-                    onClearInput={this.onClearInput}
+                    value={value}
+                    //sendValue={this.props.getValueFromMarkerPanel(value)}//
+                    onHandleChange={props.handleChange}
                     aria-label="Filter markers form"
                     role="search"
                     label="Filter markers"
@@ -47,17 +25,16 @@ class MarkersPanel extends Component {
                     role='menu'
                     className="marker-list"
                     tabIndex="0"
-                    sendArray={foundPlaces}
-                    sortedMarkers = {this.props.sortingMarkers}
-                    clickInfoWindow={this.props.clickInfoWindow}
-                    changePlaces={this.props.handleChangePlacesAndMarkers}   
-                    places={places}
-                    //{...[foundedPlaces]}
+                    //sendArray={foundPlaces}
+                    sortedMarkers = {props.sortingMarkers}
+                    clickInfoWindow={props.clickInfoWindow}
+                    changePlaces={props.handleChangePlacesAndMarkers}   
+                    places={sortPlaces}
                     
                     />
                 </Alert>
             </div>
-        )
-    }
+    )
 }
+
 export default MarkersPanel;

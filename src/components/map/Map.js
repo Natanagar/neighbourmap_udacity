@@ -26,10 +26,24 @@ class Map extends Component {
     this.myMapContainer = '<div class="message">Trying to load GoogleMap, please wait...</div>';
     let timeout = timer || 5000;
 
-    window.gm_authFailure = (error)=> {
+  //check authorization
+    window.gm_authFailure = (error) => {
       console.log(`error ${error}`)
       alert(`Couldn't load the Google Map. Check your internet connection`);
     } 
+
+    if(window.google && !window.google.maps) {
+          setTimeout(() => {
+              timeout += 200
+              if(timeout > 5000){
+                  this.myMapContainer.innerHTML = 'It seems that there is an internet connection error. Could not reach the GoogleMap API';
+                  return;
+              }else{
+                  console.log('TRY LOAD');
+                  this.checkTheMapIsLoaded(timeout);
+              }
+          }, 200);
+      }
   }
  
   checkConnection(){
@@ -37,36 +51,11 @@ class Map extends Component {
       alert('Check your internet connection');
     }
   }
-
-  loadScript = (url, callback) => {
-    let script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDk1ofIQBQEDmSeVrt1PU0FmokyLWp2KvQ&sensor=false"
-    script.onreadystatechange = callback;
-    script.onload = callback;
-    setTimeout(() => {
-          try{
-              if (!google || !google.maps) {
-                  //This will Throw the error if 'google' is not defined
-                 alert('Google is not defined');
-              }
-          }
-          catch (e) {
-              //You can write the code for error handling here
-              //Something like alert('Ah...Error Occurred!');
-              alert(`'Ah...Error Occurred!`);
-          }
-      }, 5000);
-    document.head.appendChild(script);
-  }
-
-  
-
  
 componentDidMount(){
+//check internet connection
+this.checkConnection();
 
-window.onload = this.loadScript;
-  
 //create googleMaps with Google API
   let optionMap = {
     center: {
@@ -79,17 +68,27 @@ window.onload = this.loadScript;
   };
 
   let map = new google.maps.Map(this.myMapContainer.current, optionMap);
+   
+  //add attribute
+  window.google.maps.event.addListener(map, "tilesloaded", function(){
+      [].slice.apply(document.querySelectorAll('.google-map-container a img')).forEach(function(item) {
+          item.setAttribute('tabindex','-1');
+      });
+  })
+
+
+  //checked load Map from googleAPI
+  this.checkTheMapIsLoaded();
+  
+  
   this.setState({map});
   let styledMapType = new google.maps.StyledMapType(styledMap,{name: 'Styled Map'}); 
   //Associate the styled map with the MapTypeId and set it to display.
   map.mapTypes.set('styled_map', styledMapType);
   map.setMapTypeId('styled_map');
   
-this.checkConnection();
 
-      //checked load Map from googleAPI
-      this.checkTheMapIsLoaded();
-            
+
       //type of icons in markers  
       let defaultIcon = makeMarkerIcon('558000');
       //let highlightedIcon = makeMarkerIcon('FFFF24');
@@ -103,8 +102,7 @@ this.checkConnection();
             id = place.id;
             
             
-       // this.fetchDataFromFlickr(); 
-        let {imageFlickr, authorFlickr} = this.state;
+      
         //create infoWindow
         let style = {
           'width': '300px',
@@ -184,15 +182,11 @@ marker.addListener('click', function () {
     
 
 }
-//componentWillMount(){
- // this.props.getMapFromMapJS(this.state.map);
-//}
+
 
     render(){
       let arrayWithMarkers = this.state.arrayWithMarkers;
-      //arrayWithMarkers.map(marker => console.log(marker.infowindow));
       let arrayInfoWindow = this.state.arrayInfoWindow;
-      // this.props.getContentInfoWindow(this.state.content);
       this.props.getMapFromMapJS(this.state.map);
       
       
@@ -200,8 +194,8 @@ marker.addListener('click', function () {
             <div ref={this.myMapContainer} 
             id="map" 
             onKeyDown = {() => this.getInfoAboutMarkers}
-            sendArray = {this.props.getArrayMarkers(arrayWithMarkers)} 
-            onClick = {() => this.props.getArrayInfoWindow(arrayInfoWindow)}
+            sendarray = {this.props.getArrayMarkers(arrayWithMarkers)} 
+            getarrayinfowindow = {this.props.getarrayinfowindow(arrayInfoWindow)}
             
             />
         )

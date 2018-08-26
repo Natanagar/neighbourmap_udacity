@@ -16,8 +16,8 @@ class App extends Component {
   constructor(props){
     super(props)
     this.getArrayMarkers = this.getArrayMarkers.bind(this);
-    this.getArrayInfoWindow = this.getArrayInfoWindow.bind(this);
-    this.getValueFromMarkerPanel = this.getValueFromMarkerPanel.bind(this);
+    this.getarrayinfowindow = this.getarrayinfowindow.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.clickInfoWindow = this.clickInfoWindow.bind(this);
     this.getContentInfoWindow = this.getContentInfoWindow.bind(this);
     this.getMapFromMapJS = this.getMapFromMapJS.bind(this);
@@ -37,8 +37,7 @@ class App extends Component {
 
 
  //get array with infoWindow
- getArrayInfoWindow(arrayInfoWindow){
-
+ getarrayinfowindow(arrayInfoWindow){
    if(arrayInfoWindow !== this.state.InfoWindow){
       this.setState({
         InfoWindow : arrayInfoWindow
@@ -60,11 +59,6 @@ getMapFromMapJS = (map) => {
   }
 }
 
-
-onClearInput = () =>{
-  console.log('clear')
-} 
-
 handleChangePlacesAndMarkers(event, element){
   const match = new RegExp(escapeRegExp(this.state.value, 'i'));
   const sortedPlaces = this.state.foundPlaces.filter((place)=>match.test(place.name));
@@ -76,11 +70,20 @@ handleChangePlacesAndMarkers(event, element){
 }
  // open and close InfoWindow
  sortingMarkers = (event, element) => {
-  const { foundPlaces, allMarkers, map } = this.state;
-  console.log(foundPlaces, allMarkers);
-  
-  //logics with compare markers maybe reduce
-  // ОПОЗДАНИЕ СО Стейта!!!
+  const { foundPlaces, allMarkers, map, value } = this.state;
+ 
+  this.withoutSorting();
+  if(value == ""){
+    this.setState({
+      foundPlaces: Places
+    })
+  }
+  if(foundPlaces.length == 0){
+    allMarkers.forEach((marker)=>{
+      marker.setVisible(false)
+    })
+  }
+   //logics with compare markers maybe reduce
   allMarkers.forEach((marker)=>{
     this.fetchDataFromFlickr(); 
     let toogle = foundPlaces.find(place => place.id === marker.id) ? true : false
@@ -90,7 +93,15 @@ handleChangePlacesAndMarkers(event, element){
   })
   
 }
-
+//sorting with zero value and foundPlaces
+withoutSorting = (value, foundPlaces) => {
+   if(value == "" && foundPlaces.length == 0){
+    this.setState({
+      foundPlaces : Places,
+      value : ''
+    })
+   }
+}
 //change content infowndow
 changeContentInfoWindow = (marker) => {
  if (marker.getVisible) {
@@ -100,31 +111,35 @@ changeContentInfoWindow = (marker) => {
 
 //click to InfoWindow and add new Content
 clickInfoWindow = (event, element) => {
+  const { map } = this.state;
   let placeID = event.currentTarget.id;
-  //console.log(placeID);
-  let { allMarkers } = this.state;
-  
-  
-  let marker = allMarkers.filter(marker => marker.id == placeID);
-  //console.log(marker);
-  let { map } = this.state;
-  this.fetchDataFromFlickr();
-  this.bindInfoWindow(marker, map);
-  
+  let { allMarkers, InfoWindow } = this.state;
+    let infowindow = InfoWindow.find(infowindow=>infowindow.marker.id == placeID)
+    let marker = infowindow.marker;
+    console.log(marker, infowindow);
+    infowindow.open(marker, map)
+    this.closeInfowindow();
+  }
+
+//close infowindow
+closeInfowindow = (infowindow) => {
+  const { map } = this.state;
+  setTimeout((
+   infowindow.close()
+  ), 2000)
 }
-bindInfoWindow = (marker, map, content, event) =>{
-  let html = this.state.content;
-  let infowindow = marker.infowindow;
-   infowindow.setContent(html);
-   infowindow.open(map.marker);
-  };
+  
  
 //get value from MarkerPanel
-getValueFromMarkerPanel = (value) => {
+handleChange = (event, value) => {
+  console.log(event.target.value)
+  
   if(value !== this.state.value){ 
     this.setState({
-      value : value
-    })
+      value : event.target.value.substr(0,20)
+    })  
+    //load algorithm sorting
+    setTimeout((this.handleChangePlacesAndMarkers()), 2000)
   }
 }
 //get content from Map.js
@@ -138,6 +153,7 @@ getContentInfoWindow = (content) => {
 }
    //authentification user flickr
  fetchDataFromFlickr = ()=> {
+  let index = Math.floor(Math.random()*(20)) + 1;
   let flickrProperties = {
     apikey : `dc1fa29f1d6ba587a26ef719ef5f1107`,
     format : `json`,
@@ -169,15 +185,16 @@ getContentInfoWindow = (content) => {
     .then((json) => {
         let arrayPics = json.photos.photo;
         //console.log(arrayPics);
-        let photo = arrayPics.filter(pic => pic.ispublic & !(pic.isfamily) & !(pic.isfriend))[0]
+        let photo = arrayPics.filter(pic => pic.ispublic & !(pic.isfamily) & !(pic.isfriend))[index]
         
         let imageFromFlickr = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
             authorPics = `http://www.flickr.com/photos/${photo.owner}/${photo.id}`;
             this.setState({
-              content : `<div className="infowindow">
-              <a href=${imageFromFlickr} alt='photo' >Pics from Flickr</a>
-              <a href=${authorPics} alt='author'> by the ${authorPics}</a>
-            </div>`}) ;
+              content : `<div className="infowindow>
+                              <img className="image"src="${imageFromFlickr}" alt ='Photo from Flickr'>
+                              <a href = ${authorPics} alt='author'> by the ${authorPics}</a>
+                            from Flickr
+                      </div>`}) ;
           })
           
           
@@ -188,7 +205,7 @@ getContentInfoWindow = (content) => {
 
 
   render(){ 
-    const { foundPlaces } = this.state;
+    const { foundPlaces, value } = this.state;
       return (
         <Container className="App">
           <Row>
@@ -207,10 +224,11 @@ getContentInfoWindow = (content) => {
               changeMarkers={this.updateMarkers}
               sortingMarkers={this.sortingMarkers}
               getPlaces={this.getFoundPlaces}
-              getValueFromMarkerPanel={this.getValueFromMarkerPanel}
+              handleChange={this.handleChange}
               clickInfoWindow={this.clickInfoWindow}
               handleChangePlacesAndMarkers={this.handleChangePlacesAndMarkers}
-              places = {foundPlaces}
+              sortPlaces = {foundPlaces}
+              value = {value}
              
               />
             </Col>
@@ -228,7 +246,7 @@ getContentInfoWindow = (content) => {
                 aria-label="google map"
                 openInfoWindow={event => this.showInfowindow }
                 getArrayMarkers={this.getArrayMarkers}
-                getArrayInfoWindow={this.getArrayInfoWindow}
+                getarrayinfowindow={this.getarrayinfowindow}
                 getContentInfoWindow={event => this.getContentInfoWindow}
                 getMapFromMapJS={this.getMapFromMapJS}
                 handleChangePlacesAndMarkers = {this.handleChangePlacesAndMarkers}
