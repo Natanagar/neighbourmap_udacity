@@ -20,6 +20,8 @@ const SearchBar = (props) => {
                                 type="text" 
                                 value ={props.value}
                                 placeholder = "Search"
+                                aria-label="search text"
+                                role = "search"
                                 onChange ={props.onHandleChange} 
                                 />
                     </InputGroup>

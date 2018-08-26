@@ -22,6 +22,8 @@ You can see in the map of Kielce (city of Poland) 21 markers.
 You can click to each markers and you'll have some information in infowindow;
 If you want to sort markers, please, sort your favourite places in the *Seach* and after them click in the marker
 
+This application use offline-first model (PWA) and works with ServiceWorker w offline mode.
+
 #### API:
 In this project was implemented two APIs:
 * [Google Maps API](https://developers.google.com/maps/documentation/embed/start)

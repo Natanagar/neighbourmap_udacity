@@ -192,7 +192,8 @@ marker.addListener('click', function () {
       
         return(
             <div ref={this.myMapContainer} 
-            id="map" 
+            id="map"
+            role="application"
             onKeyDown = {() => this.getInfoAboutMarkers}
             sendarray = {this.props.getArrayMarkers(arrayWithMarkers)} 
             getarrayinfowindow = {this.props.getarrayinfowindow(arrayInfoWindow)}

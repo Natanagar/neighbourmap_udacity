@@ -171,14 +171,19 @@ getContentInfoWindow = (content) => {
     } else {
         let error = new Error(response.statusText);
         error.response = response;
+        alert (`Error loading pics ${error}`);
         throw error
+        
+        
     }
     })
     .then((response) => {
     if (response.headers['content-type'] !== 'application/json') {
         let error = new Error('This is uncorrect response from server');
         error.response = response;
+        alert ('This is uncorrect response from server')
         throw error
+        
     }
     return response.data;
     })
@@ -200,6 +205,7 @@ getContentInfoWindow = (content) => {
           
     .catch((error) => {
      console.log(error);
+     alert(`Server can't load picture. Searching picture is not not available`);
    });
 }; 
 
