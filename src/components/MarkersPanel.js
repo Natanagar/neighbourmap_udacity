@@ -7,7 +7,7 @@ import sortBy from 'sort-by';
 
 
 const MarkersPanel = (props) =>  {
-    
+
     let { clickInfoWindow, sortPlaces, value } = props;
 return(
     <div>
@@ -29,7 +29,7 @@ return(
                     sortedMarkers = {props.sortingMarkers}
                     clickInfoWindow={props.clickInfoWindow}
                     changePlaces={props.handleChangePlacesAndMarkers}   
-                    places={sortPlaces}
+                    sortPlaces={sortPlaces}
                     
                     />
                 </Alert>

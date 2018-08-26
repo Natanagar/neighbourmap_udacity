@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 
 
 const MarkersList = (props) =>{   
-  const { places } = props;
-   
+  const { sortPlaces } = props;
+ 
 
    
     return(
@@ -15,7 +15,7 @@ const MarkersList = (props) =>{
         <div>
             <Alert color="light">
                 <ol>
-                    {places.map((place) => {
+                    {sortPlaces.map((place) => {
             
                         return (
                         <li id={place.id} 

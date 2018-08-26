@@ -188,7 +188,7 @@ marker.addListener('click', function () {
       let arrayWithMarkers = this.state.arrayWithMarkers;
       let arrayInfoWindow = this.state.arrayInfoWindow;
       this.props.getMapFromMapJS(this.state.map);
-      
+
       
         return(
             <div ref={this.myMapContainer} 

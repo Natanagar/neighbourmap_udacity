@@ -8,7 +8,6 @@ import Places from './components/map/places';
 import './App.css';
 import ErrorBoundary from './components/HandleError';
 import axios from 'axios';
-import escapeRegExp from 'escape-string-regexp';
 import sortBy from 'sort-by';
 
 
@@ -21,7 +20,6 @@ class App extends Component {
     this.clickInfoWindow = this.clickInfoWindow.bind(this);
     this.getContentInfoWindow = this.getContentInfoWindow.bind(this);
     this.getMapFromMapJS = this.getMapFromMapJS.bind(this);
-    this.handleChangePlacesAndMarkers = this.handleChangePlacesAndMarkers.bind(this);
   } 
   state = {
     width : 0,
@@ -52,6 +50,7 @@ getMapFromMapJS = (map) => {
 }
 //get array with markers from map component
  getArrayMarkers(arrayWithMarkers){
+   console.log(arrayWithMarkers)
    if(this.state.allMarkers !== arrayWithMarkers){
     this.setState({
       allMarkers : arrayWithMarkers
@@ -59,24 +58,39 @@ getMapFromMapJS = (map) => {
   }
 }
 
-handleChangePlacesAndMarkers(event, element){
-  const match = new RegExp(escapeRegExp(this.state.value, 'i'));
-  const sortedPlaces = this.state.foundPlaces.filter((place)=>match.test(place.name));
-  if (sortedPlaces !== this.state.foundPlaces) 
-    this.setState({
-      foundPlaces : sortedPlaces.sort(sortBy('name'))
-    });
-    this.sortingMarkers();
+//sorting marker after sorting places
+sortingMarker = (event, element) => {
+  const { foundPlaces, allMarkers, map, value } = this.state;
+  this.withoutSorting();
+//clear markers 
+  if(foundPlaces.length == 0){
+    allMarkers.forEach((marker)=>{
+      marker.setVisible(false)
+    })
+  }
+
+  //logics with compare markers maybe reduce
+  allMarkers.forEach((marker)=>{
+    this.fetchDataFromFlickr(); 
+    let toogle = foundPlaces.find(place => place.id === marker.id) ? true : false
+    marker.setVisible(toogle);
+    //change content infowindow
+    this.changeContentInfoWindow(marker);
+  })
+}
+
+//change content infowndow
+changeContentInfoWindow = (marker) => {
+if (marker.getVisible) {
+marker.infowindow.setContent(this.state.content);
+}
 }
  // open and close InfoWindow
- sortingMarkers = (event, element) => {
+ /*sortingMarkers = (event, element) => {
   const { foundPlaces, allMarkers, map, value } = this.state;
  
   this.withoutSorting();
-  if(value == ""){
-    this.setState({
-      foundPlaces: Places
-    })
+ 
   }
   if(foundPlaces.length == 0){
     allMarkers.forEach((marker)=>{
@@ -92,7 +106,7 @@ handleChangePlacesAndMarkers(event, element){
      this.changeContentInfoWindow(marker);
   })
   
-}
+}*/
 //sorting with zero value and foundPlaces
 withoutSorting = (value, foundPlaces) => {
    if(value == "" && foundPlaces.length == 0){
@@ -102,12 +116,7 @@ withoutSorting = (value, foundPlaces) => {
     })
    }
 }
-//change content infowndow
-changeContentInfoWindow = (marker) => {
- if (marker.getVisible) {
-  marker.infowindow.setContent(this.state.content);
- }
-}
+
 
 //click to InfoWindow and add new Content
 clickInfoWindow = (event, element) => {
@@ -132,14 +141,11 @@ closeInfowindow = (infowindow) => {
  
 //get value from MarkerPanel
 handleChange = (event, value) => {
-  console.log(event.target.value)
-  
-  if(value !== this.state.value){ 
+  value = event.target.value.substr(0, 20);
+    if(value !== this.state.value){
     this.setState({
-      value : event.target.value.substr(0,20)
-    })  
-    //load algorithm sorting
-    setTimeout((this.handleChangePlacesAndMarkers()), 2000)
+      value : value
+    })
   }
 }
 //get content from Map.js
@@ -210,8 +216,20 @@ getContentInfoWindow = (content) => {
 }; 
 
 
-  render(){ 
-    const { foundPlaces, value } = this.state;
+  render(){
+   const { foundPlaces, value } = this.state;
+    const findPlaces = foundPlaces.filter(
+      place => {
+        return place.englishName.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+    });
+    
+    
+    //logics with compare markers maybe reduce
+    /*allMarkers.map((marker) => { 
+      let toogle = findPlaces.find(place => place.id === marker.id) ? true : false
+      marker.setVisible(toogle);
+    })*/
+
       return (
         <Container className="App">
           <Row>
@@ -232,8 +250,7 @@ getContentInfoWindow = (content) => {
               getPlaces={this.getFoundPlaces}
               handleChange={this.handleChange}
               clickInfoWindow={this.clickInfoWindow}
-              handleChangePlacesAndMarkers={this.handleChangePlacesAndMarkers}
-              sortPlaces = {foundPlaces}
+              sortPlaces = {findPlaces.sort(sortBy('name'))}
               value = {value}
              
               />
@@ -255,7 +272,6 @@ getContentInfoWindow = (content) => {
                 getarrayinfowindow={this.getarrayinfowindow}
                 getContentInfoWindow={event => this.getContentInfoWindow}
                 getMapFromMapJS={this.getMapFromMapJS}
-                handleChangePlacesAndMarkers = {this.handleChangePlacesAndMarkers}
                 
                 />
               </ErrorBoundary>

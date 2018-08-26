@@ -25,7 +25,7 @@ const Footer = () => {
                             <Media heading>
                                 Neibourhood Map
                             </Media>
-                                This is education project. Powered by Flickr and GoogleMaps API.
+                                This is education project. Powered by Flickr and GoogleMaps.
                         </Media>
                     </Col>
                 </Media>

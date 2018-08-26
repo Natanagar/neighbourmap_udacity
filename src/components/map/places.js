@@ -386,7 +386,7 @@ const Places = [{
         'name' : "Kielecki Teatr Tańca",
         'polishName' : "Kielecki Teatr Tańca",
         'primary' : " ",
-        'englishName' : "Kielce Dance Canter",
+        'englishName' : "Kielce Dance Center",
         'hasPerk' :  " ",
         'img' : 'img/teatr_tanca.jpg',
         'location' : {
