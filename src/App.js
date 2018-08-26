@@ -272,6 +272,7 @@ getContentInfoWindow = (content) => {
                 getarrayinfowindow={this.getarrayinfowindow}
                 getContentInfoWindow={event => this.getContentInfoWindow}
                 getMapFromMapJS={this.getMapFromMapJS}
+                sortPlaces = {findPlaces.sort(sortBy('name'))}
                 
                 />
               </ErrorBoundary>

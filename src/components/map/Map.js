@@ -160,8 +160,16 @@ marker.addListener('click', function () {
   this.state.arrayWithMarkers.push(marker);
   //console.log(this.state.arrayWithMarkers);
   this.props.getArrayMarkers(this.state.arrayWithMarker);
-
-
+  
+  /*const {sortPlaces } = this.props;
+  const { arrayWithMarker } = this.state;
+  console.log(sortPlaces)
+  console.log(arrayWithMarker)
+  //logics with compare markers maybe reduce
+      arrayWithMarker.forEach((marker) => { 
+      let toogle = sortPlaces.find(place => place.id === marker.id) ? true : false
+      marker.setVisible(toogle);
+  })*/
   
 })
 
@@ -185,10 +193,18 @@ marker.addListener('click', function () {
 
 
     render(){
-      let arrayWithMarkers = this.state.arrayWithMarkers;
+      const { arrayWithMarkers } = this.state;
+      const {sortPlaces} = this.props;
+      console.log(sortPlaces, arrayWithMarkers)
+      arrayWithMarkers.map((marker) => { 
+        let toogle = sortPlaces.find(place => place.id === marker.id) ? true : false
+        marker.setVisible(toogle);
+      })
+      
       let arrayInfoWindow = this.state.arrayInfoWindow;
       this.props.getMapFromMapJS(this.state.map);
 
+    
       
         return(
             <div ref={this.myMapContainer} 
