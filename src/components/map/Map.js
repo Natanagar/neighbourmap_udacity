@@ -11,7 +11,7 @@ class Map extends Component {
   constructor(props) {
     super(props);
 
-
+    
     this.myMapContainer = React.createRef()
   }
   state = {
@@ -21,6 +21,7 @@ class Map extends Component {
     map: false
   }
   
+
   //Set timeout to check if the Map is loaded
   checkTheMapIsLoaded = (timer) => {
     this.myMapContainer = '<div class="message">Trying to load GoogleMap, please wait...</div>';
@@ -51,12 +52,16 @@ class Map extends Component {
       alert('Check your internet connection');
     }
   }
+
+  
  
 componentDidMount(){
 //check internet connection
+
 this.checkConnection();
 
 //create googleMaps with Google API
+
   let optionMap = {
     center: {
       lat: 50.866077, 
@@ -91,7 +96,7 @@ this.checkConnection();
 
       //type of icons in markers  
       let defaultIcon = makeMarkerIcon('558000');
-      //let highlightedIcon = makeMarkerIcon('FFFF24');
+      let highlightedIcon = makeMarkerIcon('FFFF24');
 
   
         
@@ -100,7 +105,7 @@ this.checkConnection();
         
         let title = place.name,
             id = place.id;
-            
+              
             
       
         //create infoWindow
@@ -116,6 +121,7 @@ this.checkConnection();
                             <span>tel. ${place.phone}</span>
                           </div>`
             });
+
           infowindow.addListener('closeclick', (() => infowindow.setMarker = null));
           //send request to Flickr
           
@@ -148,6 +154,9 @@ this.checkConnection();
 marker.addListener('click', function() {
   infowindow.open(map, marker);
 });
+marker.addListener('mouseover', (
+  () => marker.setIcon(window.highlightedIcon) 
+));
 
 google.maps.event.addListener(infowindow,'closeclick',function(){
   marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -155,25 +164,19 @@ google.maps.event.addListener(infowindow,'closeclick',function(){
 marker.addListener('click', function () {
   marker.setAnimation(null);
 });
-  
+
+
+
 //add markers to state to App.js 
-  this.state.arrayWithMarkers.push(marker);
+
+ this.state.arrayWithMarkers.push(marker)
   //console.log(this.state.arrayWithMarkers);
-  this.props.getArrayMarkers(this.state.arrayWithMarker);
-  
-  /*const {sortPlaces } = this.props;
-  const { arrayWithMarker } = this.state;
-  console.log(sortPlaces)
-  console.log(arrayWithMarker)
-  //logics with compare markers maybe reduce
-      arrayWithMarker.forEach((marker) => { 
-      let toogle = sortPlaces.find(place => place.id === marker.id) ? true : false
-      marker.setVisible(toogle);
-  })*/
+  this.props.getArrayMarkers(this.state.arrayInfoWindow);
   
 })
 
- 
+
+
 // This function takes in a COLOR, and then creates a new marker
 // icon of that color. The icon will be 21 px wide by 34 high, have an origin
 // of 0, 0 and be anchored at 10, 34).
@@ -188,14 +191,31 @@ marker.addListener('click', function () {
     return markerImage;
     }
     
+    
 
 }
+componentWillReceiveProps(){
+    function toggleBounce() {
+      marker.getAnimation() !== null ? marker.setAnimation(null) : marker.setAnimation(google.maps.Animation.BOUNCE)
+    }
 
+      const { clickedMarker, content } = this.props;
+      let marker = clickedMarker[0];
+      let infowindow = marker.infowindow;
+      console.log(infowindow)
+      //marker.addListener('click', toggleBounce)
+    }
 
     render(){
-      const { arrayWithMarkers } = this.state;
-      const {sortPlaces} = this.props;
-      console.log(sortPlaces, arrayWithMarkers)
+      console.log(this.props.clickedMarker)
+      const { arrayWithMarkers, map } = this.state;
+      const {sortPlaces, clickedMarker} = this.props;
+      
+      
+      if (clickedMarker){
+        //clickedMarker[0].google.maps.Animation.DROP()
+      }
+     
       arrayWithMarkers.map((marker) => { 
         let toogle = sortPlaces.find(place => place.id === marker.id) ? true : false
         marker.setVisible(toogle);

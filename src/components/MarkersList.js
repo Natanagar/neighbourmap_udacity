@@ -20,9 +20,8 @@ const MarkersList = (props) =>{
                         return (
                         <li id={place.id} 
                             key={place.id}
-                            onClick={(event) => props.sortedMarkers(event)}
-                            onMouseUp={(event) => props.clickInfoWindow(event)}
-                            onMouseMove={(event) => props.changePlaces(event)}
+                            onClick={(event) => props.clickInfoWindow(event)}
+                            //onMouseMove={(event) => props.changePlaces(event)}
                             >
                             <div className="markerList"
                                 role={'menuitem'}

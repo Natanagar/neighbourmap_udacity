@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Alert } from 'reactstrap';
 import SearchBar from './SearchBar';
 import MarkersList from './MarkersList';
-import escapeRegExp from 'escape-string-regexp';
-import sortBy from 'sort-by';
+
 
 
 const MarkersPanel = (props) =>  {
@@ -25,8 +24,6 @@ return(
                     role='menu'
                     className="marker-list"
                     tabIndex="0"
-                    //sendArray={foundPlaces}
-                    sortedMarkers = {props.sortingMarkers}
                     clickInfoWindow={props.clickInfoWindow}
                     changePlaces={props.handleChangePlacesAndMarkers}   
                     sortPlaces={sortPlaces}

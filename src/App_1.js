@@ -50,11 +50,10 @@ getMapFromMapJS = (map) => {
   }
 }
 //get array with markers from map component
- getArrayMarkers(arrayInfoWindow){
-   console.log(this.state.allMarkers)
-   if(this.state.allMarkers !== arrayInfoWindow){
+ getArrayMarkers(arrayWithMarkers){
+   if(this.state.allMarkers !== arrayWithMarkers){
     this.setState({
-      allMarkers : arrayInfoWindow
+      allMarkers : arrayWithMarkers
     })
   }
 }
@@ -181,13 +180,19 @@ getContentInfoWindow = (content) => {
 
 
   render(){
-  console.log(this.state)
-   const { foundPlaces, value, allMarkers } = this.state;
+  console.log(this.state.content)
+   const { foundPlaces, value } = this.state;
     const findPlaces = foundPlaces.filter(
       place => {
         return place.englishName.toLowerCase().indexOf(value.toLowerCase()) !== -1;
     });
     
+    
+    //logics with compare markers maybe reduce
+    /*allMarkers.map((marker) => { 
+      let toogle = findPlaces.find(place => place.id === marker.id) ? true : false
+      marker.setVisible(toogle);
+    })*/
 
       return (
         <Container className="App">
