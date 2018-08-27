@@ -138,8 +138,8 @@ getContentInfoWindow = (content) => {
     } else {
         let error = new Error(response.statusText);
         error.response = response;
-        alert (`Error loading pics ${error}`);
         throw error
+        alert (`Error loading pics ${error}`);
         
         
     }
@@ -148,8 +148,8 @@ getContentInfoWindow = (content) => {
     if (response.headers['content-type'] !== 'application/json') {
         let error = new Error('This is uncorrect response from server');
         error.response = response;
-        alert ('This is uncorrect response from server')
         throw error
+        alert ('This is uncorrect response from server')
         
     }
     return response.data;
@@ -158,7 +158,7 @@ getContentInfoWindow = (content) => {
         let arrayPics = json.photos.photo;
         //console.log(arrayPics);
         let photo = arrayPics.filter(pic => pic.ispublic & !(pic.isfamily) & !(pic.isfriend))[index]
-        console.log(photo);
+        
         
         let imageFromFlickr = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
             authorPics = `http://www.flickr.com/photos/${photo.owner}/${photo.id}`;
