@@ -31,7 +31,8 @@ class App extends Component {
     map : false,
     value : "",
     content : '',
-    clickedMarker : " "
+    clickedMarker : " ",
+    placeID : false,
 }
 
 
@@ -79,6 +80,7 @@ withoutSorting = (value, foundPlaces) => {
 //click to InfoWindow and add new Content
 clickInfoWindow = (event, element) => {
   let placeID = event.currentTarget.id;
+  console.log(placeID)
   this.fetchDataFromFlickr();
   const { allMarkers} = this.state;
   let pressMarker = allMarkers.filter(marker => marker.id == placeID);
@@ -86,7 +88,8 @@ clickInfoWindow = (event, element) => {
   
 
   this.setState({
-    clickedMarker : pressMarker
+    clickedMarker : pressMarker,
+    placeID : placeID
   })
 }
   
@@ -229,6 +232,8 @@ getContentInfoWindow = (content) => {
                 clickedMarker = {this.state.clickedMarker}
                 content={this.state.content}
                 arrayInfoWindow ={this.state.arrayInfoWindow}
+                placeID={this.state.placeID}
+                
                 
                 />
               </ErrorBoundary>

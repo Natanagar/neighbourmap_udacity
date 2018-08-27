@@ -210,9 +210,9 @@ componentWillReceiveProps(){
     }
 
     render(){
-      
+      console.log(this.props.placeID)
       const { arrayWithMarkers, map } = this.state;
-      const {sortPlaces, clickedMarker} = this.props;
+      const {sortPlaces, clickedMarker, placeID} = this.props;
       
       
       if (clickedMarker){
@@ -227,6 +227,12 @@ componentWillReceiveProps(){
       let arrayInfoWindow = this.state.arrayInfoWindow;
       this.props.getMapFromMapJS(this.state.map);
 
+      let pressMarker = arrayWithMarkers.filter(marker => marker.id == placeID)
+      console.log(pressMarker)
+      if(pressMarker[0]){
+        pressMarker[0].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+        pressMarker[0].setAnimation(google.maps.Animation.BOUNCE)
+      }
     
       
         return(
