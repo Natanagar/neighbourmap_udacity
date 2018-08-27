@@ -51,7 +51,6 @@ getMapFromMapJS = (map) => {
 }
 //get array with markers from map component
  getArrayMarkers(arrayInfoWindow){
-   console.log(this.state.allMarkers)
    if(this.state.allMarkers !== arrayInfoWindow){
     this.setState({
       allMarkers : arrayInfoWindow
@@ -81,12 +80,9 @@ withoutSorting = (value, foundPlaces) => {
 clickInfoWindow = (event, element) => {
   let placeID = event.currentTarget.id;
   this.fetchDataFromFlickr();
-  
   const { allMarkers} = this.state;
   console.log(allMarkers)
-  let pressMarker = allMarkers.filter(marker => {
-    return marker.id.indexOf(placeID) !== -1;
-  });
+  let pressMarker = allMarkers.filter(marker => marker.id == placeID);
   console.log(pressMarker)
 
   this.setState({

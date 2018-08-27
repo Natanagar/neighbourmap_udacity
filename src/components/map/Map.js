@@ -201,8 +201,7 @@ componentWillReceiveProps(){
 
       const { clickedMarker, content } = this.props;
       let marker = clickedMarker[0];
-      let infowindow = marker.infowindow;
-      console.log(infowindow)
+      console.log(marker)
       //marker.addListener('click', toggleBounce)
     }
 
