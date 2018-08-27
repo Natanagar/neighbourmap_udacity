@@ -154,9 +154,9 @@ this.checkConnection();
 marker.addListener('click', function() {
   infowindow.open(map, marker);
 });
-marker.addListener('mouseover', (
+/*marker.addListener('mouseover', (
   () => marker.setIcon(window.highlightedIcon) 
-));
+));*/
 
 google.maps.event.addListener(infowindow,'closeclick',function(){
   marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -196,10 +196,6 @@ marker.addListener('click', function () {
 }
 componentWillReceiveProps(){
   const { arrayWithMarkers, map, arrayInfoWindow } = this.state;
-  function toggleBounce() {
-      
-      marker.getAnimation() !== null ? marker.setAnimation(null) : marker.setAnimation(google.maps.Animation.BOUNCE)
-    }
 
       const { clickedMarker, content } = this.props;
 
@@ -215,12 +211,9 @@ componentWillReceiveProps(){
       const {sortPlaces, clickedMarker, placeID} = this.props;
       
       
-      if (clickedMarker){
-        //clickedMarker[0].google.maps.Animation.DROP()
-      }
      
       arrayWithMarkers.map((marker) => { 
-        let toogle = sortPlaces.find(place => place.id === marker.id) ? true : false
+        let toogle = sortPlaces.find(place => place.id == marker.id) ? true : false
         marker.setVisible(toogle);
       })
       
@@ -230,8 +223,11 @@ componentWillReceiveProps(){
       let pressMarker = arrayWithMarkers.filter(marker => marker.id == placeID)
       console.log(pressMarker)
       if(pressMarker[0]){
+        let pressInfowindow = pressMarker[0].infowindow;
+        console.log(pressInfowindow)
         pressMarker[0].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
         pressMarker[0].setAnimation(google.maps.Animation.BOUNCE)
+        
       }
     
       

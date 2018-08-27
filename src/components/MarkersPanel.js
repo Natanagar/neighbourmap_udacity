@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Alert } from 'reactstrap';
 import SearchBar from './SearchBar';
 import MarkersList from './MarkersList';

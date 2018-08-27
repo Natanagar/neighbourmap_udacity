@@ -68,7 +68,7 @@ marker.infowindow.setContent(this.state.content);
  
 //sorting with zero value and foundPlaces
 withoutSorting = (value, foundPlaces) => {
-   if(value == "" && foundPlaces.length == 0){
+   if(value === "" && foundPlaces.length === 0){
     this.setState({
       foundPlaces : Places,
       value : ''
@@ -83,7 +83,7 @@ clickInfoWindow = (event, element) => {
   console.log(placeID)
   this.fetchDataFromFlickr();
   const { allMarkers} = this.state;
-  let pressMarker = allMarkers.filter(marker => marker.id == placeID);
+  let pressMarker = allMarkers.filter(marker => marker.id === placeID);
   console.log(pressMarker)
   
 
@@ -95,7 +95,6 @@ clickInfoWindow = (event, element) => {
   
 //close infowindow
 closeInfowindow = (infowindow) => {
-  const { map } = this.state;
   setTimeout((
    infowindow.close()
   ), 2000)
@@ -165,7 +164,7 @@ getContentInfoWindow = (content) => {
             authorPics = `http://www.flickr.com/photos/${photo.owner}/${photo.id}`;
             this.setState({
               content : `<div className="infowindow>
-                              <img className="image"src="${imageFromFlickr}" alt ='Photo from Flickr'>
+                              <img className="image"src="${imageFromFlickr}" alt ='Photo from Flickr'><img>
                               <a href = ${authorPics} alt='author'> by the ${authorPics}</a>
                             from Flickr
                       </div>`}) ;
@@ -180,7 +179,7 @@ getContentInfoWindow = (content) => {
 
 
   render(){
-   const { foundPlaces, value, allMarkers } = this.state;
+   const { foundPlaces, value} = this.state;
     const findPlaces = foundPlaces.filter(
       place => {
         return place.englishName.toLowerCase().indexOf(value.toLowerCase()) !== -1;
