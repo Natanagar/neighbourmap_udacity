@@ -237,11 +237,9 @@ marker.addListener('click', function () {
         let pressInfowindow = pressMarker[0].infowindow;
         pressInfowindow.setContent(content);
         pressInfowindow.open(map, pressMarker[0])
-        let openedInfowindow = arrayInfoWindow.filter(infowindow => infowindow.marker.id == placeID)
-        console.log(` Last open infowindow ${openedInfowindow}`);
+        let openedInfowindow = arrayInfoWindow.filter(infowindow => infowindow.marker.id == placeID)  
         let closeInfowindow = arrayInfoWindow.filter(infowindow => infowindow.marker.id == openedInfowindow[0])
-        console.log(closeInfowindow);
-
+        
         //console.log(pressInfowindow)
         //pressMarker[0].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
         pressMarker[0].setAnimation(google.maps.Animation.BOUNCE)
@@ -263,36 +261,5 @@ marker.addListener('click', function () {
     }
   }
       
-      
-      /*let arrayInfoWindow = this.state.arrayInfoWindow;
-      this.props.getMapFromMapJS(this.state.map);
 
-      let pressMarker = arrayWithMarkers.filter(marker => marker.id == placeID)
-      console.log(pressMarker)
-      if(pressMarker[0]){
-
-        let pressInfowindow = pressMarker[0].infowindow;
-        console.log(pressInfowindow)
-        pressMarker[0].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
-  
-        pressMarker[0].setAnimation(google.maps.Animation.BOUNCE)
-        if(!pressInfowindow){
-          console.log(`============hura===================`)
-        } places.map(place => {
-            arrayInfoWindow.map(infowindow => infowindow.setContent(`<div className="infowindow" style={style}>
-                                                                      <h3>${place.title}</h3>
-                                                                        <span>${place.site}</span>
-                                                                        <span>tel. ${place.phone}</span>
-                                                                      </div>`))
-                //infowindow.open(map, pressMarker)
-              }
-            
-          )
-        } 
-      }
-    
-       
-        
-    }
-}*/
 export default Map;

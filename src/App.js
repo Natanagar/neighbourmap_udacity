@@ -80,11 +80,10 @@ withoutSorting = (value, foundPlaces) => {
 //click to InfoWindow and add new Content
 clickInfoWindow = (event, element) => {
   let placeID = event.currentTarget.id;
-  console.log(placeID)
   this.fetchDataFromFlickr();
   const { allMarkers} = this.state;
   let pressMarker = allMarkers.filter(marker => marker.id === placeID);
-  console.log(pressMarker)
+
   
 
   this.setState({
@@ -159,14 +158,22 @@ getContentInfoWindow = (content) => {
         let arrayPics = json.photos.photo;
         //console.log(arrayPics);
         let photo = arrayPics.filter(pic => pic.ispublic & !(pic.isfamily) & !(pic.isfriend))[index]
+        console.log(photo);
         
         let imageFromFlickr = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
             authorPics = `http://www.flickr.com/photos/${photo.owner}/${photo.id}`;
             this.setState({
-              content : `<div className="infowindow>
-                              <img className="image"src=${imageFromFlickr} alt ='Photo from Flickr'><img>
-                              <a href = ${authorPics} alt='author'> by the ${authorPics}</a>
-                            from Flickr
+              content : `<div className="infowindow style ={{
+                width: "50%",
+                height: "300px",
+                backgroundImage: "url(" + { imageFromFlickr } + ")"
+              }}>
+                              <div>
+                                <h3>Welcome to Kielce!</h3>
+                                  <img className="image"src=${imageFromFlickr} alt ='Photo from Flickr'><img>
+                                  <a href = ${authorPics} alt='author'> by the ${authorPics}</a>
+                              from Flickr
+                            </div>
                       </div>`}) ;
           })
           
