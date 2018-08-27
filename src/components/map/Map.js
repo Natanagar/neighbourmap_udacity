@@ -152,6 +152,15 @@ this.checkConnection();
   
   //open infowindow
 marker.addListener('click', function() {
+  console.log(marker)
+  marker.infowindow = infowindow;
+  if(infowindow.getContent() == false){
+    infowindow.setContent(`<div className="infowindow" style={style}>
+                            <h3>${title}</h3>
+                            <span>${place.site}</span>
+                           <span>tel. ${place.phone}</span>
+                          </div>`)
+  }
   infowindow.open(map, marker);
 });
 /*marker.addListener('mouseover', (
@@ -206,9 +215,9 @@ componentWillReceiveProps(){
     }
 
     render(){
-      console.log(this.props.placeID)
+      console.log(this.props.places  )
       const { arrayWithMarkers, map } = this.state;
-      const {sortPlaces, clickedMarker, placeID} = this.props;
+      const {sortPlaces, clickedMarker, placeID, places} = this.props;
       
       
      
@@ -227,7 +236,19 @@ componentWillReceiveProps(){
         console.log(pressInfowindow)
         pressMarker[0].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
         pressMarker[0].setAnimation(google.maps.Animation.BOUNCE)
-        
+        if(!pressInfowindow){
+          console.log(`============hura===================`)
+          places.map(place => {
+            arrayInfoWindow.map(infowindow => infowindow.setContent(`<div className="infowindow" style={style}>
+                                                                      <h3>${place.title}</h3>
+                                                                        <span>${place.site}</span>
+                                                                        <span>tel. ${place.phone}</span>
+                                                                      </div>`))
+                //infowindow.open(map, pressMarker)
+              }
+            
+          )
+        } 
       }
     
       
