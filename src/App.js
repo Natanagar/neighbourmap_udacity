@@ -164,7 +164,7 @@ getContentInfoWindow = (content) => {
             authorPics = `http://www.flickr.com/photos/${photo.owner}/${photo.id}`;
             this.setState({
               content : `<div className="infowindow>
-                              <img className="image"src="${imageFromFlickr}" alt ='Photo from Flickr'><img>
+                              <img className="image"src=${imageFromFlickr} alt ='Photo from Flickr'><img>
                               <a href = ${authorPics} alt='author'> by the ${authorPics}</a>
                             from Flickr
                       </div>`}) ;

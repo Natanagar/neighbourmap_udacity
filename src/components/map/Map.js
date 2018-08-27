@@ -96,7 +96,7 @@ this.checkConnection();
 
       //type of icons in markers  
       let defaultIcon = makeMarkerIcon('558000');
-      let highlightedIcon = makeMarkerIcon('FFFF24');
+      //let highlightedIcon = makeMarkerIcon('FFFF24');
 
   
         
@@ -160,12 +160,12 @@ marker.addListener('click', function() {
                             <span>${place.site}</span>
                            <span>tel. ${place.phone}</span>
                           </div>`)
-  }
+    }
   infowindow.open(map, marker);
+  infowindow.addListener('closeClick', ()=>{
+    infowindow.setMarker(null);
+  });
 });
-/*marker.addListener('mouseover', (
-  () => marker.setIcon(window.highlightedIcon) 
-));*/
 
 google.maps.event.addListener(infowindow,'closeclick',function(){
   marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -202,43 +202,83 @@ marker.addListener('click', function () {
     
     
 
-}
-componentWillReceiveProps(){
-  const { arrayWithMarkers, map, arrayInfoWindow } = this.state;
-
-      const { clickedMarker, content } = this.props;
-
-      let marker = clickedMarker[0];
-      //marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
-      //marker.addListener('click', toggleBounce)
-      arrayInfoWindow.map(infowindow => infowindow.setContent(content))
-    }
+  }
 
     render(){
-      console.log(this.props.places  )
       const { arrayWithMarkers, map } = this.state;
-      const {sortPlaces, clickedMarker, placeID, places} = this.props;
-      
-      
-     
+      const { sortPlaces, clickedMarker, placeID, places, content } = this.props;
+      let arrayInfoWindow = this.state.arrayInfoWindow;
+
+
       arrayWithMarkers.map((marker) => { 
         let toogle = sortPlaces.find(place => place.id == marker.id) ? true : false
         marker.setVisible(toogle);
       })
+
+      this.props.getMapFromMapJS(this.state.map);
+
+
+      let pressMarker = arrayWithMarkers.filter(marker => marker.id == placeID)
+      //console.log(pressMarker);
+
+      if(pressMarker[0]){
+        let animatedMarkers = arrayWithMarkers.filter(marker => 
+          marker.getAnimation() != null)
+        //console.log(`We have animated markers ${animatedMarkers.length}`);
+        //console.log(`Press place number ${placeID}`)
+        let getAnimation = animatedMarkers.filter(marker => marker.id == placeID)
+        //console.log(`Animated marker ${getAnimation}`);
+        let removeAnimation = animatedMarkers.filter(marker => marker !== getAnimation[0])
+        removeAnimation.map(marker => {
+          marker.setAnimation(null),
+          marker.infowindow.close()
+        })
+
+        let pressInfowindow = pressMarker[0].infowindow;
+        pressInfowindow.setContent(content);
+        pressInfowindow.open(map, pressMarker[0])
+        let openedInfowindow = arrayInfoWindow.filter(infowindow => infowindow.marker.id == placeID)
+        console.log(` Last open infowindow ${openedInfowindow}`);
+        let closeInfowindow = arrayInfoWindow.filter(infowindow => infowindow.marker.id == openedInfowindow[0])
+        console.log(closeInfowindow);
+
+        //console.log(pressInfowindow)
+        //pressMarker[0].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+        pressMarker[0].setAnimation(google.maps.Animation.BOUNCE)
+        pressMarker[0].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+        //console.log(arrayWithMarkers, content);
+        
+      }
+
+        return(
+          <div ref={this.myMapContainer} 
+          id="map"
+          role="application"
+          onKeyDown = {() => this.getInfoAboutMarkers}
+          sendarray = {this.props.getArrayMarkers(arrayWithMarkers)} 
+          getarrayinfowindow = {this.props.getarrayinfowindow(arrayInfoWindow)}
+          
+          />
+      )
+    }
+  }
       
-      let arrayInfoWindow = this.state.arrayInfoWindow;
+      
+      /*let arrayInfoWindow = this.state.arrayInfoWindow;
       this.props.getMapFromMapJS(this.state.map);
 
       let pressMarker = arrayWithMarkers.filter(marker => marker.id == placeID)
       console.log(pressMarker)
       if(pressMarker[0]){
+
         let pressInfowindow = pressMarker[0].infowindow;
         console.log(pressInfowindow)
         pressMarker[0].setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+  
         pressMarker[0].setAnimation(google.maps.Animation.BOUNCE)
         if(!pressInfowindow){
           console.log(`============hura===================`)
-          places.map(place => {
+        } places.map(place => {
             arrayInfoWindow.map(infowindow => infowindow.setContent(`<div className="infowindow" style={style}>
                                                                       <h3>${place.title}</h3>
                                                                         <span>${place.site}</span>
@@ -251,17 +291,8 @@ componentWillReceiveProps(){
         } 
       }
     
-      
-        return(
-            <div ref={this.myMapContainer} 
-            id="map"
-            role="application"
-            onKeyDown = {() => this.getInfoAboutMarkers}
-            sendarray = {this.props.getArrayMarkers(arrayWithMarkers)} 
-            getarrayinfowindow = {this.props.getarrayinfowindow(arrayInfoWindow)}
-            
-            />
-        )
+       
+        
     }
-}
+}*/
 export default Map;
