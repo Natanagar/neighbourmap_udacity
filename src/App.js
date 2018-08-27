@@ -81,9 +81,9 @@ clickInfoWindow = (event, element) => {
   let placeID = event.currentTarget.id;
   this.fetchDataFromFlickr();
   const { allMarkers} = this.state;
-  console.log(allMarkers)
   let pressMarker = allMarkers.filter(marker => marker.id == placeID);
   console.log(pressMarker)
+  
 
   this.setState({
     clickedMarker : pressMarker
@@ -177,7 +177,6 @@ getContentInfoWindow = (content) => {
 
 
   render(){
-  console.log(this.state)
    const { foundPlaces, value, allMarkers } = this.state;
     const findPlaces = foundPlaces.filter(
       place => {
@@ -229,6 +228,7 @@ getContentInfoWindow = (content) => {
                 sortPlaces = {findPlaces.sort(sortBy('name'))}
                 clickedMarker = {this.state.clickedMarker}
                 content={this.state.content}
+                arrayInfoWindow ={this.state.arrayInfoWindow}
                 
                 />
               </ErrorBoundary>

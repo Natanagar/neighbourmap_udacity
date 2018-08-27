@@ -195,18 +195,22 @@ marker.addListener('click', function () {
 
 }
 componentWillReceiveProps(){
-    function toggleBounce() {
+  const { arrayWithMarkers, map, arrayInfoWindow } = this.state;
+  function toggleBounce() {
+      
       marker.getAnimation() !== null ? marker.setAnimation(null) : marker.setAnimation(google.maps.Animation.BOUNCE)
     }
 
       const { clickedMarker, content } = this.props;
+
       let marker = clickedMarker[0];
-      console.log(marker)
+      //marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
       //marker.addListener('click', toggleBounce)
+      arrayInfoWindow.map(infowindow => infowindow.setContent(content))
     }
 
     render(){
-      console.log(this.props.clickedMarker)
+      
       const { arrayWithMarkers, map } = this.state;
       const {sortPlaces, clickedMarker} = this.props;
       
