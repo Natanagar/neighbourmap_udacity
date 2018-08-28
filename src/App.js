@@ -80,9 +80,11 @@ withoutSorting = (value, foundPlaces) => {
 //click to InfoWindow and add new Content
 clickInfoWindow = (event, element) => {
   let placeID = event.currentTarget.id;
-  this.fetchDataFromFlickr();
+  
   const { allMarkers} = this.state;
-  let pressMarker = allMarkers.filter(marker => marker.id === placeID);
+  let pressMarker = allMarkers.filter(marker => marker.id == placeID);
+  console.log(pressMarker);
+  this.fetchDataFromFlickr(placeID);
 
   
 
@@ -119,7 +121,15 @@ getContentInfoWindow = (content) => {
 
 }
    //authentification user flickr
- fetchDataFromFlickr = ()=> {
+ fetchDataFromFlickr = (id)=> {
+   console.log(id);
+  const { Places } = this.state;
+  let pressPlace = Places.filter(el => el.id == id)
+  console.log(pressPlace)
+  let title = pressPlace[0].polishName;
+  let phone = pressPlace[0].phone;
+  let site = pressPlace[0].site;
+  console.log(title, phone, site)
   let index = Math.floor(Math.random()*(20)) + 1;
   let flickrProperties = {
     apikey : `dc1fa29f1d6ba587a26ef719ef5f1107`,
@@ -162,15 +172,18 @@ getContentInfoWindow = (content) => {
         
         let imageFromFlickr = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
             authorPics = `http://www.flickr.com/photos/${photo.owner}/${photo.id}`;
+          
             this.setState({
               content : `<div className="infowindow style ={{
-                width: "50%",
+                width: "100%",
                 height: "300px",
                 backgroundImage: "url(" + { imageFromFlickr } + ")"
               }}>
                               <div>
-                                <h3>Welcome to Kielce!</h3>
+                                <h4>${title}</h4>
                                   <img className="image"src=${imageFromFlickr} alt ='Photo from Flickr'><img>
+                                  <span>${site}</span>
+                                  <span>tel. ${phone}</span>
                                   <a href = ${authorPics} alt='author'> by the ${authorPics}</a>
                               from Flickr
                             </div>
@@ -186,6 +199,7 @@ getContentInfoWindow = (content) => {
 
 
   render(){
+    
    const { foundPlaces, value} = this.state;
     const findPlaces = foundPlaces.filter(
       place => {

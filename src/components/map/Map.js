@@ -98,10 +98,11 @@ this.checkConnection();
       let defaultIcon = makeMarkerIcon('558000');
       //let highlightedIcon = makeMarkerIcon('FFFF24');
 
-  
-        
+       
         //create list of markers
+      
       Places.map((place)=>{
+      
         
         let title = place.name,
             id = place.id;
@@ -151,7 +152,7 @@ this.checkConnection();
     infowindow.marker = marker;
   
   //open infowindow
-marker.addListener('click', function() {
+  marker.addListener('click', function() {
   console.log(marker)
   marker.infowindow = infowindow;
   if(infowindow.getContent() == false){
@@ -173,7 +174,7 @@ google.maps.event.addListener(infowindow,'closeclick',function(){
 marker.addListener('click', function () {
   marker.setAnimation(null);
 });
-
+console.log(marker)
 
 
 //add markers to state to App.js 
@@ -206,10 +207,10 @@ marker.addListener('click', function () {
 
     render(){
       const { arrayWithMarkers, map } = this.state;
+     
       const { sortPlaces, clickedMarker, placeID, places, content } = this.props;
       let arrayInfoWindow = this.state.arrayInfoWindow;
-
-
+      
       arrayWithMarkers.map((marker) => { 
         let toogle = sortPlaces.find(place => place.id == marker.id) ? true : false
         marker.setVisible(toogle);
