@@ -24,6 +24,9 @@ If you want to sort markers, please, sort your favourite places in the *Seach* a
 
 This application use offline-first model (PWA) and works with ServiceWorker w offline mode.
 
+
+The service worker works only with the production mode. You'll use production mode if you run *yarn build* or *npm run build* after *npm install* or *yarn install* in the terminal.
+
 #### API:
 In this project was implemented two APIs:
 * [Google Maps API](https://developers.google.com/maps/documentation/embed/start)

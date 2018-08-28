@@ -181,7 +181,7 @@ getContentInfoWindow = (content) => {
               }}>
                               <div>
                                 <h4>${title}</h4>
-                                  <img className="image"src=${imageFromFlickr} alt ='Photo from Flickr'><img>
+                                  <img className="image"src=${imageFromFlickr} alt =${title}><img>
                                   <span>${site}</span>
                                   <span>tel. ${phone}</span>
                                   <a href = ${authorPics} alt='author'> by the ${authorPics}</a>

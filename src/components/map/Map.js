@@ -212,16 +212,14 @@ console.log(marker)
       console.log(sortPlaces)
       let arrayInfoWindow = this.state.arrayInfoWindow;
       
-      arrayWithMarkers.map((marker) => {
-        if(sortPlaces.lenght == 21){
-          arrayWithMarkers.map(marker => marker.setVisible(true))
-        }
-        if(sortPlaces && sortPlaces.lenght > 1){
-          let toogle = sortPlaces.find(place => place.id == marker.id) ? true : false
-          marker.setVisible(toogle);
-        } 
-        
-      })
+      arrayWithMarkers.map(marker => {
+        marker.setVisible(true)
+        console.log(marker)
+        let toogle = sortPlaces.find(place => place.id == marker.id) ? true : false
+        console.log(marker.getVisible());
+        marker.setVisible(toogle);
+      });
+    
 
       this.props.getMapFromMapJS(this.state.map);
 
