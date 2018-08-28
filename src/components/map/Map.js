@@ -207,14 +207,21 @@ console.log(marker)
 
     render(){
       const { arrayWithMarkers, map } = this.state;
+      arrayWithMarkers.map(marker => 
+        console.log(marker.getVisible())
+      )
      
       const { sortPlaces, clickedMarker, placeID, places, content } = this.props;
-      console.log(sortPlaces)
+      //console.log(sortPlaces)
+     
       let arrayInfoWindow = this.state.arrayInfoWindow;
+      if(sortPlaces && sortPlaces.length > 1){
+        arrayInfoWindow.map(infowindow => infowindow.close())
+      }
       
       arrayWithMarkers.map(marker => {
-        marker.setVisible(true)
-        console.log(marker)
+        //marker.setVisible(true)
+        //console.log(marker)
         let toogle = sortPlaces.find(place => place.id == marker.id) ? true : false
         console.log(marker.getVisible());
         marker.setVisible(toogle);
@@ -241,6 +248,10 @@ console.log(marker)
         })
 
         let pressInfowindow = pressMarker[0].infowindow;
+        if(pressInfowindow){
+          let closeInfowindow = arrayInfoWindow.filter(infowindow => infowindow !== pressInfowindow)
+          closeInfowindow.map(infowindow => infowindow.close())
+        }
         pressInfowindow.setContent(content);
         pressInfowindow.open(map, pressMarker[0])
         let openedInfowindow = arrayInfoWindow.filter(infowindow => infowindow.marker.id == placeID)  
