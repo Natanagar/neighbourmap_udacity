@@ -177,14 +177,17 @@ getContentInfoWindow = (content) => {
               content : `<div className="infowindow style ={{
                 width: "100%",
                 height: "300px",
-                backgroundImage: "url(" + { imageFromFlickr } + ")"
+                backgroundImage: "url(" + { imageFromFlickr } + ")",
+                border: '1px solid black',
+                borderRadius: '5px!important'
+
               }}>
                               <div>
                                 <h4>${title}</h4>
                                   <img className="image"src=${imageFromFlickr} alt =${title}><img>
-                                  <span>${site}</span>
-                                  <span>tel. ${phone}</span>
-                                  <a href = ${authorPics} alt='author'> by the ${authorPics}</a>
+                                  <section>${site}</section>
+                                  <section>tel. ${phone}</section>
+                                  <section><a href = ${authorPics} alt='author'> by the ${authorPics}</a><section>
                               from Flickr
                             </div>
                       </div>`}) ;
