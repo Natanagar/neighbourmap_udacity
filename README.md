@@ -26,6 +26,7 @@ This application use offline-first model (PWA) and works with ServiceWorker w of
 
 
 The service worker works only with the production mode. You'll use production mode if you run *yarn build* or *npm run build* after *npm install* or *yarn install* in the terminal.
+after npm run build press serve -s build and visit to localhost:3000
 
 #### API:
 In this project was implemented two APIs:
