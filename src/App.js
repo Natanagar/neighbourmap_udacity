@@ -122,14 +122,14 @@ getContentInfoWindow = (content) => {
 }
    //authentification user flickr
  fetchDataFromFlickr = (id)=> {
-   console.log(id);
+   //console.log(id);
   const { Places } = this.state;
   let pressPlace = Places.filter(el => el.id == id)
-  console.log(pressPlace)
+  //console.log(pressPlace)
   let title = pressPlace[0].polishName;
   let phone = pressPlace[0].phone;
   let site = pressPlace[0].site;
-  console.log(title, phone, site)
+  //console.log(title, phone, site)
   let index = Math.floor(Math.random()*(20)) + 1;
   let flickrProperties = {
     apikey : `dc1fa29f1d6ba587a26ef719ef5f1107`,

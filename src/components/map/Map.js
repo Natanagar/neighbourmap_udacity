@@ -209,11 +209,18 @@ console.log(marker)
       const { arrayWithMarkers, map } = this.state;
      
       const { sortPlaces, clickedMarker, placeID, places, content } = this.props;
+      console.log(sortPlaces)
       let arrayInfoWindow = this.state.arrayInfoWindow;
       
-      arrayWithMarkers.map((marker) => { 
-        let toogle = sortPlaces.find(place => place.id == marker.id) ? true : false
-        marker.setVisible(toogle);
+      arrayWithMarkers.map((marker) => {
+        if(sortPlaces.lenght == 21){
+          arrayWithMarkers.map(marker => marker.setVisible(true))
+        }
+        if(sortPlaces && sortPlaces.lenght > 1){
+          let toogle = sortPlaces.find(place => place.id == marker.id) ? true : false
+          marker.setVisible(toogle);
+        } 
+        
       })
 
       this.props.getMapFromMapJS(this.state.map);
